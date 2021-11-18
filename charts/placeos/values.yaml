@@ -239,6 +239,9 @@ etcd:
   auth:
     rbac:
       enabled: false
+  persistence:
+    enabled: true
+    size: 1Gi
 # elasticsearch third party chart overrides
 elasticsearch:
   # -- elasticsearch chart disabled by default. included for testing purposes only
@@ -250,6 +253,9 @@ elasticsearch:
     replicas: 1
   data:
     replicas: 1
+    persistence:
+      enabled: true
+      size: 8Gi
   coordinating:
     replicas: 0
 # rethinkdb third party chart overrides
@@ -261,6 +267,9 @@ rethinkdb:
     rethinkdbFullName: rethinkdb
   cluster:
     replicas: 1
+    persistentVolume:
+      enabled: true
+      size: 8Gi
   rethinkdbPassword: *rethinkdbPassword
 # redis third party chart overrides
 redis:
@@ -272,6 +281,9 @@ redis:
     enabled: false
   configmap: |-
     notify-keyspace-events Kg$
+  persistence:
+    enabled: true
+    size: 1Gi
 # influxdb third party chart overrides
 influxdb:
   # influxdb chart disabled by default. included for testing purposes only
@@ -287,6 +299,9 @@ postgresql:
   # -- postgres chart disabled by default. included for testing purposes only
   enabled: false
   fullnameOverride: postgres
+  persistence:
+    enabled: true
+    size: 8Gi
   << : *postgresValues
 
 global:
