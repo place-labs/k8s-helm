@@ -75,13 +75,6 @@ jobs:
           name: artifact-2
           path: output.txt
 
-      # Ensure the workflow eventually fails if files did not pass kube-score-ckecks.
-      - name: Verify kube-score-ckeck-action succeeded
-        shell: bash
-        run: |
-          echo "Status: ${{ job.status }}, Outcome: ${{ steps.ksga.outcome }}, If this step fails, kube-score-ckeck found issues. Check the output of the check step above."
-          [[ "${{ steps.ksga.outcome }}" == "success" ]]
-
       - name: Google Chat Notification
         uses: Co-qn/google-chat-notification@releases/v1
         with:
