@@ -48,3 +48,45 @@ jobs:
         run: |
           echo "If this step fails, kube-linter found issues. Check the output of the scan step above."
           [[ "${{ steps.kube-linter-action-scan.outcome }}" == "success" ]]
+
+  kube-score-ckeck:
+    needs: chart-directories
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
+    name: kube-score (Linux)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: kube-score action step
+        continue-on-error: true
+        uses: piraces/kube-score-ga@v0.1.2
+        id: ksga
+        with:
+          manifests-folders: '${{ matrix.directory }}/*.yaml'
+          ignore-exit-code: 'false'
+          kube-score-version: '1.11.0'
+          output-file: 'output.txt'
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact-2
+          path: output.txt
+
+      # Ensure the workflow eventually fails if files did not pass kube-score-ckecks.
+      - name: Verify kube-score-ckeck-action succeeded
+        shell: bash
+        run: |
+          echo "Status: ${{ job.status }}, Outcome: ${{ steps.ksga.outcome }}, If this step fails, kube-score-ckeck found issues. Check the output of the check step above."
+          [[ "${{ steps.ksga.outcome }}" == "success" ]]
+
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+            name: kube-score-ckeck
+            url: ${{ secrets.CHAT_ERROR }}
+            status: ${{ steps.ksga.outcome }}
+        if: failure()
+
