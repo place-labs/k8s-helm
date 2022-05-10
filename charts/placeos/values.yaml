@@ -105,7 +105,7 @@ xdispatchSecrets: &dispatchSecrets
 # api is the overide configuration for the embedded api subchart
 api:
   # -- api is a core PlaoceOS chart enabled by default.
-  enabled: true
+enabled: true
   fullnameOverride: api
   configmap:
     << : *deploymentEnv
