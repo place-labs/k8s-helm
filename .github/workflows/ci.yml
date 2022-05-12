@@ -38,7 +38,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           # Path to SARIF file relative to the root of the repository
-          sarif_file: kube-linter.sarif
+          sarif_file: ${{ matrix.directory }}/kube-linter.sarif
 
       # Ensure the workflow eventually fails if files did not pass kube-linter checks.
       - name: Verify kube-linter-action succeeded
@@ -75,4 +75,4 @@ jobs:
             name: kube-score-ckeck
             url: ${{ secrets.PLACE_OS_CHAT_STDOUT }}
             status: ${{ steps.ksga.outcome }}
-        if: always()
+        if: failure()
