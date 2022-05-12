@@ -25,11 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
-      - name: Create ../results directory for SARIF report files
-        shell: bash
-        run: mkdir -p ../results
-
       - name: Scan yaml files with kube-linter
         continue-on-error: true 
         uses: stackrox/kube-linter-action@v1.0.4
@@ -37,7 +32,7 @@ jobs:
         with:
           directory: ${{ matrix.directory }}
           format: sarif
-          output-file: ../results/kube-linter.sarif
+          output-file: kube-linter.sarif
 
       - name: Upload SARIF report files to GitHub
         uses: github/codeql-action/upload-sarif@v1
