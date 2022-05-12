@@ -48,3 +48,33 @@ jobs:
         run: |
           echo "If this step fails, kube-linter found issues. Check the output of the scan step above."
           [[ "${{ steps.kube-linter-action-scan.outcome }}" == "success" ]]
+
+  kube-score-ckeck:
+    needs: chart-directories
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
+    name: kube-score (Linux)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: kube-score action step
+        uses: piraces/kube-score-ga@v0.1.2
+        id: ksga
+        with:
+          manifests-folders: '${{ matrix.directory }}/*.yaml'
+          ignore-exit-code: 'false'
+          kube-score-version: '1.11.0'
+          output-file: 'output.txt'
+
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+            name: kube-score-ckeck
+            url: ${{ secrets.PLACE_OS_CHAT_STDOUT }}
+            status: ${{ steps.ksga.outcome }}
+        if: always()
