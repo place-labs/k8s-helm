@@ -38,9 +38,9 @@ jobs:
           output-file: 'output.txt'
 
       - name: Google Chat Notification
+        if: failure()
         uses: Co-qn/google-chat-notification@releases/v1
         with:
             name: kube-score-ckeck
-            url: ${{ secrets.PLACE_OS_CHAT_STDOUT }}
+            url: ${{ secrets.PLACE_OS_CHAT_STDERR }}
             status: ${{ steps.ksga.outcome }}
-        if: always()
