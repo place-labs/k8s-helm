@@ -23,30 +23,35 @@ spec:
     http:
       paths:
       - path: /*
+        pathType: Prefix
         backend:
           service:
             name: frontend-loader-http-gcp
             port:
               number: 8080
       - path: /api/*
+        pathType: Prefix
         backend:
           service:
             name: api-gcp
             port:
               number: 3000
       - path: /auth/*
+        pathType: Prefix
         backend:
           service:
             name: auth-gcp
             port:
               number: 3000
       - path: /api/files/*
+        pathType: Prefix
         backend:
           service:
             name: auth-gcp
             port:
               number: 3000
       - path: /api/staff/*
+        pathType: Prefix
         backend:
           service:
             name: staff-gcp
