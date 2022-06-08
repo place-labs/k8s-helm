@@ -6,7 +6,7 @@ metadata:
 spec:
   {{- toYaml .Values.global.gcpbackendConfig.config | nindent 2 }}
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Values.global.gcpbackendConfig.name }}
@@ -24,22 +24,32 @@ spec:
       paths:
       - path: /*
         backend:
-          serviceName: frontend-loader-http-gcp
-          servicePort: 8080
+          service:
+            name: frontend-loader-http-gcp
+            port:
+              number: 8080
       - path: /api/*
         backend:
-          serviceName: api-gcp
-          servicePort: 3000
+          service:
+            name: api-gcp
+            port:
+              number: 3000
       - path: /auth/*
         backend:
-          serviceName: auth-gcp
-          servicePort: 3000
+          service:
+            name: auth-gcp
+            port:
+              number: 3000
       - path: /api/files/*
         backend:
-          serviceName: auth-gcp
-          servicePort: 3000
+          service:
+            name: auth-gcp
+            port:
+              number: 3000
       - path: /api/staff/*
         backend:
-          serviceName: staff-gcp
-          servicePort: 8080
+          service:
+            name: staff-gcp
+            port:
+              number: 8080
 {{- end }}
