@@ -45,9 +45,13 @@ xrethinkdbClientSecrets: &rethinkdbClientSecrets
   RETHINKDB_PASSWORD: *rethinkdbPassword
 
 xpostgresqlValues: &postgresqlValues
-  postgresqlUsername: placeos
-  postgresqlDatabase: placeos
-  postgresqlPassword: *postgresqlPassword
+  global:
+    postgresql:
+      auth:
+        username: placeos
+        database: placeos
+        password: *postgresqlPassword
+        postgresPassword: *postgresqlPassword
 
 # xsmtpClientSecrets secrets values exposed as environment variables for the trigger service
 xsmtpClientSecrets: &smtpClientSecrets
@@ -202,11 +206,17 @@ rethinkdb:
     replicas: 1
   rethinkdbPassword: "{{ rethinkdbPassword }}"
 redis:
-  fullnameOverride: redis
   enabled: true
-  usePassword: false
-  cluster:
+  fullnameOverride: redis
+  auth:
     enabled: false
+  architecture: standalone
+  commonConfiguration: |-
+    notify-keyspace-events Kg$
+  master:
+    persistence:
+      enabled: true
+      size: 1Gi
 influxdb:
   fullnameOverride: influxdb
   enabled: false
