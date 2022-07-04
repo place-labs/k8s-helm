@@ -15,8 +15,12 @@ data:
         access_log /dev/stdout;
 
         location / {
+            absolute_redirect on;
+            if ($request_uri ~ ^([^.\?]*[^/])$) {
+              return 301 https://$http_host$uri/;
+            }
             root   /usr/share/nginx/html;
-            try_files $uri $uri/index.html backoffice/$uri =404;
+            try_files $uri $uri/index.html =404;
         }
                        
         error_page 400 /ErrorPages/HTTP400.html;
