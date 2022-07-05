@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-external-access-placeos
+spec:
+  namespaceSelector:
+    matchLabels:
+      networking/namespace: "{{ placeos_namespace }}"
+  policyTypes:
+  - Ingress
+  ingress:
+    - from:
+      - ipBlock:
+          cidr: '0.0.0.0/0'
+          except: ['10.0.0.0/8']
+      ports:
+        - port: 3000
+        - port: 8080
+# NOTE. Denies GCP VPC range, allowing the load balancer - narrow down to only allow LB IP range if possible
+

@@ -27,11 +27,12 @@
     namespace: "{{ placeos_namespace }}"
     definition: "{{ lookup('template', 'allow-external.yaml') | from_yaml }}"
 
-- name: allow access to placeos
+- name: allow load balancer and deny gcp private IP range to placeos
   community.kubernetes.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ placeos_namespace }}"
-    definition: "{{ lookup('template', 'allow-external-placeos.yaml') | from_yaml }}"
+    definition: "{{ lookup('template', 'allow-gcp-lb.yaml') | from_yaml }}"
+  when: gke is defined
 
 # tasks file for placeos.networkpolicies
 #- name: placeos ns to service ns
@@ -54,18 +55,20 @@
   loop_control:
     loop_var: "ns"
 
-#- name: deny all
-#  community.kubernetes.k8s:
-#    state: "{{ policy_state }}"
-#    namespace: "{{ ns }}"
-#    definition: "{{ lookup('template', 'deny-all.yaml') | from_yaml }}"
-#  loop:
-#    "{{ internal_ns }}"
-#  loop_control:
-#    loop_var: "ns"
+- name: deny all
+  community.kubernetes.k8s:
+    state: "{{ policy_state }}"
+    namespace: "{{ ns }}"
+    definition: "{{ lookup('template', 'deny-all.yaml') | from_yaml }}"
+  loop:
+    "{{ internal_ns }}"
+  loop_control:
+    loop_var: "ns"
+  when: gke is not defined
 
-#- name: ingress access to upstream apps
-#  community.kubernetes.k8s:
-#    state: "{{ policy_state }}"
-#    namespace: "{{ placeos_namespace }}"
-#    definition: "{{ lookup('template', 'ingress-to-placeos.yaml') | from_yaml }}"
+- name: ingress access to upstream apps
+  community.kubernetes.k8s:
+    state: "{{ policy_state }}"
+    namespace: "{{ placeos_namespace }}"
+    definition: "{{ lookup('template', 'ingress-to-placeos.yaml') | from_yaml }}"
+  when: gke is not defined

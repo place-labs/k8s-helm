@@ -49,7 +49,7 @@ ansible-playbook placeos.yaml -i inventories/gke/  --check
 # Define the placeDomain value when running:
 # Terraform will output the created External IP or find `l7-ip` at `VPC Network -> External IP Addresses`
 ansible-playbook placeos.yaml -i inventories/gke/ -e "placeDomain={domain/{external IP.sslip.io}}"
-ansible-playbook placeos-network-policies.yaml
+ansible-playbook placeos-network-policies.yaml -e "gke=true"
 
 # AKS deployment
 # Check first be for deploying
