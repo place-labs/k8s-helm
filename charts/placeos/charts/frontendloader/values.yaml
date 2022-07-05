@@ -137,8 +137,8 @@ service:
 persistentVolume:
   name: www
   accessModes:
-    - ReadWriteOnce
-  storage: 1Gi
+    - ReadWriteMany
+  storage: 10Gi
 
 ingress:
   # -- ingress to expose the http server pod services
