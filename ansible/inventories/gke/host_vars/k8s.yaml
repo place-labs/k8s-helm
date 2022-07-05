@@ -22,7 +22,7 @@ xserverSecret: &serverSecret "{{ serverSecret | default( '', true ) }}"
 
 # xelasticClientEnv configmap values for ElasticSearch Service exposed as environment variables to PlaceOS containers
 xelasticClientEnv: &elasticClientEnv
-  ES_HOST: "{{ elasticsearch_release_name }}-elasticsearch-master.{{ elasticsearch_namespace }}"
+  ES_HOST: "{{ elasticsearch_release_name }}.{{ elasticsearch_namespace }}"
   ES_PORT: 9200
 
 # xetcdClientEnv configmap values for Etcd end point Service as environment variables to PlaceOS containers
