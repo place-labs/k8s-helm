@@ -74,7 +74,7 @@ deployment:
     repository: placeos/frontend-loader
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2202.2
+    #tag: placeos-1.2207.0
 
   imagePullSecrets: []
   nameOverride: ""
@@ -137,8 +137,8 @@ service:
 persistentVolume:
   name: www
   accessModes:
-    - ReadWriteOnce
-  storage: 1Gi
+    - ReadWriteMany
+  storage: 10Gi
 
 ingress:
   # -- ingress to expose the http server pod services

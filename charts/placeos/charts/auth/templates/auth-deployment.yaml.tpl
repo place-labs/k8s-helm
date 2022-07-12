@@ -46,11 +46,11 @@ spec:
         {{/* 
         livenessProbe:
           httpGet:
-            path: /api/auth/v1
+            path: /auth/authority?health=true
             port: http
         readinessProbe:
           httpGet:
-            path: /api/auth/v1
+            path: /auth/authority?health=true
             port: http 
         */}}
         resources:

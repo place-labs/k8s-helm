@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  chart-directories:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: kanga333/json-array-builder@main
+        id: array
+        with:
+          cmd: find charts/placeos/charts -mindepth 1 -type d -not -name tests -not -name templates
+    outputs:
+      directories: ${{ steps.array.outputs.build }}
+
+  kube-lint:
+    needs: chart-directories
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
+    steps:
+      - uses: actions/checkout@v2
+
+      # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
+      - name: Create ../results directory for SARIF report files
+        shell: bash
+        run: mkdir -p ../results
+
+      - name: Scan yaml files with kube-linter
+        continue-on-error: true 
+        uses: stackrox/kube-linter-action@v1.0.4
+        id: kube-linter-action-scan
+        with:
+          directory: ${{ matrix.directory }}
+          format: sarif
+          output-file: ../results/kube-linter.sarif
+
+      - name: Upload SARIF report files to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+
+      # Ensure the workflow eventually fails if files did not pass kube-linter checks.
+      - name: Verify kube-linter-action succeeded
+        shell: bash
+        run: |
+          echo "If this step fails, kube-linter found issues. Check the output of the scan step above."
+          [[ "${{ steps.kube-linter-action-scan.outcome }}" == "success" ]]
