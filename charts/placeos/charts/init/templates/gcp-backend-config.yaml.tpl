@@ -6,7 +6,7 @@ metadata:
 spec:
   {{- toYaml .Values.global.gcpbackendConfig.config | nindent 2 }}
 ---
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ .Values.global.gcpbackendConfig.name }}
@@ -18,10 +18,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - 34.149.88.250.sslip.io
+    - {{ .Values.global.placeDomain  }}
   - secretName: {{ .Values.global.placeDomain }}
   rules:
-  - host: 34.149.88.250.sslip.io
+  - host: {{ .Values.global.placeDomain  }}
     http:
       paths:
       - path: /
