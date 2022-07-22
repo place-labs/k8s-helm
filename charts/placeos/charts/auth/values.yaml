@@ -89,7 +89,6 @@ configmap:
   # -- value exposed as environment variable to the pod
   TZ: Australia/Sydney
   RAILS_ENV: production
-  PLACE_URI: 
 
 # secrets for the deployment exposed as environment variables to the pod
 secrets:

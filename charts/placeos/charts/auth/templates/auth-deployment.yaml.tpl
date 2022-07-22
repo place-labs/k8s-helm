@@ -29,9 +29,6 @@ spec:
       - name: {{ .Chart.Name }}
         securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 12 }}
-        env:
-          - name: PLACE_URI
-            value: {{ include "auth.placeURI" . }}
         envFrom:
           - configMapRef:
               name:  {{ include "auth.fullname" . }}
