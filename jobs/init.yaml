@@ -1,0 +1,76 @@
+apiVersion: batch/v1
+
+kind: Job
+metadata:
+  name: run-init
+spec:
+  completions: 1
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      name: run-init
+    spec:
+      containers:
+      - name: init
+        image: placeos/init:placeos-1.2207.0
+        imagePullPolicy: IfNotPresent
+        env:
+          # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
+          - name: PLACE_SKIP_PLACEHOLDERS
+            value: true
+          # PLACE_DOMAIN can be left blank unless PLACE_SKIP_PLACEHOLDERS is false
+          - name: PLACE_DOMAIN
+            value: ""
+          - name: PLACE_EMAIL
+            value: "support@place.tech"
+          - name: PLACE_USERNAME
+            value: "support@place.tech"
+          - name: PLACE_AUTH_HOST
+            value: "auth:3000"
+          - name: PLACE_TLS
+            value: "true"
+          - name: ENV
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: ENV
+          - name: RETHINKDB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_HOST
+          - name: RETHINKDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: core
+                key: RETHINKDB_PASSWORD
+          - name: RETHINKDB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_PORT
+          - name: RETHINKDB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_USER
+          - name: RETHINKDB_DB
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_DB
+          - name: SG_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: SG_ENV
+          - name: PLACE_SERVER_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: core
+                key: PLACE_SERVER_SECRET
+        envFrom:
+        - secretRef:
+            name: init
+      restartPolicy: Never
+  backoffLimit: 0
