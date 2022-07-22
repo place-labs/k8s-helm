@@ -64,11 +64,6 @@ spec:
               configMapKeyRef:
                 name: core
                 key: SG_ENV
-          - name: PLACE_SERVER_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: core
-                key: PLACE_SERVER_SECRET
         envFrom:
         - secretRef:
             name: init
