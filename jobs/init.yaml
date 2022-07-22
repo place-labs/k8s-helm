@@ -17,7 +17,7 @@ spec:
         env:
           # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
           - name: PLACE_SKIP_PLACEHOLDERS
-            value: true
+            value: "true"
           # PLACE_DOMAIN can be left blank unless PLACE_SKIP_PLACEHOLDERS is false
           - name: PLACE_DOMAIN
             value: ""
