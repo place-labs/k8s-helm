@@ -78,6 +78,14 @@ placeos:
     secrets:
       << : *rethinkdbClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+    deployment:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+        requests:
+          cpu: 10m
+          memory: 50Mi
   # auth is the overide configuration for the embedded auth subchart
   auth:
     ingress:
@@ -89,6 +97,14 @@ placeos:
     secrets:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *rethinkdbClientSecrets
+    deployment:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 400Mi
   # core is the overide configuration for the embedded core subchart
   core:
     configmap:
@@ -99,6 +115,14 @@ placeos:
     secrets:
       << : *rethinkdbClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+    deployment:
+      resources:
+        limits:
+          cpu: 1
+          memory: 1536Mi
+        requests:
+          cpu: 1
+          memory: 1536Mi
   # dispatch is the overide configuration for the embedded dispatch subchart
   dispatch:
     udpLoadbalancer:
@@ -110,6 +134,11 @@ placeos:
       service.beta.kubernetes.io/aws-load-balancer-internal: "true"
     secrets:
       << : *dispatchSecrets
+    deployment:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 5Mi
   # frontend-loader is the overide configuration for the embedded frontend-loader subchart
   frontendloader:
     ingress:
@@ -122,6 +151,22 @@ placeos:
     secrets:
       << : *rethinkdbClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+    deployment:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 100Mi
+        requests:
+          cpu: 500m
+          memory: 100Mi
+    httpDeployment:
+      resources:
+        limits:
+          cpu: 50m
+          memory: 100Mi
+        requests:
+          cpu: 50m
+          memory: 100Mi
   # search-ingest is the overide configuration for the embedded search-ingest subchart
   searchingest:
     configmap:
@@ -130,6 +175,11 @@ placeos:
       << : *elasticClientEnv
     secrets:
       << : *rethinkdbClientSecrets
+    deployment:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
   # triggers is the overide configuration for the embedded triggers subchart
   triggers:
     configmap:
@@ -141,6 +191,11 @@ placeos:
       << : *rethinkdbClientSecrets
       << : *smtpClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+    deployment:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 50Mi
   # init is the overide configuration for the embedded init subchart
   init:
     config:
@@ -162,6 +217,14 @@ placeos:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
     << : *postgresqlValues
+    deployment:
+      resources:
+        limits:
+          cpu: 25m
+          memory: 250Mi
+        requests:
+          cpu: 10m
+          memory: 50Mi
   global:
     placeDomain: "{{ placeDomain | default('localhost', true ) }}"
     customRedirectPort: "{{ customRedirectPort | default( omit ) }}"
@@ -182,11 +245,17 @@ etcd:
 elasticsearch:
   enabled: true
   master:
-    replicas: 1
+    replicaCount: 1
   data:
-    replicas: 1
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 25m
+        memory: 1536Mi
   coordinating:
-    replicas: 0
+    replicaCount: 0
+  ingest:
+    replicaCount: 0
 rethinkdb:
   enabled: true
   cluster:

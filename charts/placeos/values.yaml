@@ -132,6 +132,14 @@ api:
     << : *rubberSoulClientEnv
   secrets:
     << : *rethinkdbClientSecrets
+  deployment:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 10m
+        memory: 50Mi
 # auth is the overide configuration for the embedded auth subchart
 auth:
  # -- auth is a core PlaoceOS chart enabled by default.
@@ -143,6 +151,14 @@ auth:
     TZ: *TZ
   secrets:
     << : *rethinkdbClientSecrets
+  deployment:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 10m
+        memory: 400Mi
 # core is the overide configuration for the embedded core subchart
 core:
   # -- core is a core PlaoceOS chart enabled by default.
@@ -155,6 +171,14 @@ core:
     << : *deploymentEnv
   secrets:
     << : *rethinkdbClientSecrets
+  deployment:
+    resources:
+      limits:
+        cpu: 1
+        memory: 1536Mi
+      requests:
+        cpu: 1
+        memory: 1536Mi
 # dispatch is the overide configuration for the embedded dispatch subchart
 dispatch:
   # -- dispatch is a core PlaoceOS chart enabled by default.
@@ -162,6 +186,11 @@ dispatch:
   fullnameOverride: dispatch
   secrets:
     << : *dispatchSecrets
+  deployment:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 5Mi
 # frontend-loader is the overide configuration for the embedded frontend-loader subchart
 frontendloader:
   # -- frontend-loader is a core PlaoceOS chart enabled by default.
@@ -175,6 +204,22 @@ frontendloader:
     << : *deploymentEnv
   secrets:
     << : *rethinkdbClientSecrets
+  deployment:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 100Mi
+      requests:
+        cpu: 500m
+        memory: 100Mi
+  httpDeployment:
+    resources:
+      limits:
+        cpu: 50m
+        memory: 100Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
 # search-ingest is the overide configuration for the embedded search-ingest subchart
 searchingest:
   # -- search-ingest is a core PlaoceOS chart enabled by default.
@@ -186,6 +231,11 @@ searchingest:
     << : *deploymentEnv
   secrets:
     << : *rethinkdbClientSecrets
+  deployment:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
 # triggers is the overide configuration for the embedded triggers subchart
 triggers:
   # -- triggers is a core PlaoceOS chart enabled by default.
@@ -200,6 +250,11 @@ triggers:
   secrets:
     << : *rethinkdbClientSecrets
     << : *smtpClientSecrets
+  deployment:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
 # init is the overide configuration for the embedded init subchart
 init:
   # -- init is a core PlaoceOS chart enabled by default.
@@ -227,6 +282,14 @@ staff:
   secrets:
     # -- Default password for initial users in domain
     PLACE_PASSWORD: *placePassword
+  deployment:
+    resources:
+      limits:
+        cpu: 25m
+        memory: 250Mi
+      requests:
+        cpu: 10m
+        memory: 50Mi
 
 ###########################################
 ##### -- Third Party Supporting Services #####
@@ -254,14 +317,20 @@ elasticsearch:
   # -- templateOverrides. A work around to override the full name of the ElasticSearch master. See templates/_helpers.tpl
     elasticsearchMasterfullName: elasticsearch-master
   master:
-    replicas: 1
+    replicaCount: 1
   data:
-    replicas: 1
+    replicaCount: 1
     persistence:
       enabled: true
       size: 8Gi
+    resources:
+      requests:
+        cpu: 25m
+        memory: 1536Mi
   coordinating:
-    replicas: 0
+    replicaCount: 0
+  ingest:
+    replicaCount: 0
 # rethinkdb third party chart overrides
 rethinkdb:
   # -- rethinkdb chart disabled by default. included for testing purposes only
