@@ -64,7 +64,8 @@ spec:
         ports:
         - containerPort: 8080
           name: http-nginx
-        resources: {}
+        resources:
+          {{- toYaml .Values.httpDeployment.resources | nindent 12 }}
         volumeMounts:
         - mountPath: /usr/share/nginx/html/
           name: www
