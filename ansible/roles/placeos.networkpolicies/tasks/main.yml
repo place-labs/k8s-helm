@@ -21,6 +21,20 @@
 #        labels:
 #          networking/namespace: "{{ ingress_namespace }}"
 
+- name: patch the ingress pod with allow-external label
+  community.kubernetes.k8s:
+    state: present
+    name: "{{ ingress_deployment }}"
+    api_version: v1
+    kind: Deployment
+    namespace: "{{ ingress_namespace }}"
+    definition:
+      spec:
+        template:
+          metadata:
+            labels:
+              networking/allow-external-access: "true"
+
 - name: service for dispatch
   community.kubernetes.k8s:
     state: "{{ policy_state }}"
