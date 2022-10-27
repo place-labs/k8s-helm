@@ -216,7 +216,7 @@ placeos:
   # staff is the overide configuration for the embedded staff subchart
   staff:
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/ingress.class: nginx
         ingress.kubernetes.io/ssl-redirect: "true"
