@@ -34,6 +34,7 @@
           metadata:
             labels:
               networking/allow-external-access: "true"
+  when: gke is not defined
 
 - name: service for dispatch
   community.kubernetes.k8s:
@@ -78,7 +79,6 @@
     "{{ internal_ns }}"
   loop_control:
     loop_var: "ns"
-  when: gke is not defined
 
 - name: ingress access to upstream apps
   community.kubernetes.k8s:
