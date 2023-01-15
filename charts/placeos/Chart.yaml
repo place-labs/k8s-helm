@@ -71,7 +71,7 @@ dependencies:
     # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
 
   - name: redis
-    version: ~16.11.3
+    version: ~17.3.11
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
     # tags: # (optional)

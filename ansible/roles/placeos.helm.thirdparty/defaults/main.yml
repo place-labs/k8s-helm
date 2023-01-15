@@ -18,7 +18,7 @@ elasticsearch_chart_version: "~18.2.9"
 
 redis_namespace: "placeos"
 redis_release_name: "redis"
-redis_chart_version: "~15.7.6"
+redis_chart_version: "~17.3.11"
 
 influxdb_namespace: "placeos"
 influxdb_release_name: "influxdb"
