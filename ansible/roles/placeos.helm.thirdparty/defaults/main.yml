@@ -6,7 +6,7 @@ ingress_nginx_chart_version: "4.3.0"
 
 etcd_namespace: "placeos"
 etcd_release_name: "etcd"
-etcd_chart_version: "~6.10.7"
+etcd_chart_version: "~8.5.9"
 
 rethinkdb_namespace: "placeos"
 rethinkdb_release_name: "rethinkdb"

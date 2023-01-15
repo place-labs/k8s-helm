@@ -305,7 +305,7 @@ etcd:
   fullnameOverride: etcd
   auth:
     rbac:
-      enabled: false
+      create: false
   persistence:
     enabled: true
     size: 1Gi

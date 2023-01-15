@@ -46,7 +46,7 @@ dependencies:
 
 # Third party helm charts
   - name: etcd
-    version: ~8.2.5
+    version: ~8.5.9
     #version: 3.5.4
     repository: https://charts.bitnami.com/bitnami
     condition: etcd.enabled

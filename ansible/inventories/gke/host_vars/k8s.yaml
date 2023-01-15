@@ -258,7 +258,7 @@ etcd:
   enabled: true
   auth:
     rbac:
-      enabled: false
+      create: false
 elasticsearch:
   enabled: true
   master:

@@ -162,7 +162,7 @@ etcd:
   enabled: true
   auth:
     rbac:
-      enabled: false
+      create: false
   persistence.size: 100Mib
 elasticsearch:
   enabled: true
