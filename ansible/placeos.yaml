@@ -15,6 +15,7 @@
       placePassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       rethinkdbPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       postgresqlPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
+      influxdbAdminToken: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
 
   roles:
   ## Override random rethinkdbPassword if it already exists

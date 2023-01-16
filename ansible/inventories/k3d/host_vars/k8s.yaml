@@ -62,6 +62,8 @@ xinfluxClientEnv: &influxClientEnv
   INFLUX_ORG: PlaceOS
   INFLUX_BUCKET: placeos
 
+xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
+
 # xsmtpClientSecrets secrets values exposed as environment variables for the trigger service
 xsmtpClientSecrets: &smtpClientSecrets
   SMTP_PASS: *smtpPassword
@@ -162,6 +164,7 @@ placeos:
     secrets:
       << : *rethinkdbClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+      INFLUX_API_KEY: *influxAdminToken
     serviceAccount:
       name: null
   global:
@@ -213,6 +216,9 @@ redis:
 influxdb:
   fullnameOverride: influxdb
   enabled: true
+  auth:
+    admin:
+      token: *influxAdminToken
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
