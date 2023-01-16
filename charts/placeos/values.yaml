@@ -113,6 +113,14 @@ xpostgresValues: &postgresValues
         password: development
         postgresPassword: development
 
+xinfluxClientEnv: &influxClientEnv
+  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
+  INFLUX_HOST: http://influx:8086
+  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
+  INFLUX_ORG: PlaceOS
+  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
+  INFLUX_BUCKET: placeos
+
 #####################################
 ##### -- PlaceOS Service SubCharts #####
 #####################################
@@ -290,6 +298,20 @@ staff:
       requests:
         cpu: 10m
         memory: 50Mi
+
+source:
+  enabled: true
+  fullnameOverride: source
+  configmap:
+    << : *etcdClientEnv
+    << : *redisClientEnv
+    << : *rethinkdbClientEnv
+    << : *influxClientEnv
+    << : *deploymentEnv
+  secrets:
+    << : *rethinkdbClientSecrets
+  serviceAccount:
+    name: null
 
 ###########################################
 ##### -- Third Party Supporting Services #####

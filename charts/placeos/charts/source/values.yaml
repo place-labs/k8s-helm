@@ -1,0 +1,107 @@
+# Default values for rubbersoul.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# deployment configuration for the rubbersoul pod
+deployment:
+  # -- number of replicas to deploy
+  replicaCount: 1
+
+  image:
+    registry: docker.io
+    repository: placeos/source
+    pullPolicy: IfNotPresent
+    # -- tag Overrides the image tag whose default is the chart appVersion.
+    #tag: placeos-1.2109.1
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+  podAnnotations: {}
+
+  # podSecurityContext for the pod
+  podSecurityContext:
+    # -- fsGroup is defined at container build time and in most circumstances should not be changed
+    fsGroup: 10001
+
+  securityContext:
+    # -- Linux Capabilities for the container
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    # -- runAsUser is defined at container build time and in most circumstances should not be changed
+    runAsUser: 10001
+  # -- Pod resources request and limits
+  resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+# autoscaling configuration for pod
+autoscaling:
+  # -- enable horizontal pod autoscaling
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: false
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- service exposed by deployment
+service:
+  type: ClusterIP
+  port: 3000
+
+# configmap for the deployment exposed as environment variables to the pod
+configmap:
+  # -- value exposed as environment variable to the pod
+  ENV: null
+  # -- value exposed as environment variable to the pod
+  ETCD_HOST: null
+  # -- value exposed as environment variable to the pod
+  ETCD_PORT: 0
+  # -- value exposed as environment variable to the pod
+  REDIS_URL: null
+  # -- value exposed as environment variable to the pod
+  RETHINKDB_DB: null
+  # -- value exposed as environment variable to the pod
+  RETHINKDB_HOST: null
+  # -- value exposed as environment variable to the pod
+  RETHINKDB_PORT: 0
+  # -- value exposed as environment variable to the pod
+  RETHINKDB_USER: null
+  # -- value exposed as environment variable to the pod
+  INFLUX_BUCKET: null
+  # -- value exposed as environment variable to the pod
+  INFLUX_HOST: null
+  # -- value exposed as environment variable to the pod
+  INFLUX_ORG: null
+  # -- value exposed as environment variable to the pod
+  SG_ENV: null
+  # -- value exposed as environment variable to the pod
+  TZ: Australia/Sydney
+
+# secrets for the deployment exposed as environment variables to the pod
+secrets:
+  # -- value exposed as environment variable to the pod
+  RETHINKDB_PASSWORD: null
+  INFLUX_API_KEY: "Replace with influxdb admin-user-token secret"
