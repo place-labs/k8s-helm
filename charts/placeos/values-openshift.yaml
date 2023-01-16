@@ -36,5 +36,8 @@ redis:
 postgresql:
   enabled: true
 
+influxdb:
+  enabled: true
+
 global:
   placeDomain: ""

@@ -57,6 +57,13 @@ xpostgresqlValues: &postgresqlValues
         password: *postgresqlPassword
         postgresPassword: *postgresqlPassword
 
+xinfluxClientEnv: &influxClientEnv
+  INFLUX_HOST: http://influx:8086
+  INFLUX_ORG: PlaceOS
+  INFLUX_BUCKET: placeos
+
+xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
+
 # xsmtpClientSecrets secrets values exposed as environment variables for the trigger service
 xsmtpClientSecrets: &smtpClientSecrets
   SMTP_PASS: *smtpPassword
@@ -147,6 +154,19 @@ placeos:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
     << : *postgresqlValues
+  # source is the overide configuration for the embedded source subchart
+  source:
+    configmap:
+      << : *etcdClientEnv
+      << : *redisClientEnv
+      << : *rethinkdbClientEnv
+      << : *influxClientEnv
+    secrets:
+      << : *rethinkdbClientSecrets
+      PLACE_SERVER_SECRET: *placeServerSecret
+      INFLUX_API_KEY: *influxAdminToken
+    serviceAccount:
+      name: null
   global:
     placeDomain: "{{ placeDomain }}"
     customRedirectPort: "{{ customRedirectPort | default( omit ) }}"
@@ -195,7 +215,10 @@ redis:
       size: 1Gi
 influxdb:
   fullnameOverride: influxdb
-  enabled: false
+  enabled: true
+  auth:
+    admin:
+      token: *influxAdminToken
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
