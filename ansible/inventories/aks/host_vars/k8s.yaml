@@ -260,6 +260,10 @@ placeos:
 ingress-nginx:
   enabled: true
   fullnameOverride: "ingress-nginx"
+  controller:
+    service:
+      annotations:
+        "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
 etcd:
   fullnameOverride: etcd
   enabled: true
