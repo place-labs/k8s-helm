@@ -74,7 +74,7 @@ deployment:
     repository: placeos/frontend-loader
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2212.4
+    #tag: placeos-1.2301.7
 
   imagePullSecrets: []
   nameOverride: ""
