@@ -109,7 +109,7 @@ placeos:
     deployment:
       resources:
         limits:
-          cpu: 500m
+          cpu: 1
           memory: 500Mi
         requests:
           cpu: 10m
