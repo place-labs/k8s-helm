@@ -183,7 +183,9 @@ etcd:
   auth:
     rbac:
       create: false
-  persistence.size: 100Mib
+  persistence:
+    enabled: true
+    size: 100M
 elasticsearch:
   enabled: true
   master:
@@ -200,6 +202,9 @@ rethinkdb:
   enabled: true
   cluster:
     replicas: 1
+    persistentVolume:
+      enabled: true
+      size: 1Gi
   rethinkdbPassword: "{{ rethinkdbPassword }}"
 redis:
   enabled: true
@@ -212,7 +217,7 @@ redis:
   master:
     persistence:
       enabled: true
-      size: 1Gi
+      size: 100M
 influxdb:
   fullnameOverride: influxdb
   enabled: true
