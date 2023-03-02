@@ -31,7 +31,6 @@ frontendloader:
     annotations:
       kubernetes.io/ingress.class: nginx
       ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/app-root: "/backoffice/"
 
 ###########################################
 ##### Third Party Supporting Services #####
