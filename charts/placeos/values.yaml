@@ -99,13 +99,13 @@ xpostgresValues: &postgresValues
     password: *pgPassword
     postgresPassword: *pgPostgresPassword
 
-xpostgresClientEnv:
+xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
   PG_HOST: postgres
   PG_PORT: 5432
   PG_USER: *pgUsername
 
-xpostgresClientSecrets:
+xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
 
 xinfluxClientEnv: &influxClientEnv
