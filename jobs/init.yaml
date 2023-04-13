@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: init
-        image: placeos/init:placeos-1.2301.7
+        image: placeos/init:refactor-pg-migration
         imagePullPolicy: IfNotPresent
         env:
           # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
