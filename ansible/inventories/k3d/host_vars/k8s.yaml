@@ -2,12 +2,11 @@
 placeDomain: "localhost"
 customRedirectPort: 8443
 
-# xrethinkdbPassword the admin password for RethinkDb.
-#  Used to set the admin password in RethinkDB if enabled then passed to multiple containers in a k8s secret
-xrethinkdbPassword: &rethinkdbPassword "{{ rethinkdbPassword }}"
+#  Used to set the user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
+xpostgresPassword: &pgPassword "{{ postgresqlPassword }}"
 
-#  Used to set the postgres user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
-xpostgresqlPassword: &postgresqlPassword "{{ postgresqlPassword }}"
+#  Used to set the admin "postgres" user password in PostgresQL if enabled
+xpostgresPostgresPassword: &pgPostgresPassword "{{ postgresqlPostgresPassword }}"
 
 # xsmtpPassword. the smtp password used by triggers
 xsmtpPassword: &smtpPassword "{{ smtpPassword | default( '', true ) }}"
@@ -38,24 +37,21 @@ xetcdClientEnv: &etcdClientEnv
 xredisClientEnv: &redisClientEnv
   REDIS_URL: "redis://redis-headless.{{ redis_namespace }}:6379"
 
-# xrethinkdbClientEnv configmap values for RethinkDB Service exposed as environment variables to PlaceOS containers
-xrethinkdbClientEnv: &rethinkdbClientEnv
-  RETHINKDB_HOST: "{{ rethinkdb_release_name }}-rethinkdb-proxy.{{ rethinkdb_namespace }}"
-  RETHINKDB_PORT: 28015
-  RETHINKDB_DB: place_development
-  RETHINKDB_USER: admin
+xpostgresValues: &postgresValues
+  postgresql:
+    username: &pgUsername placeos
+    database: &pgDatabase placeos
+    password: *pgPassword
+    postgresPassword: *pgPostgresPassword
 
-xrethinkdbClientSecrets: &rethinkdbClientSecrets
-  RETHINKDB_PASSWORD: *rethinkdbPassword
+xpostgresClientEnv: &postgresClientEnv
+  PG_DB: *pgDatabase
+  PG_HOST: postgres
+  PG_PORT: 5432
+  PG_USER: *pgUsername
 
-xpostgresqlValues: &postgresqlValues
-  global:
-    postgresql:
-      auth:
-        username: placeos
-        database: placeos
-        password: *postgresqlPassword
-        postgresPassword: *postgresqlPassword
+xpostgresClientSecrets: &postgresClientSecrets
+  PG_PASSWORD: *pgPassword
 
 xinfluxClientEnv: &influxClientEnv
   INFLUX_HOST: http://influx:8086
@@ -81,26 +77,26 @@ placeos:
       << : *elasticClientEnv
       << : *etcdClientEnv
       << : *redisClientEnv
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
   # auth is the overide configuration for the embedded auth subchart
   auth:
     configmap:
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
     secrets:
       SECRET_KEY_BASE: *authSecretKeyBase
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
   # core is the overide configuration for the embedded core subchart
   core:
     configmap:
       # Service Hosts
       << : *etcdClientEnv
       << : *redisClientEnv
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
   # dispatch is the overide configuration for the embedded dispatch subchart
   dispatch:
@@ -110,36 +106,36 @@ placeos:
   frontendloader:
     httpSidecar: true
     configmap:
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
   # search-ingest is the overide configuration for the embedded search-ingest subchart
   searchingest:
     configmap:
       # Service Hosts
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
       << : *elasticClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
   # triggers is the overide configuration for the embedded triggers subchart
   triggers:
     configmap:
       # Service Hosts
       << : *etcdClientEnv
       << : *redisClientEnv
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
       << : *smtpClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
   # init is the overide configuration for the embedded init subchart
   init:
     config:
       # Service Hosts
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
       << : *elasticClientEnv
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
     secrets:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -159,10 +155,10 @@ placeos:
     configmap:
       << : *etcdClientEnv
       << : *redisClientEnv
-      << : *rethinkdbClientEnv
+      << : *postgresClientEnv
       << : *influxClientEnv
     secrets:
-      << : *rethinkdbClientSecrets
+      << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
       INFLUX_API_KEY: *influxAdminToken
     serviceAccount:

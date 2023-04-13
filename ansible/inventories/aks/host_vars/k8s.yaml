@@ -1,5 +1,3 @@
-# xrethinkdbPassword the admin password for RethinkDb.
-
 #  Used to set the user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
 xpostgresPassword: &pgPassword "{{ postgresqlPassword }}"
 
