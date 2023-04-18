@@ -98,12 +98,16 @@ xpostgresValues: &postgresValues
     database: &pgDatabase placeos
     password: *pgPassword
     postgresPassword: *pgPostgresPassword
+    maxConnections: 500
+  pgpool:
+    numInitChildren: 500
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
   PG_HOST: postgresql-pgpool
   PG_PORT: 5432
   PG_USER: *pgUsername
+  PG_QUERY: "?initial_pool_size=10&max_idle_pool_size=10"
 
 xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
