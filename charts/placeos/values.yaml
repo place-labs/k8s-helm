@@ -101,7 +101,7 @@ xpostgresValues: &postgresValues
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
-  PG_HOST: postgres
+  PG_HOST: postgresql-pgpool
   PG_PORT: 5432
   PG_USER: *pgUsername
 
