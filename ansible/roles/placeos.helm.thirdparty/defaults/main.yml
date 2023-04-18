@@ -26,6 +26,6 @@ mosquitto_chart_version: "~0.2.0"
 
 postgresql_namespace: "placeos"
 postgresql_release_name: "postgresql"
-postgresql_chart_version: "~11.6.3"
+postgresql_chart_version: "~11.2.1"
 
 chart_state: "present"
