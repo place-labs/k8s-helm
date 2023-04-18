@@ -149,7 +149,7 @@ placeos:
           memory: 5Mi
   # frontend-loader is the overide configuration for the embedded frontend-loader subchart
   frontendloader:
-    httpSidecar: trfalseue
+    httpSidecar: false
     ingress:
       enabled: false
       annotations:
