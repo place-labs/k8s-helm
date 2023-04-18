@@ -315,4 +315,4 @@ mosquitto:
 postgresql:
   enabled: true
   fullnameOverride: postgresql
-  << : *postgresqlValues
+  << : *postgresValues

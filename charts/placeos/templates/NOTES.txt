@@ -28,8 +28,8 @@ Third Party Services Configured:
 {{ if .Values.etcd.enabled -}}
 - etcd
 {{- end }}
-{{ if .Values.rethinkdb.enabled -}}
-- rethinkdb
+{{ if .Values.postgresql.enabled -}}
+- postgresql
 {{- end }}
 {{ if .Values.elasticsearch.enabled -}}
 - elasticsearch
