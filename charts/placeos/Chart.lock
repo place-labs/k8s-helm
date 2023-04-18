@@ -29,9 +29,6 @@ dependencies:
 - name: etcd
   repository: https://charts.bitnami.com/bitnami
   version: 8.5.11
-- name: rethinkdb
-  repository: https://www.pozetron.com/helm/
-  version: 1.1.9
 - name: elasticsearch
   repository: https://charts.bitnami.com/bitnami
   version: 18.2.16

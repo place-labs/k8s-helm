@@ -8,10 +8,6 @@ etcd_namespace: "placeos"
 etcd_release_name: "etcd"
 etcd_chart_version: "~8.5.9"
 
-rethinkdb_namespace: "placeos"
-rethinkdb_release_name: "rethinkdb"
-rethinkdb_chart_version: "~1.1.9"
-
 elasticsearch_namespace: "placeos"
 elasticsearch_release_name: "elasticsearch"
 elasticsearch_chart_version: "~18.2.9"

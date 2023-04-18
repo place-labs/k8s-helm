@@ -20,7 +20,7 @@ elasticsearch:
     enabled: false
 
 rethinkdb:
-  enabled: true
+  enabled: false
   rbac:
     # Specifies whether RBAC resources should be created
     # Disable for environments without permission to create RBAC or ServiceAccounts

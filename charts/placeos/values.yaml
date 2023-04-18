@@ -109,11 +109,8 @@ xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
 
 xinfluxClientEnv: &influxClientEnv
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
   INFLUX_HOST: http://influx:8086
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
   INFLUX_ORG: PlaceOS
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
   INFLUX_BUCKET: placeos
 
 #####################################

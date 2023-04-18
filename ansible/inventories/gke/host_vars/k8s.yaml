@@ -211,7 +211,6 @@ placeos:
       # Service Hosts
       << : *postgresClientEnv
       << : *elasticClientEnv
-      << : *rethinkdbClientSecrets
     secrets:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -300,14 +299,6 @@ elasticsearch:
     replicaCount: 0
   ingest:
     replicaCount: 0
-rethinkdb:
-  enabled: true
-  cluster:
-    replicas: 1
-    persistentVolume:
-      enabled: true
-      size: 1Gi
-  rethinkdbPassword: "{{ rethinkdbPassword }}"
 redis:
   enabled: true
   fullnameOverride: redis

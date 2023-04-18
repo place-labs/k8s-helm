@@ -13,7 +13,6 @@
       authSecretKeyBase: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
       serverSecret: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       placePassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
-      rethinkdbPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       postgresqlPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       postgresqlPostgresPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
       influxdbAdminToken: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
@@ -69,14 +68,6 @@
       chart_release_namespace: "{{ mosquitto_namespace }}"
       chart_release_name: "{{ mosquitto_release_name }}"
       chart_version: "{{ mosquitto_chart_version }}"
-  ## Deploy Rethinkdb
-  - role: placeos.helm.thirdparty
-    vars:
-      chart_repo_url: "https://www.pozetron.com/helm/"
-      chart_ref: "rethinkdb"
-      chart_release_namespace: "{{ rethinkdb_namespace }}"
-      chart_release_name: "{{ rethinkdb_release_name }}"
-      chart_version: "{{ rethinkdb_chart_version }}"
   ## Deploy Postgresql
   - role: placeos.helm.thirdparty
     vars:
