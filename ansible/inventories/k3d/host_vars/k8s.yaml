@@ -215,7 +215,7 @@ influxdb:
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
-postgresql:
+postgresql-ha:
   enabled: true
   fullnameOverride: postgresql
   << : *postgresValues
