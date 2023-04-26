@@ -54,14 +54,6 @@ dependencies:
     #   - Tags can be used to group charts for enabling/disabling together
     # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
 
-  - name: rethinkdb
-    version: ~1.1.9
-    repository: https://www.pozetron.com/helm/
-    condition: rethinkdb.enabled
-    # tags: # (optional)
-    #   - Tags can be used to group charts for enabling/disabling together
-    # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
-
   - name: elasticsearch
     version: ~18.2.9
     repository: https://charts.bitnami.com/bitnami
@@ -96,10 +88,10 @@ dependencies:
     #   - ImportValues holds the mapping of source values to parent key to be imported. Each item can be a string or pair of child/parent sublist items.
     # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
 
-  - name: postgresql
-    version: ~11.6.3
+  - name: postgresql-ha
+    version: ~11.2.1
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
     # tags: # (optional)
     #   - Tags can be used to group charts for enabling/disabling together
-    # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
+    alias: postgresql

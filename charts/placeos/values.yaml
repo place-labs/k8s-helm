@@ -4,10 +4,13 @@
 ###############################
 ##### Configmap Variable ######
 ###############################
+# -- yaml anchor for the user password for postgres.
+# Used to set the user password in postgres if enabled then passed to multiple containers in a k8s secret
+xpostgresPassword: &pgPassword "development"
 
-# -- yaml anchor for the admin password for RethinkDb.
-# Used to set the admin password in RethinkDB if enabled then passed to multiple containers in a k8s secret
-xrethinkdbPassword: &rethinkdbPassword "password"
+# -- yaml anchor for the admin password for postgres.
+# Used to set the admin ("postgres" user) password in postgres if enabled
+xpostgresPostgresPassword: &pgPostgresPassword "development"
 
 # -- yaml anchor for the smtp password used by triggers
 xsmtpPassword: &smtpPassword ""
@@ -55,24 +58,9 @@ xredisClientEnv: &redisClientEnv
   # -- configmap value for the redis Service exposed as environment variables to PlaceOS containers
   REDIS_URL: redis://redis-headless:6379
 
-xrethinkdbClientEnv: &rethinkdbClientEnv
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
-  RETHINKDB_HOST: rethinkdb-proxy
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
-  RETHINKDB_PORT: 28015
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
-  RETHINKDB_DB: place_development
-  # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
-  RETHINKDB_USER: admin
-
-xrethinkdbClientSecrets: &rethinkdbClientSecrets
-  # -- secret value for the rethinkdb password exposed as environment variables to PlaceOS containers
-  RETHINKDB_PASSWORD: *rethinkdbPassword
-
 xrubberSoulClientEnv: &rubberSoulClientEnv
   # -- configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers
   RUBBER_SOUL_URI: http://search-ingest:3000
-
 
 xsmtpClientEnv: &smtpClientEnv
   # -- configmap value for the SMTP server exposed as environment variables for the trigger service
@@ -105,13 +93,29 @@ xdispatchSecrets: &dispatchSecrets
   SERVER_SECRET: *serverSecret
 
 xpostgresValues: &postgresValues
-  global:
-    postgresql:
-      auth:
-        uername: placeos
-        database: placeos
-        password: development
-        postgresPassword: development
+  postgresql:
+    username: &pgUsername placeos
+    database: &pgDatabase placeos
+    password: *pgPassword
+    postgresPassword: *pgPostgresPassword
+    maxConnections: 500
+  pgpool:
+    numInitChildren: 500
+
+xpostgresClientEnv: &postgresClientEnv
+  PG_DB: *pgDatabase
+  PG_HOST: postgresql-pgpool
+  PG_PORT: 5432
+  PG_USER: *pgUsername
+  PG_QUERY: "?initial_pool_size=10&max_idle_pool_size=10"
+
+xpostgresClientSecrets: &postgresClientSecrets
+  PG_PASSWORD: *pgPassword
+
+xinfluxClientEnv: &influxClientEnv
+  INFLUX_HOST: http://influx:8086
+  INFLUX_ORG: PlaceOS
+  INFLUX_BUCKET: placeos
 
 xinfluxClientEnv: &influxClientEnv
   # --  configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers
@@ -136,10 +140,10 @@ api:
     << : *etcdClientEnv
     << : *placeLoaderClientEnv
     << : *redisClientEnv
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *rubberSoulClientEnv
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
   deployment:
     resources:
       limits:
@@ -154,11 +158,11 @@ auth:
   enabled: true
   fullnameOverride: auth
   configmap:
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     COAUTH_NO_SSL: "false"
     TZ: *TZ
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
   deployment:
     resources:
       limits:
@@ -175,10 +179,10 @@ core:
   configmap:
     << : *etcdClientEnv
     << : *redisClientEnv
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *deploymentEnv
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
   deployment:
     resources:
       limits:
@@ -208,10 +212,10 @@ frontendloader:
   configmap:
     # -- path to static html resources
     PLACE_LOADER_WWW: www
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *deploymentEnv
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
   deployment:
     resources:
       limits:
@@ -234,11 +238,11 @@ searchingest:
   enabled: true
   fullnameOverride: search-ingest
   configmap:
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *elasticClientEnv
     << : *deploymentEnv
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
   deployment:
     resources:
       requests:
@@ -252,11 +256,11 @@ triggers:
   configmap:
     << : *etcdClientEnv
     << : *redisClientEnv
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *smtpClientEnv
     << : *deploymentEnv
   secrets:
-    << : *rethinkdbClientSecrets
+    << : *postgresClientSecrets
     << : *smtpClientSecrets
   deployment:
     resources:
@@ -269,12 +273,13 @@ init:
   enabled: true
   fullnameOverride: init
   config:
+    PG_FORCE_RESTORE: false
     << : *initConfigEnv
-    << : *rethinkdbClientEnv
+    << : *postgresClientEnv
     << : *elasticClientEnv
     << : *deploymentEnv
-    << : *rethinkdbClientSecrets
   secrets:
+    << : *postgresClientSecrets
     # -- Default password for initial users in domain
     PLACE_PASSWORD: *placePassword
 # staff is the overide configuration for the embedded staff subchart
@@ -284,11 +289,12 @@ staff:
   fullnameOverride: staff
   << : *postgresValues
   configmap:
+    << : *postgresClientEnv
     PLACE_EMAIL: *placeEmail
     SG_ENV: *sgEnv
     STAFF_TIME_ZONE: *TZ
   secrets:
-    # -- Default password for initial users in domain
+    << : *postgresClientSecrets
     PLACE_PASSWORD: *placePassword
   deployment:
     resources:
@@ -310,6 +316,20 @@ source:
     << : *deploymentEnv
   secrets:
     << : *rethinkdbClientSecrets
+  serviceAccount:
+    name: null
+
+source:
+  enabled: true
+  fullnameOverride: source
+  configmap:
+    << : *etcdClientEnv
+    << : *redisClientEnv
+    << : *postgresClientEnv
+    << : *influxClientEnv
+    << : *deploymentEnv
+  secrets:
+    << : *postgresClientSecrets
   serviceAccount:
     name: null
 
@@ -356,19 +376,6 @@ elasticsearch:
     replicaCount: 0
   ingest:
     replicaCount: 0
-# rethinkdb third party chart overrides
-rethinkdb:
-  # -- rethinkdb chart disabled by default. included for testing purposes only
-  enabled: false
-  templateOverrides:
-  # -- templateOverrides. A work around to override the full name of the RethinkDb deployment. See templates/_helpers.tpl
-    rethinkdbFullName: rethinkdb
-  cluster:
-    replicas: 1
-    persistentVolume:
-      enabled: true
-      size: 1Gi
-  rethinkdbPassword: *rethinkdbPassword
 # redis third party chart overrides
 redis:
   # -- redis chart disabled by default. included for testing purposes only

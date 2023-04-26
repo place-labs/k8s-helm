@@ -12,7 +12,7 @@ deployment:
     repository: placeos/source
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2109.1
+    #tag: placeos-2.2304.0
 
   imagePullSecrets: []
   nameOverride: ""
@@ -73,35 +73,23 @@ service:
 
 # configmap for the deployment exposed as environment variables to the pod
 configmap:
-  # -- value exposed as environment variable to the pod
+  # -- values exposed as environment variable to the pod
   ENV: null
-  # -- value exposed as environment variable to the pod
   ETCD_HOST: null
-  # -- value exposed as environment variable to the pod
   ETCD_PORT: 0
-  # -- value exposed as environment variable to the pod
   REDIS_URL: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_DB: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_HOST: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_PORT: 0
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_USER: null
-  # -- value exposed as environment variable to the pod
   INFLUX_BUCKET: null
-  # -- value exposed as environment variable to the pod
   INFLUX_HOST: null
-  # -- value exposed as environment variable to the pod
   INFLUX_ORG: null
-  # -- value exposed as environment variable to the pod
   SG_ENV: null
-  # -- value exposed as environment variable to the pod
   TZ: Australia/Sydney
+  PG_DB: null
+  PG_HOST: null
+  PG_PORT: null
+  PG_USER: null
 
 # secrets for the deployment exposed as environment variables to the pod
 secrets:
   # -- value exposed as environment variable to the pod
-  RETHINKDB_PASSWORD: null
+  PG_PASSWORD: null
   INFLUX_API_KEY: "Replace with influxdb admin-user-token secret"

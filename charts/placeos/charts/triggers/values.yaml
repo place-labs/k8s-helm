@@ -12,7 +12,7 @@ deployment:
     repository: placeos/triggers
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2301.7
+    #tag: placeos-2.2304.0
 
   imagePullSecrets: []
   nameOverride: ""
@@ -76,36 +76,23 @@ service:
 configmap:
   # -- value exposed as environment variable to the pod
   ENV: null
-  # -- value exposed as environment variable to the pod
   ETCD_HOST: null
-  # -- value exposed as environment variable to the pod
   ETCD_PORT: 0
-  # -- value exposed as environment variable to the pod
   REDIS_URL: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_DB: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_HOST: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_PORT: 0
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_USER: null
-  # -- value exposed as environment variable to the pod
   SG_ENV: null
-  # -- value exposed as environment variable to the pod
   SMTP_PORT: 0
-  # -- value exposed as environment variable to the pod
   SMTP_SECURE: null
-  # -- value exposed as environment variable to the pod
   SMTP_SERVER: null
-  # -- value exposed as environment variable to the pod
   SMTP_USER: null
-  # -- value exposed as environment variable to the pod
   TZ: Australia/Sydney
+  PG_DB: null
+  PG_HOST: null
+  PG_PORT: null
+  PG_USER: null
 
 # secrets for the deployment exposed as environment variables to the pod
 secrets:
   # -- value exposed as environment variable to the pod
-  RETHINKDB_PASSWORD: null
+  PG_PASSWORD: null
   # -- value exposed as environment variable to the pod
   SMTP_PASS: null

@@ -37,8 +37,6 @@ etcd:
   enabled: true
 elasticsearch:
   enabled: true
-rethinkdb:
-  enabled: true
 redis:
   enabled: true
 postgresql:

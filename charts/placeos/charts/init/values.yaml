@@ -12,7 +12,7 @@ deployment:
     repository: placeos/init
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2301.7
+    #tag: placeos-2.2304.0
 
   imagePullSecrets: []
   nameOverride: ""
@@ -54,42 +54,26 @@ serviceAccount:
 
 # config variables injected into the pod containers as environment vars
 config:
-  # -- value exposed as environment variable to the pod
+  # -- values exposed as environment variable to the pod
   ENV: null
-  # -- value exposed as environment variable to the pod
   ES_HOST: null
-  # -- value exposed as environment variable to the pod
   ES_PORT: 0
-  # -- value exposed as environment variable to the pod
   PLACE_APPLICATION: null
-  # -- value exposed as environment variable to the pod
   PLACE_AUTH_HOST: null
-  # -- value exposed as environment variable to the pod
   PLACE_EMAIL: null
-  # -- value exposed as environment variable to the pod
   PLACE_TLS: true
-  # -- value exposed as environment variable to the pod
   PLACE_USERNAME: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_DB: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_HOST: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_PASSWORD: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_PORT: 0
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_USER: null
-  # -- value exposed as environment variable to the pod
   SG_ENV: null
-  # -- value exposed as environment variable to the pod
   TZ: Australia/Sydney
+  PG_DB: null
+  PG_HOST: null
+  PG_PORT: null
+  PG_USER: null
 
-
+# secrets for the deployment exposed as environment variables to the pod
 secrets:
-  #  --The default user password for the domain at initialisation time.
-  # Not used internally. This can be deleted after the password is retreived
-  PLACE_PASSWORD: null
+  # -- value exposed as environment variable to the pod
+  PG_PASSWORD: null
 
 domain:
   # -- alt names to add to the generated x509 cert

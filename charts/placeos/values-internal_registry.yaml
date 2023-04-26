@@ -18,15 +18,12 @@ xelasticImageRepo: &elasticImageRepo        "placeos/elasticsearch"
 xetcdImageRepo: &etcdImageRepo              "placeos/etcd"
 xpostgresImageRepo: &postgresImageRepo      "placeos/postgresql"
 xredisImageRepo: &redisImageRepo            "placeos/redis"
-# RethinkDB must include the registry
-xrethinkImageRepo: &rethinkImageRepo        "example.image.registry:5000/placeos/helm-rethinkdb-cluster"
 
 # Third-party Image Tags
 xelasticTag: &elasticTag                    "7.9.1-debian-10-r10"
 xetcdTag: &etcdTag                          "3.4.13-debian-10-r0"
 xpostgresTag: &postgresTag                  "11.12.0-debian-10-r13"
 xredisTag: &redisTag                        "6.0.8-debian-10-r0"
-xrethinkTag: &rethinkTag                    "0.1.0"
 
 
 ############################
@@ -109,7 +106,3 @@ redis:
     registry: *internalRegistry
     repository: *redisImageRepo
     tag: *redisTag
-rethinkdb:
-  image:
-    name: *rethinkImageRepo
-    tag: *rethinkTag

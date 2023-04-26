@@ -4,13 +4,9 @@ ingress_nginx_namespace: "placeos"
 ingress_nginx_release_name: "ingress-nginx"
 ingress_nginx_chart_version: "4.3.0"
 
-etcd_namespace: "placeos"
-etcd_release_name: "etcd"
-etcd_chart_version: "~8.5.9"
-
-rethinkdb_namespace: "placeos"
-rethinkdb_release_name: "rethinkdb"
-rethinkdb_chart_version: "~1.1.9"
+postgresql_namespace: "placeos"
+postgresql_release_name: "postgresql-ha"
+postgresql_chart_version: "~11.2.1"
 
 elasticsearch_namespace: "placeos"
 elasticsearch_release_name: "elasticsearch"
@@ -20,6 +16,10 @@ redis_namespace: "placeos"
 redis_release_name: "redis"
 redis_chart_version: "~17.3.11"
 
+etcd_namespace: "placeos"
+etcd_release_name: "etcd"
+etcd_chart_version: "~8.5.9"
+
 influxdb_namespace: "placeos"
 influxdb_release_name: "influxdb"
 influxdb_chart_version: "~5.3.3"
@@ -27,9 +27,5 @@ influxdb_chart_version: "~5.3.3"
 mosquitto_namespace: "placeos"
 mosquitto_release_name: "mosquitto"
 mosquitto_chart_version: "~0.2.0"
-
-postgresql_namespace: "placeos"
-postgresql_release_name: "postgresql"
-postgresql_chart_version: "~11.6.3"
 
 chart_state: "present"

@@ -13,7 +13,7 @@ deployment:
     repository: placeos/auth
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-1.2301.7
+    #tag: placeos-2.2304.0
 
   imagePullSecrets: []
   nameOverride: ""
@@ -74,26 +74,20 @@ service:
 
 # configmap for the deployment exposed as environment variables to the pod
 configmap:
-  # -- value exposed as environment variable to the pod
+  # -- values exposed as environment variable to the pod
   COAUTH_NO_SSL: false
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_DB: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_HOST: null
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_PORT: 0
-  # -- value exposed as environment variable to the pod
-  RETHINKDB_USER: null
-  # -- value exposed as environment variable to the pod
   REDIS_URL: redis://redis-headless:6379
-  # -- value exposed as environment variable to the pod
   TZ: Australia/Sydney
   RAILS_ENV: production
+  PG_DB: null
+  PG_HOST: null
+  PG_PORT: null
+  PG_USER: null
 
 # secrets for the deployment exposed as environment variables to the pod
 secrets:
   # -- value exposed as environment variable to the pod
-  RETHINKDB_PASSWORD: null
+  PG_PASSWORD: null
 
 
 ingress:

@@ -28,24 +28,21 @@ dependencies:
   version: 0.1.0
 - name: etcd
   repository: https://charts.bitnami.com/bitnami
-  version: 8.2.6
-- name: rethinkdb
-  repository: https://www.pozetron.com/helm/
-  version: 1.1.9
+  version: 8.5.11
 - name: elasticsearch
   repository: https://charts.bitnami.com/bitnami
   version: 18.2.16
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 16.11.3
+  version: 17.3.18
 - name: influxdb
   repository: https://charts.bitnami.com/bitnami
   version: 5.3.12
 - name: mosquitto
   repository: https://halkeye.github.io/helm-charts/
   version: 0.2.0
-- name: postgresql
+- name: postgresql-ha
   repository: https://charts.bitnami.com/bitnami
-  version: 11.6.26
-digest: sha256:69b5cb2777e8c8c71c126af3a86e88e1c014de13d9be1fec7ae8fa8fe2dfb6a3
-generated: "2022-10-24T13:17:50.884466128+11:00"
+  version: 11.2.1
+digest: sha256:531b4726a9d80d085a7fdcf17566f0f13217a42dc06fba207ef159380e73c4c7
+generated: "2023-04-18T13:55:14.818408277+10:00"
