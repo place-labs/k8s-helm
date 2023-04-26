@@ -3,45 +3,45 @@ name: placeos
 description: An Umbrella Chart for PlaceOS and its dependencies
 
 type: application
-version: 0.1.0
-appVersion: 1.0.0
+version: 2.0.0
+appVersion: "2.2304.0"
 
 dependencies:
 # PlaceOS components
   - name: api
-    version: 0.1.0
+    version: 2.0.0
     condition: api.enabled
 
   - name: auth
-    version: 0.1.0
+    version: 2.0.0
     condition: auth.enabled
 
   - name: core
-    version: 0.1.0
+    version: 2.0.0
     condition: core.enabled
 
   - name: dispatch
-    version: 0.1.0
+    version: 2.0.0
     condition: dispatch.enabled
 
   - name: frontendloader
-    version: 0.1.0
+    version: 2.0.0
     condition: frontendloader.enabled
 
   - name: searchingest
-    version: 0.1.0
+    version: 2.0.0
     condition: searchingest.enabled
 
   - name: triggers
-    version: 0.1.0
+    version: 2.0.0
     condition: triggers.enabled
 
   - name: staff
-    version: 0.1.0
+    version: 2.0.0
     condition: staff.enabled
 
   - name: init
-    version: 0.1.0
+    version: 2.0.0
     condition: init.enabled
 
 # Third party helm charts
