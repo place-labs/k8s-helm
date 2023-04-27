@@ -47,7 +47,7 @@
   community.kubernetes.helm:
     release_name: "{{ chart_release_name }}"
     chart_ref: "{{ placeos_chart_ref }}"
-    chart_version: "0.1.0"
+    chart_version: "2.0.0"
     release_namespace: "{{ placeos_release_namespace }}"
     create_namespace: "{{ placeos_create_namespace | default( true, true) }}"
     release_values: "{{ placeos_profile | default( omit ) }}"

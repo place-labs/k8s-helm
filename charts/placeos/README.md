@@ -1,6 +1,6 @@
 # placeos
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 An Umbrella Chart for PlaceOS and its dependencies
 
@@ -8,14 +8,14 @@ An Umbrella Chart for PlaceOS and its dependencies
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | api | 0.1.0 |
-|  | auth | 0.1.0 |
-|  | core | 0.1.0 |
-|  | dispatch | 0.1.0 |
-|  | frontend-loader | 0.1.0 |
-|  | init | 0.1.0 |
-|  | search-ingest | 0.1.0 |
-|  | triggers | 0.1.0 |
+|  | api | 2.0.0 |
+|  | auth | 2.0.0 |
+|  | core | 2.0.0 |
+|  | dispatch | 2.0.0 |
+|  | frontend-loader | 2.0.0 |
+|  | init | 2.0.0 |
+|  | search-ingest | 2.0.0 |
+|  | triggers | 2.0.0 |
 | https://charts.bitnami.com/bitnami | elasticsearch | ~12.6.3 |
 | https://charts.bitnami.com/bitnami | etcd | ~4.10.1 |
 | https://charts.bitnami.com/bitnami | influxdb | ~0.6.6 |

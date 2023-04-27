@@ -4,7 +4,7 @@ description: A PlaceOS helm chart for the Source component
 
 type: application
 
-version: 0.1.0
+version: 2.0.0
 
 # This number is reflected in the container version deployed
 appVersion: placeos-2.2304.0

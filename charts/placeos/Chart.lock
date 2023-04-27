@@ -1,31 +1,31 @@
 dependencies:
 - name: api
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: auth
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: core
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: dispatch
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: frontendloader
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: searchingest
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: triggers
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: staff
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: init
   repository: ""
-  version: 0.1.0
+  version: 2.0.0
 - name: etcd
   repository: https://charts.bitnami.com/bitnami
   version: 8.5.11
