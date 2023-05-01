@@ -9,4 +9,4 @@ grafana-loki:
   enabled: false
 
 grafana-tempo:
-  enabled: false
+  enabled: true
