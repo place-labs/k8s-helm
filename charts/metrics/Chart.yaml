@@ -6,12 +6,22 @@ type: application
 version: 0.1.0
 
 dependencies:
-  - name: kube-prometheus-stack
-    version: ~45.23.0
-    repository: https://prometheus-community.github.io/helm-charts
-    condition: kube-prometheus-stack.enabled
+  - name: kube-prometheus
+    version: ~8.9.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: kube-prometheus.enabled
 
-  - name: loki-stack
-    version: ~2.9.10
-    repository: https://grafana.github.io/helm-charts
-    condition: loki-stack.enabled
+  - name: grafana
+    version: ~8.2.33
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana.enabled
+
+  - name: grafana-loki
+    version: ~2.7.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana-loki.enabled
+
+  - name: grafana-tempo
+    version: ~2.2.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana-tempo.enabled

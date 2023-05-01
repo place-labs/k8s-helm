@@ -1,9 +1,15 @@
 dependencies:
-- name: kube-prometheus-stack
-  repository: https://prometheus-community.github.io/helm-charts
-  version: 45.23.0
-- name: loki-stack
-  repository: https://grafana.github.io/helm-charts
-  version: 2.9.10
-digest: sha256:c865dd9ed2d3517138c6500981a0ad325d7732f79cfafd594f5656d827af513d
-generated: "2023-05-01T15:05:45.129751988+10:00"
+- name: kube-prometheus
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.9.1
+- name: grafana
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.2.33
+- name: grafana-loki
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.7.1
+- name: grafana-tempo
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.2.1
+digest: sha256:8d2ba917522d5b0149fb4d0368c538a8adebd192d0780167e4f917da1e1143cf
+generated: "2023-05-01T16:01:43.161031654+10:00"

@@ -1,7 +1,12 @@
 ## Metrics
-kube-prometheus-stack:
+kube-prometheus:
   enabled: true
-  cleanPrometheusOperatorObjectNames: true
 
-loki-stack:
-  enabled: true
+grafana:
+  enabled: false
+
+grafana-loki:
+  enabled: false
+
+grafana-tempo:
+  enabled: false
