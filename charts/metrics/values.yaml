@@ -3,7 +3,7 @@ kube-prometheus:
   enabled: true
 
 grafana:
-  enabled: false
+  enabled: true
 
 grafana-loki:
   enabled: false
