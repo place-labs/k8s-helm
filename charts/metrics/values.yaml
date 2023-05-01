@@ -1,0 +1,7 @@
+## Metrics
+kube-prometheus-stack:
+  enabled: true
+  cleanPrometheusOperatorObjectNames: true
+
+loki-stack:
+  enabled: true
