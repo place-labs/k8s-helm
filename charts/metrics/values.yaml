@@ -1,12 +1,29 @@
 ## Metrics
 kube-prometheus:
   enabled: true
+  prometheus:
+    persistence:
+      size: 100MB
 
 grafana:
   enabled: true
+  persistence:
+    size: 100MB
 
 grafana-loki:
   enabled: false
+  compactor:
+    persistence:
+      size: 100MB
+  ingester:
+    persistence:
+      size: 100MB
+  querier:
+    persistence:
+      size: 100MB
 
 grafana-tempo:
   enabled: true
+  ingester:
+    persistence:
+      size: 100MB
