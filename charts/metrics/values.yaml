@@ -1,10 +1,15 @@
 ## Metrics
+
+# Prometheus collects node & k8s metrics
+# https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus
 kube-prometheus:
   enabled: true
   prometheus:
     persistence:
       size: 100M
 
+# Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana
 grafana:
   enabled: true
   persistence:
@@ -19,7 +24,12 @@ grafana:
   admin:
     user: place-admin
     password: "" # leave blank for random
+  datasources:
+    secretDefinition: |-
+      {{ .Files.Get "./grafana-provisioning/datasources.yaml" | indent 6 }}
 
+# Loki collects pod logs
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
 grafana-loki:
   enabled: true
   compactor:
@@ -28,15 +38,18 @@ grafana-loki:
       size: 100M
   ingester:
     persistence:
-      enabled: false
+      enabled: true
       size: 100M
   querier:
     persistence:
       enabled: false
       size: 100M
 
+# Tempo ingests tracing from PlaceOS services
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
 grafana-tempo:
   enabled: true
   ingester:
     persistence:
+      enabled: true
       size: 100M

@@ -1,6 +1,58 @@
-# Install
-helm install metrics . -f values.yaml -n placeos-metrics --create-namespace
+# PlaceOS Metrics
 
-# Upgrade
-helm upgrade --install metrics . -f values.yaml -n placeos-metrics --create-namespace
+## Configure
 
+Deployment values for each service can be set in `values.yaml`  
+See the github links inside for full lists of options
+
+### Useful values:
+`grafana.ingress`
+```
+enabled: true # create an ingress to grafana or not
+hostname: metrics.dev.example.com # (sub)domain pointing to your k8s ingress
+annotations: {} # ingress annotations can be applied here
+tls: true # creates a self signed cert as defined below
+selfSigned: true # see the github link above for other tls options
+```
+`grafana.admin`
+```
+user: admin-username # this user will be able log in via the ingress above
+password: admin-password # if left blank will create a random 10 character string in secret `metrics-grafana-admin`
+```
+`grafana.datasources`
+```
+secretDefinition: # configures the grafana-provisioning/datasources.yaml file as a secret to be applied by grafana on pod creation
+```
+Several services have persistence available.  
+For dev deployments, most are disabled and all are set to minimal sizes:
+```
+kube-prometheus:
+  persistence:
+    size: 100M
+grafana:
+  persistence:
+    size: 100M
+grafana-loki:
+  compactor:
+    persistence:
+        enabled: false
+        size: 100M
+  ingester:
+    persistence:
+        enabled: true
+        size: 100M
+  querier:
+    persistence:
+        enabled: false
+        size: 100M
+grafana-tempo:
+  ingester:
+    persistence:
+        enabled: true
+        size: 100M
+```
+
+## Install / Upgrade
+```
+helm upgrade --install metrics . -f values.yaml -n placeos-metrics --create-namespace --set grafana.ingress.hostname="metrics.k8s-dev.placeos.run"
+```
