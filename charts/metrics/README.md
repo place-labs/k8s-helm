@@ -2,7 +2,7 @@
 
 Deploys a stack of monitoring services with configured data sources and dashboards for metrics, logging, tracing & alerting to a PlaceOS kubernetes cluster
 
-| Metrics               | Logging   | tracing   | Alerting      |
+| Metrics               | Logging   | Tracing   | Alerting      |
 | --                    | --        | --        | --            |
 | Prometheus            | Grafana   | Tempo     | Alert Manager |
 | Node Exporter         | Loki      |           |               |
@@ -11,8 +11,8 @@ Deploys a stack of monitoring services with configured data sources and dashboar
 
 ## Configure
 
-Deployment values for each service can be set in `values.yaml`  
-See the chart readme / valures.yaml files for full lists of options and usage:
+Deployment values for each service can be set in `values.yaml`  or `helm install --set`
+See the chart readme / values.yaml files for full lists of options and usage:
 - [kube-prometheus](https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus)
 - [grafana](https://github.com/bitnami/charts/tree/main/bitnami/grafana)
 - [grafana-loki](https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki)
