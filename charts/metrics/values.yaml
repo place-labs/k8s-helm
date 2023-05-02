@@ -25,8 +25,7 @@ grafana:
     user: place-admin
     password: "" # leave blank for random
   datasources:
-    secretDefinition: |-
-      {{ .Files.Get "./grafana-provisioning/datasources.yaml" | indent 6 }}
+    secretName: placeos-grafana-datasources
 
 # Loki collects pod logs
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
