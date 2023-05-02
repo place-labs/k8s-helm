@@ -1,9 +1,22 @@
 # PlaceOS Metrics
 
+Deploys a stack of monitoring services with configured data sources and dashboards for metrics, logging, tracing & alerting to a PlaceOS kubernetes cluster
+
+| Metrics               | Logging   | tracing   | Alerting      |
+| --                    | --        | --        | --            |
+| Prometheus            | Grafana   | Tempo     | Alert Manager |
+| Node Exporter         | Loki      |           |               |
+| Kube State Metrics    | Promtail  |           |               |
+| Memcached             |           |           |               |
+
 ## Configure
 
 Deployment values for each service can be set in `values.yaml`  
-See the github links inside for full lists of options
+See the chart readme / valures.yaml files for full lists of options and usage:
+- [kube-prometheus](https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus)
+- [grafana](https://github.com/bitnami/charts/tree/main/bitnami/grafana)
+- [grafana-loki](https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki)
+- [grafana-tempo](https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo)
 
 ### Useful values:
 
@@ -31,6 +44,8 @@ Grafana will apply these on pod creation
 ```
 secretName: # the name of the secret created by the template file
 ```
+
+## Persistence
 
 Several services have persistence available.  
 For dev deployments, most are disabled and all are set to minimal sizes:
@@ -67,6 +82,7 @@ grafana-tempo:
 ---
 
 ## Install
+
 ```
 helm install metrics . -f values.yaml -n placeos-metrics --create-namespace --set grafana.ingress.hostname="metrics.dev.example.com"
 ```
