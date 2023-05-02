@@ -11,7 +11,7 @@ Deploys a stack of monitoring services with configured data sources and dashboar
 
 ## Configure
 
-Deployment values for each service can be set in `values.yaml`  or `helm install --set`
+Deployment values for each service can be set in `values.yaml`  or `helm install --set`  
 See the chart readme / values.yaml files for full lists of options and usage:
 - [kube-prometheus](https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus)
 - [grafana](https://github.com/bitnami/charts/tree/main/bitnami/grafana)
