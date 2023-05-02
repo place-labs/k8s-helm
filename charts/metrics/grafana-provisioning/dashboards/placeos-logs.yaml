@@ -1,0 +1,354 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"api\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "API",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"auth\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Auth",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"core\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Core",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{namespace=\"placeos\", app=\"frontendloader\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Frontend Loader",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 2,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{namespace=\"placeos\", app=\"triggers\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Triggers",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"staff\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Staff",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 7,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"searchingest\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Search Ingest",
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "A4Bgp2y4z"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 8,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "A4Bgp2y4z"
+          },
+          "editorMode": "builder",
+          "expr": "{app=\"source\", namespace=\"placeos\"} |= ``",
+          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Source",
+      "type": "logs"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "PlaceOS Logs",
+  "uid": "aXJvt2s4z",
+  "version": 4,
+  "weekStart": ""
+}

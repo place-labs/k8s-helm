@@ -3,27 +3,40 @@ kube-prometheus:
   enabled: true
   prometheus:
     persistence:
-      size: 100MB
+      size: 100M
 
 grafana:
   enabled: true
   persistence:
-    size: 100MB
+    size: 100M
+  ingress:
+    enabled: true
+    hostname: metrics.local
+    annotations: {}
+    ingressClassName: nginx
+    tls: true
+    selfSigned: true
+  admin:
+    user: place-admin
+    password: "" # leave blank for random
 
 grafana-loki:
-  enabled: false
+  enabled: true
   compactor:
     persistence:
-      size: 100MB
+      enabled: false
+      size: 100M
   ingester:
     persistence:
-      size: 100MB
+      enabled: false
+      size: 100M
   querier:
     persistence:
-      size: 100MB
+      enabled: false
+      size: 100M
 
 grafana-tempo:
   enabled: true
   ingester:
     persistence:
-      size: 100MB
+      size: 100M
