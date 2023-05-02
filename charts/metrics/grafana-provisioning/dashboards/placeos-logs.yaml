@@ -31,7 +31,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -54,7 +54,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"api\", namespace=\"placeos\"} |= ``",
@@ -69,7 +69,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -92,7 +92,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"auth\", namespace=\"placeos\"} |= ``",
@@ -107,7 +107,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -130,7 +130,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"core\", namespace=\"placeos\"} |= ``",
@@ -145,7 +145,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -168,7 +168,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{namespace=\"placeos\", app=\"frontendloader\"} |= ``",
@@ -183,7 +183,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -206,7 +206,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{namespace=\"placeos\", app=\"triggers\"} |= ``",
@@ -221,7 +221,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -244,7 +244,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"staff\", namespace=\"placeos\"} |= ``",
@@ -259,7 +259,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -282,7 +282,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"searchingest\", namespace=\"placeos\"} |= ``",
@@ -297,7 +297,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "A4Bgp2y4z"
+        "uid": "loki"
       },
       "gridPos": {
         "h": 8,
@@ -320,7 +320,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "A4Bgp2y4z"
+            "uid": "loki"
           },
           "editorMode": "builder",
           "expr": "{app=\"source\", namespace=\"placeos\"} |= ``",
@@ -348,7 +348,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "PlaceOS Logs",
-  "uid": "aXJvt2s4z",
+  "uid": "placeos-logs",
   "version": 4,
   "weekStart": ""
 }

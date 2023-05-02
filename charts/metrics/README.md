@@ -39,6 +39,7 @@ password: admin-password # if left blank will create a random 10 character strin
 A secret containing the contents of the datasources yaml files is created on helm install
 - [Secret Template](templates/grafana-datasources-secret.yaml.tpl)
 - [Grafana Datasources](grafana-provisioning/datasources/)
+- [Grafana Provisioning Documentation](https://grafana.com/docs/grafana/latest/administration/provisioning/#example-data-source-config-file)
 
 Grafana will apply these on pod creation
 ```

@@ -1,6 +1,7 @@
 apiVersion: 1
 datasources:
 - name: loki
+  uid: loki
   type: loki
   access: proxy
   url: http://metrics-grafana-loki-gateway:80
