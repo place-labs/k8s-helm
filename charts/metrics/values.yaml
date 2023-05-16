@@ -26,6 +26,37 @@ grafana:
     password: "" # leave blank for random
   datasources:
     secretName: placeos-grafana-datasources
+  dashboardsProvider:
+    enabled: true
+    configMapName: placeos-grafana-dashboard-provider
+  dashboardsConfigMaps:
+    - configMapName: placeos-grafana-dashboards-postgres
+      fileName: postgres.json
+      folderName: Database
+    - configMapName: placeos-grafana-dashboards-elasticsearch
+      fileName: elasticsearch.json
+      folderName: Database
+    - configMapName: placeos-grafana-dashboards-alertmanager
+      fileName: alertmanager.json
+      folderName: Alerts
+    - configMapName: placeos-grafana-dashboards-api-server
+      fileName: api-server.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-cluster-monitoring
+      fileName: cluster-monitoring.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-node-exporter
+      fileName: node-exporter.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-volumes
+      fileName: volumes.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-placeos-logs
+      fileName: placeos-logs.json
+      folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-pod-metrics
+      fileName: pod-metrics.json
+      folderName: PlaceOS
 
 # Loki collects pod logs
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
