@@ -276,6 +276,9 @@ etcd:
   auth:
     rbac:
       create: false
+    token:
+      enabled: false
+  replicaCount: 3
   persistence:
     enabled: true
     size: 500M

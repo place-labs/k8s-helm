@@ -348,9 +348,13 @@ etcd:
   auth:
     rbac:
       create: false
+    token:
+      enabled: false
+  replicaCount: 3
   persistence:
     enabled: true
     size: 500M
+  
 # elasticsearch third party chart overrides
 elasticsearch:
   # -- elasticsearch chart disabled by default. included for testing purposes only
