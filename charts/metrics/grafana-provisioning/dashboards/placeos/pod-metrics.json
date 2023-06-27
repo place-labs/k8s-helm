@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 11,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -203,7 +203,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(container_cpu_load_average_10s{pod=~\".*\",namespace=\"placeos\"}) BY (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{container!~\"POD|\"}[5m])) by (pod)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
