@@ -36,15 +36,15 @@ grafana:
     enabled: true
     configMapName: placeos-grafana-dashboard-provider
   dashboardsConfigMaps:
+    - configMapName: placeos-grafana-dashboards-alertmanager
+      fileName: alertmanager.json
+      folderName: Alerts
     - configMapName: placeos-grafana-dashboards-postgres
       fileName: postgres.json
       folderName: Database
     - configMapName: placeos-grafana-dashboards-elasticsearch
       fileName: elasticsearch.json
       folderName: Database
-    - configMapName: placeos-grafana-dashboards-alertmanager
-      fileName: alertmanager.json
-      folderName: Alerts
     - configMapName: placeos-grafana-dashboards-api-server
       fileName: api-server.json
       folderName: Kubernetes
@@ -60,11 +60,11 @@ grafana:
     - configMapName: placeos-grafana-dashboards-placeos-logs
       fileName: placeos-logs.json
       folderName: PlaceOS
-    - configMapName: placeos-grafana-dashboards-pod-metrics
-      fileName: pod-metrics.json
+    - configMapName: placeos-grafana-dashboards-pod-resources
+      fileName: pod-resources.json
       folderName: PlaceOS
-    - configMapName: placeos-grafana-dashboards-metrics-pods
-      fileName: metrics-pods.json
+    - configMapName: placeos-grafana-dashboards-metrics-pod-resources
+      fileName: metrics-pod-resources.json
 
 # Loki collects pod logs
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
