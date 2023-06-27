@@ -12,7 +12,7 @@ kube-prometheus:
   prometheus:
     persistence:
       enabled: true
-      size: 1Gi
+      size: 50Gi
 
 # Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
