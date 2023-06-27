@@ -4,16 +4,21 @@
 # https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus
 kube-prometheus:
   enabled: true
+  operator:
+    # This creates a Service in the kube-system namespace which exposes a set of prometheus data to grafana with a `service` label 
+    # If you have incorrect (2x, 3x, etc) values in grafana dashboards you likely have orphaned Services from previous deployments
+    kubeletService:
+      enabled: true 
   prometheus:
     persistence:
-      size: 100M
+      size: 1Gi
 
 # Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
 grafana:
   enabled: true
   persistence:
-    size: 100M
+    size: 100Mi
   ingress:
     enabled: true
     hostname: metrics.local
@@ -64,16 +69,16 @@ grafana-loki:
   enabled: true
   compactor:
     persistence:
-      enabled: false
-      size: 100M
+      enabled: true
+      size: 100Mi
   ingester:
     persistence:
       enabled: true
-      size: 100M
+      size: 1Gi
   querier:
     persistence:
       enabled: false
-      size: 100M
+      size: 100Mi
 
 # Tempo ingests tracing from PlaceOS services
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
@@ -82,4 +87,4 @@ grafana-tempo:
   ingester:
     persistence:
       enabled: true
-      size: 100M
+      size: 1Gi
