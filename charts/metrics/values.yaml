@@ -6,7 +6,7 @@ kube-prometheus:
   enabled: true
   operator:
     # This creates a Service in the kube-system namespace which exposes a set of prometheus data to grafana with a `service` label 
-    # If you have incorrect (2x, 3x, etc) values in grafana dashboards you likely have orphaned Services from previous deployments
+    # If you have incorrect (2x, 3x, etc) CONTAINER values in grafana dashboards you likely have orphaned Services from previous deployments
     kubeletService:
       enabled: true 
   prometheus:
@@ -76,7 +76,7 @@ grafana-loki:
       size: 100Mi
   ingester:
     persistence:
-      enabled: true
+      enabled: false
       size: 1Gi
   querier:
     persistence:
@@ -89,5 +89,5 @@ grafana-tempo:
   enabled: true
   ingester:
     persistence:
-      enabled: true
+      enabled: false
       size: 1Gi
