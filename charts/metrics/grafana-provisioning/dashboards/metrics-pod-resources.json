@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 18,
+  "id": 26,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -127,7 +127,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum (container_memory_working_set_bytes{container=~\".*\",namespace=\"placeos-metrics\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\".*\"}) * 100",
+          "expr": "sum (container_memory_working_set_bytes{container=~\".*\",namespace=\"placeos-metrics\",container=\"\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\".*\"}) * 100",
           "interval": "10s",
           "intervalFactor": 1,
           "range": true,
@@ -135,7 +135,7 @@
           "step": 10
         }
       ],
-      "title": "Namespace / Cluster memory usage *",
+      "title": "Namespace / Cluster Memory Use",
       "type": "gauge"
     },
     {
@@ -211,8 +211,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "builder",
-          "expr": "(sum(rate(container_cpu_usage_seconds_total{container=~\".*\", namespace=\"placeos-metrics\"}[1m])) * 100) / sum(machine_cpu_cores{kubernetes_io_hostname=~\".*\"})",
+          "editorMode": "code",
+          "expr": "(sum(rate(container_cpu_usage_seconds_total{pod=~\".*\", namespace=\"placeos-metrics\",container=\"\"}[1m])) * 100) / sum(machine_cpu_cores{kubernetes_io_hostname=~\".*\"})",
           "interval": "10s",
           "intervalFactor": 1,
           "range": true,
@@ -220,7 +220,7 @@
           "step": 10
         }
       ],
-      "title": "Namespace / Cluster CPU usage (1m avg) *",
+      "title": "Namespace / Cluster CPU Use",
       "type": "gauge"
     },
     {
@@ -307,7 +307,7 @@
           "step": 10
         }
       ],
-      "title": "Namespace filesystem usage",
+      "title": "Namespace Volume Use",
       "type": "gauge"
     },
     {
@@ -351,7 +351,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 2,
         "x": 0,
         "y": 6
       },
@@ -380,7 +380,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_working_set_bytes{container=~\".*\", namespace=\"placeos-metrics\"})",
+          "expr": "sum(container_memory_working_set_bytes{pod=~\".*\", namespace=\"placeos-metrics\",container=\"\"})",
           "interval": "10s",
           "intervalFactor": 1,
           "range": true,
@@ -432,11 +432,173 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 2,
+        "x": 2,
+        "y": 6
+      },
+      "id": 48,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"placeos-metrics\", pod=~\".*\", resource=\"memory\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
         "x": 4,
         "y": 6
       },
       "id": 10,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"placeos-metrics\", pod=~\".*\", resource=\"memory\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Limts",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 6,
+        "y": 6
+      },
+      "id": 50,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -469,7 +631,7 @@
           "step": 10
         }
       ],
-      "title": "Total",
+      "title": "Cluster Total",
       "type": "stat"
     },
     {
@@ -513,7 +675,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 2,
         "x": 8,
         "y": 6
       },
@@ -542,7 +704,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum (rate (container_cpu_usage_seconds_total{container=~\".*\",namespace=\"placeos-metrics\"}[1m]))",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\".*\",namespace=\"placeos-metrics\",container=\"\"}[1m]))",
           "interval": "10s",
           "intervalFactor": 1,
           "range": true,
@@ -594,11 +756,173 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 12,
+        "w": 2,
+        "x": 10,
         "y": 6
       },
       "id": 12,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"placeos-metrics\", pod=~\".*\", resource=\"cpu\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 12,
+        "y": 6
+      },
+      "id": 49,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"placeos-metrics\", pod=~\".*\", resource=\"cpu\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "range": true,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Limits",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 14,
+        "y": 6
+      },
+      "id": 51,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -631,7 +955,7 @@
           "step": 10
         }
       ],
-      "title": "Total",
+      "title": "Cluster Total",
       "type": "stat"
     },
     {
@@ -793,7 +1117,7 @@
           "step": 10
         }
       ],
-      "title": "Total",
+      "title": "Available",
       "type": "stat"
     },
     {
@@ -862,7 +1186,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -892,13 +1217,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_working_set_bytes{pod=~\".*\",namespace=\"placeos-metrics\"}/1000/1000)",
+          "expr": "sum(container_memory_working_set_bytes{pod=~\".*\",namespace=\"placeos-metrics\",container=\"\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Pod Memory Usage (MB)",
+      "title": "Total Pod Memory Use",
       "type": "timeseries"
     },
     {
@@ -984,13 +1309,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container!~\"POD|\",namespace=\"placeos-metrics\"}[5m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\".*\",namespace=\"placeos-metrics\",container=\"\"}[1m]))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Pod CPU Usage (Cores)",
+      "title": "Total Pod CPU Use",
       "type": "timeseries"
     },
     {
@@ -1046,7 +1371,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -1076,13 +1402,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(kubelet_volume_stats_used_bytes{namespace=\"placeos-metrics\"}) / 1000 / 1000 / 1000",
+          "expr": "sum(kubelet_volume_stats_used_bytes{namespace=\"placeos-metrics\"}) ",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Volume Use (GB)",
+      "title": "Total Volume Use",
       "type": "timeseries"
     },
     {
@@ -1138,7 +1464,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -1168,13 +1495,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_working_set_bytes{pod=~\".*\",namespace=\"placeos-metrics\"}/1000/1000) by (pod)",
+          "expr": "sum(container_memory_working_set_bytes{pod=~\".*\",namespace=\"placeos-metrics\",container=\"\"}) by (pod)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Pod Memory Usage",
+      "title": "Pod Memory Use",
       "type": "timeseries"
     },
     {
@@ -1201,7 +1528,7 @@
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "linear",
+            "lineInterpolation": "stepBefore",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1260,13 +1587,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container!~\"POD|\",namespace=\"placeos-metrics\"}[5m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\".*\",namespace=\"placeos-metrics\",container=\"\"}[1m])) by (pod)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Pod CPU Usage",
+      "title": "Pod CPU Use",
       "type": "timeseries"
     },
     {
@@ -1360,15 +1687,331 @@
       ],
       "title": "Volume Use %",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 53,
+      "panels": [],
+      "title": "Health",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 29
+      },
+      "id": 57,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(container_oom_events_total{namespace=\"placeos-metrics\", container!=\"\"}[1m])) by (pod)",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Container OOM Kill",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 29
+      },
+      "id": 55,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(container_cpu_cfs_throttled_seconds_total{namespace=\"placeos-metrics\"}[1m])) by (pod)",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Container CPU Throttling",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 29
+      },
+      "id": 56,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(changes(kube_pod_status_ready{condition=\"true\",namespace=\"placeos-metrics\"}[1m])) by (pod)\r\n",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Ready Status Change",
+      "type": "timeseries"
     }
   ],
-  "refresh": "30s",
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "alertmanager",
+          "value": "alertmanager"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(kube_pod_container_status_running{namespace=\"placeos-metrics\"}, container)",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "container",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_pod_container_status_running{namespace=\"placeos-metrics\"}, container)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-5m",
@@ -1378,6 +2021,6 @@
   "timezone": "",
   "title": "Metrics Pod Resources",
   "uid": "metrics-pod-resources",
-  "version": 3,
+  "version": 8,
   "weekStart": ""
 }
