@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+
+kind: Job
+metadata:
+  name: rethink-dump-job
+  namespace: placeos
+spec:
+  completions: 1
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      name: rethink-dump
+    spec:
+      containers:
+      - name: init
+        image: placeos/init:placeos-1.2111.1
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: RETHINKDB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_HOST
+          - name: RETHINKDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: core
+                key: RETHINKDB_PASSWORD
+          - name: RETHINKDB_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: RETHINKDB_PORT
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo $RETHINKDB_PASSWORD > /tmp/pass.txt
+          timestamp=$(date +"%Y-%m-%d_%H-%M")
+          rethinkdb dump -c $RETHINKDB_HOST:$RETHINKDB_PORT --password-file /tmp/pass.txt --file /tmp/rethink-dump_$timestamp.tar.gz
+          echo "Use \`kubectl cp -n placeos $HOSTNAME:/tmp/rethink-dump_$timestamp.tar.gz ./rethink-dump_$timestamp.tar.gz\` to get the backup then delete the rethink-dump-job kubernetes Job to remove this pod"
+          tail -f /dev/null
+      restartPolicy: Never
+  backoffLimit: 0

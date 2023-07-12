@@ -64,6 +64,7 @@ spec:
           httpGet:
             path: /api/core/v1
             port: http
+          initialDelaySeconds: 30
         readinessProbe:
           httpGet:
             path: /api/core/v1

@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: init
-        image: placeos/init:placeos-2.2306.0
+        image: placeos/init:placeos-2.2307.5
         imagePullPolicy: IfNotPresent
         env:
           # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
@@ -34,5 +34,9 @@ spec:
             name: init
         - configMapRef:
             name: core
+        - secretRef:
+            name: postgres-client
+        - configMapRef:
+            name: postgres-client
       restartPolicy: Never
   backoffLimit: 0

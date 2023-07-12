@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-postgres
+  namespace: placeos
+spec:
+  completions: 1
+  ttlSecondsAfterFinished: 3600
+  backoffLimit: 0
+  template:
+    metadata:
+      name: init-postgres
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: init
+        image: placeos/init:placeos-2.2307.3
+        command: ["bash", "-c"]
+        args:
+        - |
+          /app/bin/task db:init host=$PG_HOST user=$PG_USER password=$PG_PASSWORD db=$PG_DB
+        # These env vars are not required for the task but init requires they are set to run any task
+        env:
+          - name: PLACE_SKIP_PLACEHOLDERS
+            value: "true"
+          - name: PLACE_DOMAIN
+            value: ""
+          - name: PLACE_EMAIL
+            value: "support@place.tech"
+          - name: PLACE_USERNAME
+            value: "support@place.tech"
+          - name: PLACE_AUTH_HOST
+            value: "auth:3000"
+          - name: PLACE_TLS
+            value: "true"
+          - name: ENV
+            valueFrom:
+              configMapKeyRef:
+                name: core
+                key: ENV
+        # These env vars are required to connect to postgres
+        envFrom:
+          - configMapRef:
+              name: postgres-client
+          - secretRef:
+              name: postgres-client
+          - secretRef:
+              name: init

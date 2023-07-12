@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+
+kind: Job
+metadata:
+  name: postgres-dump-job
+  namespace: placeos
+spec:
+  completions: 1
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      name: postgres-dump
+    spec:
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: POSTGRES_USER
+            value: "placeos"
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql
+                key: password
+          - name: POSTGRES_DB
+            value: "placeos"
+          - name: POSTGRES_POD
+            value: "postgresql-0"
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          kubectl exec $POSTGRES_POD -- /bin/sh -c '
+          timestamp=$(date +"%Y-%m-%d_%H-%M")
+          PGPASSWORD=$POSTGRES_PASSWORD pg_dump --format tar -U $POSTGRES_USER $POSTGRES_DB > /tmp/postgres-dump_$timestamp.tar
+          echo "Use \`kubectl cp -n placeos $HOSTNAME:/tmp/postgres-dump_$timestamp.tar ./postgres-dump_$timestamp.tar\` to get the backup then delete the postgres-dump-job kubernetes Job to remove the job pod"
+          '
+          tail -f /dev/null
+      restartPolicy: Never
+  backoffLimit: 0
