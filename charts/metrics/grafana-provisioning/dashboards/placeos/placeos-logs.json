@@ -24,20 +24,32 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "panels": [],
+      "title": "API",
+      "type": "row"
+    },
     {
       "datasource": {
         "type": "loki",
         "uid": "loki"
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 14,
+        "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 1,
       "options": {
@@ -46,9 +58,9 @@
         "prettifyLogMessage": false,
         "showCommonLabels": false,
         "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
+        "showTime": false,
+        "sortOrder": "Ascending",
+        "wrapLogMessage": true
       },
       "targets": [
         {
@@ -59,6 +71,7 @@
           "editorMode": "builder",
           "expr": "{app=\"api\", namespace=\"placeos\"} |= ``",
           "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+          "maxLines": 100,
           "queryType": "range",
           "refId": "A"
         }
@@ -67,273 +80,378 @@
       "type": "logs"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
       },
-      "id": 4,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 24,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{app=\"auth\", namespace=\"placeos\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 40
+          },
+          "id": 25,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"auth\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Auth",
+          "type": "logs"
         }
       ],
       "title": "Auth",
-      "type": "logs"
+      "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 8
+        "y": 16
       },
-      "id": 3,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 22,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{app=\"core\", namespace=\"placeos\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 41
+          },
+          "id": 26,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"core\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Core",
+          "type": "logs"
         }
       ],
       "title": "Core",
-      "type": "logs"
+      "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 8
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
       },
-      "id": 6,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 20,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{namespace=\"placeos\", app=\"frontendloader\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 34
+          },
+          "id": 27,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"frontend-loader\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Frontend Loader",
+          "type": "logs"
         }
       ],
       "title": "Frontend Loader",
-      "type": "logs"
+      "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 16
+        "y": 18
       },
-      "id": 2,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 18,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{namespace=\"placeos\", app=\"triggers\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 35
+          },
+          "id": 28,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"triggers\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Triggers",
+          "type": "logs"
         }
       ],
       "title": "Triggers",
-      "type": "logs"
+      "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 16
-      },
-      "id": 5,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "editorMode": "builder",
-          "expr": "{app=\"staff\", namespace=\"placeos\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "Staff",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 24
+        "y": 19
       },
-      "id": 7,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 16,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{app=\"searchingest\", namespace=\"placeos\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 36
+          },
+          "id": 29,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"searchingest\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Search Ingest",
+          "type": "logs"
         }
       ],
       "title": "Search Ingest",
-      "type": "logs"
+      "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 24
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
       },
-      "id": 8,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
+      "id": 14,
+      "panels": [
         {
           "datasource": {
             "type": "loki",
             "uid": "loki"
           },
-          "editorMode": "builder",
-          "expr": "{app=\"source\", namespace=\"placeos\"} |= ``",
-          "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-          "queryType": "range",
-          "refId": "A"
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 29
+          },
+          "id": 30,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"staff\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Staff",
+          "type": "logs"
+        }
+      ],
+      "title": "Staff",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 12,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 22
+          },
+          "id": 31,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"source\", namespace=\"placeos\"} |= ``",
+              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
+              "maxLines": 100,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Source",
+          "type": "logs"
         }
       ],
       "title": "Source",
-      "type": "logs"
+      "type": "row"
     }
   ],
-  "refresh": "",
+  "refresh": false,
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -342,13 +460,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "PlaceOS Logs",
   "uid": "placeos-logs",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
