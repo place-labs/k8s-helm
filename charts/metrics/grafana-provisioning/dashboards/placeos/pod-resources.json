@@ -2419,7 +2419,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"$container.*\",namespace=\"placeos\"}[1m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"$container.*\",namespace=\"placeos\",container=\"\"}[1m])) by (pod)",
           "legendFormat": "Used",
           "range": true,
           "refId": "A"
@@ -2634,7 +2634,7 @@
       "type": "stat"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
