@@ -55,7 +55,7 @@ xpostgresValues: &postgresValues
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
-  PG_HOST: postgresql-single
+  PG_HOST: postgres-ha-postgresql
   PG_PORT: 5432
   PG_USER: *pgUsername
   PG_QUERY: "?initial_pool_size=1&max_idle_pool_size=20&retry_attempts=2"
