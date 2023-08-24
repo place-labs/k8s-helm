@@ -41,8 +41,17 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 250Mi
+    pdb:
+      create: false
   pgpool:
     numInitChildren: 500
+    replicaCount: 0
+    pdb:
+      create: false
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
