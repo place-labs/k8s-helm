@@ -292,7 +292,8 @@ etcd:
       enabled: false
   replicaCount: 1
   persistence:
-    enabled: false
+    enabled: true
+    size: 500M
 elasticsearch:
   enabled: true
   master:

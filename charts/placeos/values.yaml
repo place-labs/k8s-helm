@@ -339,7 +339,8 @@ etcd:
       enabled: false
   replicaCount: 3
   persistence:
-    enabled: false
+    enabled: true
+    size: 500M
   
 elasticsearch:
   # -- elasticsearch chart disabled by default. included for testing purposes only
