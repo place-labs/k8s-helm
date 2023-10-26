@@ -70,13 +70,6 @@ xinfluxClientEnv: &influxClientEnv
 
 xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
 
-xinfluxClientEnv: &influxClientEnv
-  INFLUX_HOST: http://influx:8086
-  INFLUX_ORG: PlaceOS
-  INFLUX_BUCKET: placeos
-
-xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
-
 # xsmtpClientSecrets secrets values exposed as environment variables for the trigger service
 xsmtpClientSecrets: &smtpClientSecrets
   SMTP_PASS: *smtpPassword
