@@ -100,15 +100,24 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 250Mi
+    pdb:
+      create: false
   pgpool:
     numInitChildren: 500
+    replicaCount: 0
+    pdb:
+      create: false
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
-  PG_HOST: postgresql-pgpool
+  PG_HOST: postgresql-postgresql
   PG_PORT: 5432
   PG_USER: *pgUsername
-  PG_QUERY: "?initial_pool_size=10&max_idle_pool_size=10"
+  PG_QUERY: "?initial_pool_size=1&max_idle_pool_size=20&retry_attempts=2"
 
 xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
@@ -394,7 +403,7 @@ mosquitto:
 postgresql:
   # -- postgres chart disabled by default. included for testing purposes only
   enabled: false
-  fullnameOverride: postgres
+  fullnameOverride: postgresql
   << : *postgresValues
 
 global:
