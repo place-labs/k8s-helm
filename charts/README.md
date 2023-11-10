@@ -9,7 +9,9 @@ Currently supported deployment scenarios are:
 - Azure deployment to AKS
 - Openshift v4
 
-Tested on k8s 1.17 and 1.18
+Currently compatible with k8s 1.22.x - 1.26.x 
+- this repo aims to support the most recent stable kubernetes version available from cloud providers
+- although it can work with certain older versions, upgrading to the most recent version is highly recommended for optimal compatibility, performance and security.
 
 ## Prerequisites
 
