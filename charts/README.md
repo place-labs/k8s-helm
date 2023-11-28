@@ -89,7 +89,7 @@ If no ingress has been deployed yet ( works for Azure ):
 ```sh
 ## Install Load Balancer. See https://hub.helm.sh/charts/ingress-nginx/ingress-nginx
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm install -n placeos ingress-nginx --create-namespace  ingress-nginx/ingress-nginx --set allowSnippetAnnotations=true --set controller.service.annotations.""service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
+helm install -n placeos ingress-nginx --create-namespace  ingress-nginx/ingress-nginx --set controller.allowSnippetAnnotations=true --set controller.service.annotations.""service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
 ```
 If an internal Azure load balancer is required add 
 ```sh

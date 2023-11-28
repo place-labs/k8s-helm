@@ -271,8 +271,8 @@ placeos:
 ingress-nginx:
   enabled: true
   fullnameOverride: "ingress-nginx"
-  allowSnippetAnnotations: true
   controller:
+    allowSnippetAnnotations: true
     service:
       annotations:
         "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
