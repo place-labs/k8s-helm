@@ -69,7 +69,7 @@ ansible-playbook placeos.yaml -i inventories/aks/  --check
 # Deploy with public IP
 ansible-playbook placeos.yaml -i inventories/aks/
 # Deploy with internal IP
-ansible-playbook placeos.yaml -i inventories/aks/ -e "internalLB: true"
+ansible-playbook placeos.yaml -i inventories/aks/ -e "internalLB=true"
 
 ansible-playbook placeos-network-policies.yaml
 ```
