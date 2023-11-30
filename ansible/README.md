@@ -38,14 +38,20 @@ ansible-galaxy collection install community.kubernetes
 # Update helm dependencies from charts directory
 helm dependency update ./charts/placeos
 
-# Local deployment to k3d
+# Move to the directory where the placeos.yaml playbook exists
+cd ansible
+```
+
+### Local deployment to k3d
+```sh
 # Check first be for deploying
 ansible-playbook placeos.yaml -i inventories/k3d/ --check
 ansible-playbook placeos.yaml -i inventories/k3d/
-## Not Suported on local install > ansible-playbook placeos-network-policies.yaml
+```
 
 
-# GKE deployment
+### GKE deployment
+```sh
 # Set the Cloud Armor security policy name in inventories/gke/host_vars/k8s.yaml as placeos.global.gcpbackendConfig.config.securityPolicy
 # Check first be for deploying
 ansible-playbook placeos.yaml -i inventories/gke/  --check
@@ -53,13 +59,19 @@ ansible-playbook placeos.yaml -i inventories/gke/  --check
 # Terraform will output the created External IP or find `l7-ip` at `VPC Network -> External IP Addresses`
 ansible-playbook placeos.yaml -i inventories/gke/ -e "placeDomain={domain/{external IP.sslip.io}}"
 ansible-playbook placeos-network-policies.yaml -e "gke=true"
+```
 
-# AKS deployment
+### AKS deployment
+```sh
 # Check first be for deploying
 ansible-playbook placeos.yaml -i inventories/aks/  --check
-ansible-playbook placeos.yaml -i inventories/aks/
-ansible-playbook placeos-network-policies.yaml
 
+# Deploy with public IP
+ansible-playbook placeos.yaml -i inventories/aks/
+# Deploy with internal IP
+ansible-playbook placeos.yaml -i inventories/aks/ -e "internalLB: true"
+
+ansible-playbook placeos-network-policies.yaml
 ```
 
 To cleanup:

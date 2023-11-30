@@ -1,3 +1,6 @@
+
+xinternalLB: &internalLB "{{ internalLB | default(false, true)}}"
+
 #  Used to set the user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
 xpostgresPassword: &pgPassword "{{ postgresqlPassword }}"
 
@@ -276,6 +279,7 @@ ingress-nginx:
     service:
       annotations:
         "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"
+        "service.beta.kubernetes.io/azure-load-balancer-internal": *internalLB
 etcd:
   fullnameOverride: etcd
   enabled: true
