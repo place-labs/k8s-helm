@@ -98,6 +98,8 @@ placeos:
         requests:
           cpu: 10m
           memory: 100Mi
+    podDisruptionBudget:
+      create: true
   # auth is the overide configuration for the embedded auth subchart
   auth:
     ingress:
