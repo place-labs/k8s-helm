@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "frontend-loader.fullname" . }}
   labels:
@@ -9,8 +9,9 @@ spec:
   selector:
     matchLabels:
       {{- include "frontend-loader.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: Recreate
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
   template:
     metadata:
     {{- with .Values.deployment.podAnnotations }}
@@ -27,6 +28,8 @@ spec:
       serviceAccountName: {{ include "frontend-loader.serviceAccountName" . }}
       securityContext:
           {{- toYaml .Values.deployment.podSecurityContext | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.deployment.affinity | nindent 8 }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
@@ -54,7 +57,7 @@ spec:
           {{- toYaml .Values.deployment.resources | nindent 12 }}
         volumeMounts:
         - mountPath: /app/www
-          name: www
+          name: {{ .Values.persistentVolumeClaim.name }}
       {{- if .Values.httpSidecar }}
       - name: nginx
         image: nginx:1.18
@@ -68,7 +71,7 @@ spec:
           {{- toYaml .Values.httpDeployment.resources | nindent 12 }}
         volumeMounts:
         - mountPath: /usr/share/nginx/html/
-          name: www
+          name: {{ .Values.persistentVolumeClaim.name }}
           readOnly: true
         - mountPath: /etc/nginx/conf.d/
           name: default-conf
@@ -81,19 +84,26 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.deployment.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       restartPolicy: Always
       volumes:
-      - name: www
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistentVolume.name }}
       - name: default-conf
         configMap:
           name: {{ include "frontend-loader.fullname" . }}-nginx-conf
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistentVolumeClaim.name }}
+      annotations:
+        pv.beta.kubernetes.io/gid: {{ .Values.deployment.podSecurityContext.fsGroup | quote }}
+    spec:
+      accessModes:
+        {{- toYaml .Values.persistentVolumeClaim.accessModes | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.persistentVolumeClaim.storage | quote }}
+      {{- if .Values.persistentVolumeClaim.storageClassName }}
+      storageClassName: {{ .Values.persistentVolumeClaim.storageClassName }}
+      {{- end }}
