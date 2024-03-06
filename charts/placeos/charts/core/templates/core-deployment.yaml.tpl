@@ -13,6 +13,7 @@ spec:
       {{- include "core.selectorLabels" . | nindent 6 }}
   updateStrategy:
     type: RollingUpdate
+  podManagementPolicy: Parallel
   serviceName: {{ include "core.fullname" . }}
   template:
     metadata:

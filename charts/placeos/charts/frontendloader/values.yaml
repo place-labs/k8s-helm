@@ -52,7 +52,19 @@ httpDeployment:
 
   tolerations: []
 
-  affinity: {}
+  affinity:
+    # -- anti-affinitiy to ensure multiple pods to not converge to a single node
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: name
+              operator: In
+              values:
+              - frontend-loader
+          topologyKey: kubernetes.io/hostname
 
 # autoscaling configuration for pod
 autoscaling:
@@ -134,10 +146,10 @@ service:
 # -- persistentVolume configuration for the volume that conatains the static resources to serve backend
 # persistentVolume.accssMode ReadWriteMany is required for distributed http serving which is set when httpSidecar: true
 # see https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
-persistentVolume:
+persistentVolumeClaim:
   name: www
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storage: 1G
 
 ingress:
