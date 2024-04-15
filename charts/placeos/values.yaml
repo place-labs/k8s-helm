@@ -44,12 +44,6 @@ xelasticClientEnv: &elasticClientEnv
   # -- configmap value for ElasticSearch Service exposed as environment variables to PlaceOS containers
   ES_PORT: 9200
 
-xetcdClientEnv: &etcdClientEnv
-  # -- configmap value for Etcd end point Service as environment variables to PlaceOS containers
-  ETCD_HOST: etcd-headless
-  # -- configmap value for Etcd end point Service as environment variables to PlaceOS containers
-  ETCD_PORT: 2379
-
 xplaceLoaderClientEnv: &placeLoaderClientEnv
   # -- configmap value for the frontend Service exposed as environment variables to PlaceOS containers
   PLACE_LOADER_URI: http://frontend-loader:3000
@@ -131,7 +125,6 @@ api:
   configmap:
     << : *deploymentEnv
     << : *elasticClientEnv
-    << : *etcdClientEnv
     << : *placeLoaderClientEnv
     << : *redisClientEnv
     << : *postgresClientEnv
@@ -171,7 +164,6 @@ core:
   enabled: true
   fullnameOverride: core
   configmap:
-    << : *etcdClientEnv
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *deploymentEnv
@@ -248,7 +240,6 @@ triggers:
   enabled: true
   fullnameOverride: triggers
   configmap:
-    << : *etcdClientEnv
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *smtpClientEnv
@@ -303,7 +294,6 @@ source:
   enabled: true
   fullnameOverride: source
   configmap:
-    << : *etcdClientEnv
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *influxClientEnv
@@ -320,17 +310,6 @@ source:
 # These charts are not part of the PlaceOS core platform and are provided for development and PoC purposes.
 # They are configured to run with minimal resource usage. Review the individual chart documentation and
 # deploy seperately for a more robust solution.
-# etcd third party chart overrides
-etcd:
-  # -- etcd chart disabled by default. included for testing purposes only
-  enabled: false
-  fullnameOverride: etcd
-  auth:
-    rbac:
-      create: false
-  persistence:
-    enabled: true
-    size: 500M
 # elasticsearch third party chart overrides
 elasticsearch:
   # -- elasticsearch chart disabled by default. included for testing purposes only

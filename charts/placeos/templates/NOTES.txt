@@ -25,9 +25,6 @@ PlaceOS Services Configured:
 {{- end }}
 
 Third Party Services Configured:
-{{ if .Values.etcd.enabled -}}
-- etcd
-{{- end }}
 {{ if .Values.postgresql.enabled -}}
 - postgresql
 {{- end }}

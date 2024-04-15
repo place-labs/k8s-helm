@@ -35,8 +35,6 @@ frontendloader:
 ###########################################
 ##### Third Party Supporting Services #####
 ###########################################
-etcd:
-  enabled: true
 elasticsearch:
   enabled: true
 redis:

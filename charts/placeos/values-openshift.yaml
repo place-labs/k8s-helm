@@ -9,9 +9,6 @@ frontendloader:
 ###########################################
 ##### Third Party Supporting Services #####
 ###########################################
-etcd:
-  enabled: true
-
 elasticsearch:
   enabled: true
   # Sets vm.max_map_count on the host node
