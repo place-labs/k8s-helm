@@ -100,6 +100,10 @@ ingress:
   # -- enable ingress to expose the pod services
   enabled: true
   annotations: {
+    nginx.ingress.kubernetes.io/server-snippet: 
+      'location ~ ^/r/(?<short_id>[^/]+) {
+          return 301 /api/engine/v2/short_url/uri-$short_id/redirect;
+      }',
     nginx.ingress.kubernetes.io/configuration-snippet: 'add_header X-Frame-Options SAMEORIGIN;',
     nginx.ingress.kubernetes.io/cors-allow-credentials: 'true',
     nginx.ingress.kubernetes.io/cors-allow-headers: 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,x-api-key',
