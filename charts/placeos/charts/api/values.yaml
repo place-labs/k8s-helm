@@ -30,7 +30,7 @@ deployment:
     capabilities:
       drop:
       - ALL
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     runAsNonRoot: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
