@@ -76,8 +76,6 @@ service:
 configmap:
   # -- value exposed as environment variable to the pod
   ENV: null
-  ETCD_HOST: null
-  ETCD_PORT: 0
   REDIS_URL: null
   SG_ENV: null
   SMTP_PORT: 0

@@ -78,8 +78,6 @@ configmap:
   ENV: null
   ES_HOST: null
   ES_PORT: 0
-  ETCD_HOST: null
-  ETCD_PORT: 0
   PLACE_LOADER_URI: null
   REDIS_URL: null
   RUBBER_SOUL_URI: null
