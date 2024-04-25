@@ -3,14 +3,12 @@
 
 placeos_namespace: placeos
 placeos_to_ns:
-    # - etcd
     # - rethinkdb
     # - elasticsearch
     # - redis
     # - influxdb
     # - mosquitto
 internal_ns:
-    # - etcd
     # - rethinkdb
     # - elasticsearch
     # - redis

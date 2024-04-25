@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: init
-        image: placeos/init:placeos-2.2307.5
+        image: placeos/init:placeos-2.2404.2
         imagePullPolicy: IfNotPresent
         env:
           # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice

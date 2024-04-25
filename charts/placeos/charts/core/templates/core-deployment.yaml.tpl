@@ -80,8 +80,6 @@ spec:
         volumeMounts:
         - mountPath: /app/bin/drivers/
           name: {{ include "core.fullname" . }}
-        - mountPath: /app/repositories/
-          name: {{ include "core.fullname" . }}-repos
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
       {{ end }}
@@ -111,17 +109,4 @@ spec:
           storage: {{ .Values.persistentVolumeClaim.storage | quote }}
       {{- if .Values.persistentVolumeClaim.storageClassName }}
       storageClassName: {{ .Values.persistentVolumeClaim.storageClassName }}
-      {{- end }}
-  - metadata:
-      name: {{ include "core.fullname" . }}-repos
-      annotations:
-        pv.beta.kubernetes.io/gid: {{ .Values.deployment.podSecurityContext.fsGroup | quote }}
-    spec:
-      accessModes:
-        {{- toYaml .Values.persistentVolumeClaimRepos.accessModes | nindent 8 }}
-      resources:
-        requests:
-          storage: {{ .Values.persistentVolumeClaimRepos.storage | quote }}
-      {{- if .Values.persistentVolumeClaimRepos.storageClassName }}
-      storageClassName: {{ .Values.persistentVolumeClaimRepos.storageClassName }}
       {{- end }}

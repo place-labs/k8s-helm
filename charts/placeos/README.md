@@ -17,7 +17,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 |  | search-ingest | 0.1.0 |
 |  | triggers | 0.1.0 |
 | https://charts.bitnami.com/bitnami | elasticsearch | ~12.6.3 |
-| https://charts.bitnami.com/bitnami | etcd | ~4.10.1 |
 | https://charts.bitnami.com/bitnami | influxdb | ~0.6.6 |
 | https://charts.bitnami.com/bitnami | redis | ~10.8.2 |
 | https://charts.helm.sh/stable/ | rethinkdb | ~1.1.2 |
@@ -30,8 +29,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 | api.configmap.<<.ENV | string | `"development"` | configmap value exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.ES_HOST | string | `"elasticsearch-master"` | configmap value for ElasticSearch Service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.ES_PORT | int | `9200` | configmap value for ElasticSearch Service exposed as environment variables to PlaceOS containers |
-| api.configmap.<<.ETCD_HOST | string | `"etcd-headless"` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
-| api.configmap.<<.ETCD_PORT | int | `2379` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
 | api.configmap.<<.PLACE_LOADER_URI | string | `"http://frontend-loader:3000"` | configmap value for the frontend Service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.REDIS_URL | string | `"redis://redis-headless:6379"` | configmap value for the redis Service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.RETHINKDB_DB | string | `"place_development"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
@@ -54,8 +51,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 | auth.fullnameOverride | string | `"auth"` |  |
 | auth.secrets.<<.RETHINKDB_PASSWORD | string | `"password"` | secret value for the rethinkdb password exposed as environment variables to PlaceOS containers |
 | core.configmap.<<.ENV | string | `"development"` | configmap value exposed as environment variables to PlaceOS containers |
-| core.configmap.<<.ETCD_HOST | string | `"etcd-headless"` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
-| core.configmap.<<.ETCD_PORT | int | `2379` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
 | core.configmap.<<.REDIS_URL | string | `"redis://redis-headless:6379"` | configmap value for the redis Service exposed as environment variables to PlaceOS containers |
 | core.configmap.<<.RETHINKDB_DB | string | `"place_development"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | core.configmap.<<.RETHINKDB_HOST | string | `"rethinkdb-proxy"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
@@ -74,9 +69,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 | elasticsearch.enabled | bool | `false` | elasticsearch chart disabled by default. included for testing purposes only |
 | elasticsearch.master.replicas | int | `1` |  |
 | elasticsearch.templateOverrides.elasticsearchMasterfullName | string | `"elasticsearch-master"` | templateOverrides. A work around to override the full name of the ElasticSearch master. See templates/_helpers.tpl |
-| etcd.auth.rbac.enabled | bool | `false` |  |
-| etcd.enabled | bool | `false` | etcd chart disabled by default. included for testing purposes only |
-| etcd.fullnameOverride | string | `"etcd"` |  |
 | frontend-loader.configmap.<<.ENV | string | `"development"` | configmap value exposed as environment variables to PlaceOS containers |
 | frontend-loader.configmap.<<.RETHINKDB_DB | string | `"place_development"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | frontend-loader.configmap.<<.RETHINKDB_HOST | string | `"rethinkdb-proxy"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
@@ -140,8 +132,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 | search-ingest.fullnameOverride | string | `"search-ingest"` |  |
 | search-ingest.secrets.<<.RETHINKDB_PASSWORD | string | `"password"` | secret value for the rethinkdb password exposed as environment variables to PlaceOS containers |
 | triggers.configmap.<<.ENV | string | `"development"` | configmap value exposed as environment variables to PlaceOS containers |
-| triggers.configmap.<<.ETCD_HOST | string | `"etcd-headless"` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
-| triggers.configmap.<<.ETCD_PORT | int | `2379` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
 | triggers.configmap.<<.REDIS_URL | string | `"redis://redis-headless:6379"` | configmap value for the redis Service exposed as environment variables to PlaceOS containers |
 | triggers.configmap.<<.RETHINKDB_DB | string | `"place_development"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | triggers.configmap.<<.RETHINKDB_HOST | string | `"rethinkdb-proxy"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
@@ -163,8 +153,6 @@ An Umbrella Chart for PlaceOS and its dependencies
 | xdispatchSecrets.SERVER_SECRET | string | `"development"` | secrets value exposed as environment variables for the dispatch service |
 | xelasticClientEnv.ES_HOST | string | `"elasticsearch-master"` | configmap value for ElasticSearch Service exposed as environment variables to PlaceOS containers |
 | xelasticClientEnv.ES_PORT | int | `9200` | configmap value for ElasticSearch Service exposed as environment variables to PlaceOS containers |
-| xetcdClientEnv.ETCD_HOST | string | `"etcd-headless"` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
-| xetcdClientEnv.ETCD_PORT | int | `2379` | configmap value for Etcd end point Service as environment variables to PlaceOS containers |
 | xinitConfigEnv.PLACE_APPLICATION | string | `"backoffice"` | configmap value for the initialisation job exposed as environment variables for the init subchart |
 | xinitConfigEnv.PLACE_AUTH_HOST | string | `"auth:3000"` | configmap value for the initialisation job exposed as environment variables for the init subchart |
 | xinitConfigEnv.PLACE_EMAIL | string | `"support@place.tech"` | configmap value for the initialisation job exposed as environment variables for the init subchart |

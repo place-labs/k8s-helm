@@ -45,15 +45,6 @@ dependencies:
     condition: init.enabled
 
 # Third party helm charts
-  - name: etcd
-    version: ~8.5.9
-    #version: 3.5.4
-    repository: https://charts.bitnami.com/bitnami
-    condition: etcd.enabled
-    # tags: # (optional)
-    #   - Tags can be used to group charts for enabling/disabling together
-    # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
-
   - name: elasticsearch
     version: ~18.2.9
     repository: https://charts.bitnami.com/bitnami

@@ -168,7 +168,7 @@ helm install placeos placeos/ -f placeos/values-openshift.yaml -f placeos/values
 
 Consequently any configuration stored on file in a PV will be retained when the deployments are deleted and redeployed as in a development scenario, ( ie helm install > helm uninstall > helm install ).
 
-Because configurations such as the Etcd master password are randomly generated redeploying without deleteing the stored configuration before hand will result in password mismatches for etcd and the deployment will fail.
+Because configurations such as the postgres master password are randomly generated redeploying without deleteing the stored configuration before hand will result in password mismatches for postgres and the deployment will fail (or helm will fail to upgrade in some cases).
 
 Solution:
 

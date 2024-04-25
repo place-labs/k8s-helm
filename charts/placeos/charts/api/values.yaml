@@ -13,7 +13,7 @@ deployment:
     repository: placeos/rest-api
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-2.2311.1
+    #tag: placeos-2.2404.2
 
   imagePullSecrets: []
   nameOverride: ""
@@ -30,7 +30,7 @@ deployment:
     capabilities:
       drop:
       - ALL
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     runAsNonRoot: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
@@ -78,8 +78,6 @@ configmap:
   ENV: null
   ES_HOST: null
   ES_PORT: 0
-  ETCD_HOST: null
-  ETCD_PORT: 0
   PLACE_LOADER_URI: null
   REDIS_URL: null
   RUBBER_SOUL_URI: null
@@ -100,6 +98,10 @@ ingress:
   # -- enable ingress to expose the pod services
   enabled: true
   annotations: {
+    nginx.ingress.kubernetes.io/server-snippet: 
+      'location ~ ^/r/(?<short_id>[^/]+) {
+          return 301 /api/engine/v2/short_url/uri-$short_id/redirect;
+      }',
     nginx.ingress.kubernetes.io/configuration-snippet: 'add_header X-Frame-Options SAMEORIGIN;',
     nginx.ingress.kubernetes.io/cors-allow-credentials: 'true',
     nginx.ingress.kubernetes.io/cors-allow-headers: 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,x-api-key',

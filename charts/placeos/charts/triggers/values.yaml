@@ -12,7 +12,7 @@ deployment:
     repository: placeos/triggers
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-2.2311.1
+    #tag: placeos-2.2404.2
 
   imagePullSecrets: []
   nameOverride: ""
@@ -76,8 +76,6 @@ service:
 configmap:
   # -- value exposed as environment variable to the pod
   ENV: null
-  ETCD_HOST: null
-  ETCD_PORT: 0
   REDIS_URL: null
   SG_ENV: null
   SMTP_PORT: 0

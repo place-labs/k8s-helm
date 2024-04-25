@@ -15,13 +15,11 @@ xfrontendloaderImageRepo: &frontendloaderImageRepo    "placeos/frontend-loader"
 
 # Third-party Images
 xelasticImageRepo: &elasticImageRepo        "placeos/elasticsearch"
-xetcdImageRepo: &etcdImageRepo              "placeos/etcd"
 xpostgresImageRepo: &postgresImageRepo      "placeos/postgresql"
 xredisImageRepo: &redisImageRepo            "placeos/redis"
 
 # Third-party Image Tags
 xelasticTag: &elasticTag                    "7.9.1-debian-10-r10"
-xetcdTag: &etcdTag                          "3.4.13-debian-10-r0"
 xpostgresTag: &postgresTag                  "11.12.0-debian-10-r13"
 xredisTag: &redisTag                        "6.0.8-debian-10-r0"
 
@@ -91,11 +89,6 @@ elasticsearch:
     registry: *internalRegistry
     repository: *elasticImageRepo
     tag: *elasticTag
-etcd:
-  image:
-    registry: *internalRegistry
-    repository: *etcdImageRepo
-    tag: *etcdTag
 postgresql:
   image:
     registry: *internalRegistry

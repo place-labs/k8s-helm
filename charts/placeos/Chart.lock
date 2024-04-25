@@ -26,9 +26,6 @@ dependencies:
 - name: init
   repository: ""
   version: 0.1.0
-- name: etcd
-  repository: https://charts.bitnami.com/bitnami
-  version: 8.5.11
 - name: elasticsearch
   repository: https://charts.bitnami.com/bitnami
   version: 18.2.16

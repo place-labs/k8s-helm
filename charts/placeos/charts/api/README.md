@@ -15,8 +15,6 @@ A PlaceOS helm chart for the API component
 | configmap.ENV | string | `nil` | value exposed as environment variable to the pod |
 | configmap.ES_HOST | string | `nil` | value exposed as environment variable to the pod |
 | configmap.ES_PORT | int | `0` | value exposed as environment variable to the pod |
-| configmap.ETCD_HOST | string | `nil` | value exposed as environment variable to the pod |
-| configmap.ETCD_PORT | int | `0` | value exposed as environment variable to the pod |
 | configmap.PLACE_LOADER_URI | string | `nil` | value exposed as environment variable to the pod |
 | configmap.REDIS_URL | string | `nil` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_DB | string | `nil` | value exposed as environment variable to the pod |
