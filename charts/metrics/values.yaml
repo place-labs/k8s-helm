@@ -13,6 +13,12 @@ kube-prometheus:
     persistence:
       enabled: true
       size: 50Gi
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
 
 # Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
@@ -81,10 +87,22 @@ grafana-loki:
     persistence:
       enabled: false
       size: 1Gi
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
   querier:
     persistence:
       enabled: false
       size: 100Mi
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 100Mi
 
 # Tempo ingests tracing from PlaceOS services
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
@@ -94,3 +112,9 @@ grafana-tempo:
     persistence:
       enabled: false
       size: 1Gi
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 1
+      requests:
+        memory: 100Mi
