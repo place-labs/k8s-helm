@@ -365,6 +365,14 @@ redis:
     persistence:
       enabled: true
       size: 100M
+    limits:
+      cpu: '1'
+      ephemeral-storage: 1Gi
+      memory: 192Mi
+    requests:
+      cpu: 100m
+      ephemeral-storage: 50Mi
+      memory: 128Mi
 # influxdb third party chart overrides
 influxdb:
   # influxdb chart disabled by default. included for testing purposes only
