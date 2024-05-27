@@ -1,15 +1,15 @@
 dependencies:
 - name: kube-prometheus
   repository: https://charts.bitnami.com/bitnami
-  version: 8.9.1
+  version: 9.2.1
 - name: grafana
   repository: https://charts.bitnami.com/bitnami
-  version: 8.2.33
+  version: 11.2.1
 - name: grafana-loki
   repository: https://charts.bitnami.com/bitnami
-  version: 2.7.1
+  version: 4.2.1
 - name: grafana-tempo
   repository: https://charts.bitnami.com/bitnami
-  version: 2.2.1
-digest: sha256:8d2ba917522d5b0149fb4d0368c538a8adebd192d0780167e4f917da1e1143cf
-generated: "2023-05-01T16:01:43.161031654+10:00"
+  version: 3.4.1
+digest: sha256:4ccad0f0ceae47769f98ad53798d6438b0c614fc9bc5b4b183df483e0eaa2aef
+generated: "2024-05-27T16:39:58.519666454+10:00"
