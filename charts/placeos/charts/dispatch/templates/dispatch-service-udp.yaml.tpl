@@ -20,6 +20,7 @@ spec:
       name: udp-{{ $lbPort }}
   {{- end }}
   {{- end }}
+  externalTrafficPolicy: Local
   selector:
     {{- include "dispatch.selectorLabels" . | nindent 4 }}
 {{ end }}
