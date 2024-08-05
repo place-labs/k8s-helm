@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: init
-        image: placeos/init:placeos-2.2404.2
+        image: placeos/init:placeos-2.2407.1
         command: ["bash", "-c"]
         args:
         - |
