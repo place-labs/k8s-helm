@@ -15,36 +15,32 @@ jobs:
     outputs:
       directories: ${{ steps.array.outputs.build }}
 
-  kube-lint:
+  kube-score-ckeck:
     needs: chart-directories
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
+    name: kube-score (Linux)
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
-      - name: Create ../results directory for SARIF report files
-        shell: bash
-        run: mkdir -p ../results
-
-      - name: Scan yaml files with kube-linter
-        continue-on-error: true 
-        uses: stackrox/kube-linter-action@v1.0.4
-        id: kube-linter-action-scan
+      - name: kube-score action step
+        uses: piraces/kube-score-ga@v0.1.2
+        id: ksga
         with:
-          directory: ${{ matrix.directory }}
-          format: sarif
-          output-file: ../results/kube-linter.sarif
+          manifests-folders: '${{ matrix.directory }}/*.yaml'
+          ignore-exit-code: 'false'
+          kube-score-version: '1.11.0'
+          output-file: 'output.txt'
 
-      - name: Upload SARIF report files to GitHub
-        uses: github/codeql-action/upload-sarif@v1
-
-      # Ensure the workflow eventually fails if files did not pass kube-linter checks.
-      - name: Verify kube-linter-action succeeded
-        shell: bash
-        run: |
-          echo "If this step fails, kube-linter found issues. Check the output of the scan step above."
-          [[ "${{ steps.kube-linter-action-scan.outcome }}" == "success" ]]
+      - name: Google Chat Notification
+        if: failure()
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+            name: kube-score-ckeck
+            url: ${{ secrets.PLACE_OS_CHAT_STDERR }}
+            status: ${{ steps.ksga.outcome }}
