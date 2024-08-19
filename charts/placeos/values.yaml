@@ -316,6 +316,14 @@ source:
     << : *deploymentEnv
   secrets:
     << : *postgresClientSecrets
+  deployment:
+    resources:
+      limits:
+        memory: 1G
+        cpu: 1
+      requests:
+        cpu: 50m
+        memory: 500M
   serviceAccount:
     name: null
 
