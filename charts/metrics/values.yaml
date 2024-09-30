@@ -20,6 +20,14 @@ kube-prometheus:
       requests:
         memory: 512Mi
         cpu: 10m
+  node-exporter:
+    resources:
+      limits:
+        memory: 192MI
+        cpu: 100m
+      requests:
+        memory: 128Mi
+        cpu: 10m
 
 # Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
