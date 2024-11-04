@@ -78,6 +78,9 @@ grafana:
     - configMapName: placeos-grafana-dashboards-placeos-service-metrics
       fileName: placeos-service-metrics.json
       folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-core-error-breakdown
+      fileName: core-error-breakdown.json
+      folderName: PlaceOS
     - configMapName: placeos-grafana-dashboards-pod-resources
       fileName: pod-resources.json
       folderName: PlaceOS
