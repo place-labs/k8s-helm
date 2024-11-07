@@ -14,7 +14,7 @@ jobs:
         run: |
           dirs=$(find charts/placeos/charts -mindepth 1 -type d \( -name tests -o -name templates \) -prune -o -type d -print | jq -R . | jq -s .)
           echo "directories=$dirs" >> $GITHUB_ENV
-          echo "Directory JSON: $json_dirs"
+          echo "Directory JSON: $dirs"
         shell: bash
 
   kube-lint:
