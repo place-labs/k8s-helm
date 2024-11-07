@@ -6,6 +6,7 @@ metadata:
 spec:
   schedule: 0 0 1 1 *
   suspend: true
+  concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
       creationTimestamp: null

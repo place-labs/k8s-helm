@@ -7,6 +7,7 @@ spec:
   # Run this Job with `kubectl create job -n placeos --from cronjob/placeos-migrations placeos-migrations` 
   schedule: "0 0 1 1 *" # Suspended so it never runs on line below
   suspend: true
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       completions: 1

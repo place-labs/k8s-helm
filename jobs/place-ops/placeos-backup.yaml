@@ -5,8 +5,8 @@ metadata:
   namespace: placeos
 spec:
   schedule: 0 0 1 1 *
-  concurrencyPolicy: Allow
   suspend: true
+  concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
       creationTimestamp: null
