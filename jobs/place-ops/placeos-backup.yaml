@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: placeos-backup
+  namespace: placeos
+spec:
+  schedule: 0 0 1 1 *
+  suspend: true
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      completions: 1
+      backoffLimit: 0
+      template:
+        metadata:
+          name: placeos-backup
+          creationTimestamp: null
+        spec:
+          containers:
+            - name: init
+              image: placeos/init:placeos-2.2409.0
+              command:
+                - bash
+                - '-c'
+              args:
+                - >
+                  /app/bin/task backup:az host=$PG_HOST user=$PG_USER
+                  password=$PG_PASSWORD db=$PG_DB
+              envFrom:
+                - secretRef:
+                    name: postgres-client
+                - configMapRef:
+                    name: postgres-client
+              env:
+                - name: PLACE_SKIP_PLACEHOLDERS
+                  value: 'true'
+                - name: PLACE_DOMAIN
+                - name: PLACE_EMAIL
+                  value: support@place.tech
+                - name: PLACE_AUTH_HOST
+                  value: auth:3000
+                - name: PLACE_TLS
+                  value: 'true'
+                - name: AZURE_STORAGE_ACCOUNT_NAME
+                  value: placeholder
+                - name: AZURE_STORAGE_ACCOUNT_KEY
+                  value: >-
+                    placeholder
+                - name: AZURE_STORAGE_CONTAINER
+                  value: placeholder
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: Always
+          restartPolicy: Never
+      ttlSecondsAfterFinished: 3600
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1

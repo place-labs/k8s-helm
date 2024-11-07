@@ -1,0 +1,12 @@
+# create a secret named postgres-client with the key PG_PASSWORD which is the PG_USER's postgres password
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-client
+  namespace: placeos
+data:
+  PG_DB: placeos
+  PG_HOST: postgresql
+  PG_PORT: "5432"
+  PG_USER: placeos
+  PG_QUERY: "?initial_pool_size=1&max_pool_size=20&retry_attempts=2"

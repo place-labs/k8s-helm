@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: placeos-version-update
+  namespace: placeos
+spec:
+  schedule: 0 0 1 1 *
+  suspend: true
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      completions: 1
+      backoffLimit: 0
+      template:
+        metadata:
+          name: placeos-version-update
+          creationTimestamp: null
+        spec:
+          volumes:
+            - name: patch-script
+              configMap:
+                name: placeos-upgrade
+                defaultMode: 420
+          containers:
+            - name: kubectl
+              image: placeos/k8s-tools
+              command:
+                - /bin/python
+                - /script/placeos-upgrade.py
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: metadata.namespace
+                - name: NEW_VERSION
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cluster-info
+                      key: version
+              volumeMounts:
+                - name: patch-script
+                  mountPath: /script
+              imagePullPolicy: IfNotPresent
+          restartPolicy: Never
+          serviceAccountName: place-ops
+          serviceAccount: place-ops
+          securityContext: {}
+      ttlSecondsAfterFinished: 3600
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
