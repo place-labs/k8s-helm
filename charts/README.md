@@ -9,7 +9,9 @@ Currently supported deployment scenarios are:
 - Azure deployment to AKS
 - Openshift v4
 
-Tested on k8s 1.17 and 1.18
+Currently compatible with k8s 1.22.x - 1.26.x 
+- this repo aims to support the most recent stable kubernetes version available from cloud providers
+- although it can work with certain older versions, upgrading to the most recent version is highly recommended for optimal compatibility, performance and security.
 
 ## Prerequisites
 
@@ -31,9 +33,6 @@ Install third party resource dependencies
 
 helm repo add halkeye https://halkeye.github.io/helm-charts/
 helm repo add bitnami  https://charts.bitnami.com/bitnami
-helm repo add stable https://charts.helm.sh/stable
-helm repo add cnieg https://cnieg.github.io/helm-charts
-helm repo add pozetron https://www.pozetron.com/helm/
 cd charts/placeos
 helm dependency update .
 
@@ -85,13 +84,16 @@ The azure folder includes.
 - deploying AKS
 - deploying a public ingress
 
-If no ingress has been deployed yet ( works for both Azure and GCP ):
+If no ingress has been deployed yet ( works for Azure ):
 
 ```sh
 ## Install Load Balancer. See https://hub.helm.sh/charts/ingress-nginx/ingress-nginx
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm install placeos -n ingress-nginx --create-namespace  ingress-nginx/ingress-nginx
-
+helm install -n placeos ingress-nginx --create-namespace  ingress-nginx/ingress-nginx --set controller.allowSnippetAnnotations=true --set controller.service.annotations.""service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
+```
+If an internal Azure load balancer is required add 
+```sh
+ --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"=true
 ```
 
 Extract the public IP of the Loadbalancer
@@ -166,7 +168,7 @@ helm install placeos placeos/ -f placeos/values-openshift.yaml -f placeos/values
 
 Consequently any configuration stored on file in a PV will be retained when the deployments are deleted and redeployed as in a development scenario, ( ie helm install > helm uninstall > helm install ).
 
-Because configurations such as the Etcd master password are randomly generated redeploying without deleteing the stored configuration before hand will result in password mismatches for etcd and the deployment will fail.
+Because configurations such as the postgres master password are randomly generated redeploying without deleteing the stored configuration before hand will result in password mismatches for postgres and the deployment will fail (or helm will fail to upgrade in some cases).
 
 Solution:
 

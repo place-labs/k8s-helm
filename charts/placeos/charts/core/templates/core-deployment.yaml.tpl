@@ -13,6 +13,7 @@ spec:
       {{- include "core.selectorLabels" . | nindent 6 }}
   updateStrategy:
     type: RollingUpdate
+  podManagementPolicy: Parallel
   serviceName: {{ include "core.fullname" . }}
   template:
     metadata:
@@ -53,7 +54,9 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: CORE_HOST
-            value: "$(POD_NAME).{{ include "core.fullname" . }}.$(POD_NAMESPACE).svc.cluster.local"
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
         image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         ports:
@@ -64,6 +67,7 @@ spec:
           httpGet:
             path: /api/core/v1
             port: http
+          initialDelaySeconds: 30
         readinessProbe:
           httpGet:
             path: /api/core/v1
@@ -76,8 +80,6 @@ spec:
         volumeMounts:
         - mountPath: /app/bin/drivers/
           name: {{ include "core.fullname" . }}
-        - mountPath: /app/repositories/
-          name: {{ include "core.fullname" . }}-repos
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
       {{ end }}
@@ -107,17 +109,4 @@ spec:
           storage: {{ .Values.persistentVolumeClaim.storage | quote }}
       {{- if .Values.persistentVolumeClaim.storageClassName }}
       storageClassName: {{ .Values.persistentVolumeClaim.storageClassName }}
-      {{- end }}
-  - metadata:
-      name: {{ include "core.fullname" . }}-repos
-      annotations:
-        pv.beta.kubernetes.io/gid: {{ .Values.deployment.podSecurityContext.fsGroup | quote }}
-    spec:
-      accessModes:
-        {{- toYaml .Values.persistentVolumeClaimRepos.accessModes | nindent 8 }}
-      resources:
-        requests:
-          storage: {{ .Values.persistentVolumeClaimRepos.storage | quote }}
-      {{- if .Values.persistentVolumeClaimRepos.storageClassName }}
-      storageClassName: {{ .Values.persistentVolumeClaimRepos.storageClassName }}
       {{- end }}

@@ -28,11 +28,6 @@ xelasticClientEnv: &elasticClientEnv
   ES_HOST: "{{ elasticsearch_release_name }}.{{ elasticsearch_namespace }}"
   ES_PORT: 9200
 
-# xetcdClientEnv configmap values for Etcd end point Service as environment variables to PlaceOS containers
-xetcdClientEnv: &etcdClientEnv
-  ETCD_HOST: "etcd-headless.{{ etcd_namespace }}"
-  ETCD_PORT: 2379
-
 # xredisClientEnv configmap values for the redis Service exposed as environment variables to PlaceOS containers
 xredisClientEnv: &redisClientEnv
   REDIS_URL: "redis://redis-headless.{{ redis_namespace }}:6379"
@@ -44,6 +39,7 @@ xpostgresValues: &postgresValues
     password: *pgPassword
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
+    replicaCount: 1
   pgpool:
     numInitChildren: 500
 
@@ -79,7 +75,6 @@ placeos:
     configmap:
       # Service Hosts
       << : *elasticClientEnv
-      << : *etcdClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
     secrets:
@@ -96,7 +91,6 @@ placeos:
   core:
     configmap:
       # Service Hosts
-      << : *etcdClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
     secrets:
@@ -126,7 +120,6 @@ placeos:
   triggers:
     configmap:
       # Service Hosts
-      << : *etcdClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
     secrets:
@@ -157,7 +150,6 @@ placeos:
   # source is the overide configuration for the embedded source subchart
   source:
     configmap:
-      << : *etcdClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
       << : *influxClientEnv
@@ -177,15 +169,6 @@ placeos:
 
 ingress-nginx:
   enabled: false
-etcd:
-  fullnameOverride: etcd
-  enabled: true
-  auth:
-    rbac:
-      create: false
-  persistence:
-    enabled: true
-    size: 100M
 elasticsearch:
   enabled: true
   master:

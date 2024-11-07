@@ -23,7 +23,7 @@ spec:
               secretKeyRef:
                 name: postgresql
                 key: password
-          - name: POSTRGES_DB
+          - name: POSTGRES_DB
             value: "placeos"
           - name: POSTGRES_POD
             value: "postgresql-0"

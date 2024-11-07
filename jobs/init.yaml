@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: init
-        image: placeos/init:refactor-pg-migration
+        image: placeos/init:placeos-2.2407.1
         imagePullPolicy: IfNotPresent
         env:
           # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
@@ -29,43 +29,14 @@ spec:
             value: "auth:3000"
           - name: PLACE_TLS
             value: "true"
-          - name: ENV
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: ENV
-          - name: RETHINKDB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: RETHINKDB_HOST
-          - name: RETHINKDB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: core
-                key: RETHINKDB_PASSWORD
-          - name: RETHINKDB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: RETHINKDB_PORT
-          - name: RETHINKDB_USER
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: RETHINKDB_USER
-          - name: RETHINKDB_DB
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: RETHINKDB_DB
-          - name: SG_ENV
-            valueFrom:
-              configMapKeyRef:
-                name: core
-                key: SG_ENV
         envFrom:
         - secretRef:
             name: init
+        - configMapRef:
+            name: core
+        - secretRef:
+            name: postgres-client
+        - configMapRef:
+            name: postgres-client
       restartPolicy: Never
   backoffLimit: 0
