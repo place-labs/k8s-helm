@@ -7,7 +7,7 @@ jobs:
   chart-directories:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: kanga333/json-array-builder@main
         id: array
         with:
@@ -23,7 +23,7 @@ jobs:
       matrix:
         directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
       - name: Create ../results directory for SARIF report files
