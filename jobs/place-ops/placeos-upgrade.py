@@ -94,7 +94,7 @@ def patch_resource(resource_name, resource_type, namespace, new_version):
         patch_json = [
             {"op": "replace", "path": "/metadata/labels/app.kubernetes.io~1version", "value": new_version},
             {"op": "replace", "path": "/spec/template/metadata/labels/app.kubernetes.io~1version", "value": new_version},
-            {"op": "replace", "path": "/spec/template/spec/containers/0/image", "value": new_image},
+            {"op": "replace", "path": f"/spec/template/spec/containers/{int(index)-1}/image", "value": new_image},
         ]
         patch_str = str(patch_json).replace("'", "\"")
         patch_cmd = (
