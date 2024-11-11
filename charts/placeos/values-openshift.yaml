@@ -195,4 +195,3 @@ influxdb:
 global:
   placeDomain: ""
   openshift: true
-    name: placeos-anyuid
