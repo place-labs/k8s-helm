@@ -24,7 +24,7 @@ spec:
                 name: placeos-upgrade
                 defaultMode: 420
           containers:
-            - name: kubectl
+            - name: k8s-tools
               image: placeos/k8s-tools
               command:
                 - /bin/python
