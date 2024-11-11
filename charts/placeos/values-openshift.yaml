@@ -1,10 +1,79 @@
 # Example override values for an Openshift v4 deployment
 
 ############################
+#### Shared Configuration ##
+############################
+xseccompProfileType: &seccompProfileType RuntimeDefault
+
+############################
 ##### PlaceOS Services #####
 ############################
+api:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+auth:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+core:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+dispatch:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
 frontendloader:
   httpSidecar: true
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+  httpDeployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+searchingest:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+triggers:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+staff:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+source:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
+init:
+  deployment:
+    securityContext:
+      seccompProfile:
+        type: *seccompProfileType
+    podPriorityClassName: ""
 
 ###########################################
 ##### Third Party Supporting Services #####
@@ -15,26 +84,97 @@ elasticsearch:
   # Not required on Openshift v4
   sysctlImage:
     enabled: false
-
-rethinkdb:
-  enabled: false
-  rbac:
-    # Specifies whether RBAC resources should be created
-    # Disable for environments without permission to create RBAC or ServiceAccounts
-    create: true
-  serviceAccount:
-    # Specifies whether a ServiceAccount should be created
-    # Disable for environments without permission to create RBAC or ServiceAccounts
-    create: true
+  podSecurityContext:
+    seccompProfile:
+      type: *seccompProfileType
+  master:
+    replicas: 3
+    serviceAccount:
+      create: false
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 25m
+        memory: 256Mi
+    persistence:
+      enabled: true
+      storageClass: default
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+  coordinating:
+    replicas: 0
+    serviceAccount:
+      create: false
+    resources:
+      limits:
+        cpu: 100m
+        memory: 384Mi
+      requests:
+        cpu: 25m
+        memory: 256Mi
+    securityContext:
+      enabled: false
+  data:
+    replicas: 2
+    serviceAccount:
+      create: false
+    resources:
+      limits:
+        cpu: 1
+        memory: 2176Mi
+      requests:
+        cpu: 25m
+        memory: 2048Mi
+    persistence:
+      enabled: true
+      storageClass: default
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
 
 redis:
   enabled: true
+  serviceAccount:
+    create: false
+  podSecurityContext:
+    seccompProfile:
+      type: *seccompProfileType
+  persistence:
+    enabled: true
+    mountPath: /data
+    subPath: ''
+    storageClass: default
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
 
 postgresql:
   enabled: true
+  podSecurityContext:
+    seccompProfile:
+      type: *seccompProfileType
+  resources:
+    limits:
+      cpu: 4
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 256Mi
 
 influxdb:
   enabled: true
+  serviceAccount:
+    create: false
+  podSecurityContext:
+    seccompProfile:
+      type: *seccompProfileType
+  influxdb:
+    securityContext:
+      enabled: false
 
 global:
   placeDomain: ""
+  openshift: true
