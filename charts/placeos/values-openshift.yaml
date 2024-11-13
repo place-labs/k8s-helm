@@ -13,6 +13,7 @@ api:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -20,6 +21,7 @@ auth:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -27,6 +29,7 @@ core:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -34,6 +37,7 @@ dispatch:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -42,11 +46,13 @@ frontendloader:
   httpSidecar: true
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
   httpDeployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -54,6 +60,7 @@ searchingest:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -61,6 +68,7 @@ triggers:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -68,6 +76,7 @@ staff:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -75,6 +84,7 @@ source:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -82,6 +92,7 @@ init:
   serviceAccountName: placeos-anyuid
   deployment:
     securityContext:
+      runAsUser: null
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
@@ -155,6 +166,10 @@ redis:
     create: false
     name: placeos-anyuid
   podSecurityContext:
+    fsgroup: null
+  containerSecurityContext:
+    runAsUser: null
+    runasGroup: null
     seccompProfile:
       type: *seccompProfileType
   master:
