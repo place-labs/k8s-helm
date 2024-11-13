@@ -4,6 +4,7 @@
 #### Shared Configuration ##
 ############################
 xseccompProfileType: &seccompProfileType RuntimeDefault
+xstorageClassName: &storageClassName default
 
 ############################
 ##### PlaceOS Services #####
@@ -111,7 +112,7 @@ elasticsearch:
         memory: 256Mi
     persistence:
       enabled: true
-      storageClass: default
+      storageClass: *storageClassName
       accessModes:
         - ReadWriteOnce
       size: 8Gi
@@ -143,7 +144,7 @@ elasticsearch:
         memory: 2048Mi
     persistence:
       enabled: true
-      storageClass: default
+      storageClass: *storageClassName
       accessModes:
         - ReadWriteOnce
       size: 8Gi
@@ -156,14 +157,15 @@ redis:
   podSecurityContext:
     seccompProfile:
       type: *seccompProfileType
-  persistence:
-    enabled: true
-    mountPath: /data
-    subPath: ''
-    storageClass: default
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
+  master:
+    persistence:
+      enabled: true
+      mountPath: /data
+      subPath: ''
+      storageClass: *storageClassName
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
 
 postgresql:
   enabled: true
@@ -175,7 +177,7 @@ postgresql:
       type: *seccompProfileType
   resources:
     limits:
-      cpu: 4
+      cpu: 2
       memory: 2Gi
     requests:
       cpu: 250m

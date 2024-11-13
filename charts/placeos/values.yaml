@@ -234,6 +234,9 @@ searchingest:
       requests:
         cpu: 10m
         memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 250Mi
 # triggers is the overide configuration for the embedded triggers subchart
 triggers:
   # -- triggers is a core PlaoceOS chart enabled by default.
@@ -252,6 +255,9 @@ triggers:
       requests:
         cpu: 10m
         memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 250Mi
 # init is the overide configuration for the embedded init subchart
 init:
   # -- init is a core PlaoceOS chart enabled by default.
@@ -357,14 +363,15 @@ redis:
     persistence:
       enabled: true
       size: 100M
-    limits:
-      cpu: '1'
-      ephemeral-storage: 1Gi
-      memory: 192Mi
-    requests:
-      cpu: 100m
-      ephemeral-storage: 50Mi
-      memory: 128Mi
+    resources:
+      limits:
+        cpu: '1'
+        ephemeral-storage: 1Gi
+        memory: 192Mi
+      requests:
+        cpu: 100m
+        ephemeral-storage: 50Mi
+        memory: 128Mi
 # influxdb third party chart overrides
 influxdb:
   # influxdb chart disabled by default. included for testing purposes only
