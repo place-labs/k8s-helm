@@ -113,6 +113,10 @@ xinfluxClientEnv: &influxClientEnv
   INFLUX_ORG: PlaceOS
   INFLUX_BUCKET: placeos
 
+xhttpProxy: &httpProxy
+  HTTP_PROXY: ""
+  HTTPS_PROXY: ""
+
 #####################################
 ##### -- PlaceOS Service SubCharts #####
 #####################################
@@ -129,6 +133,7 @@ api:
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *rubberSoulClientEnv
+    << : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
@@ -146,6 +151,7 @@ auth:
   fullnameOverride: auth
   configmap:
     << : *postgresClientEnv
+    << : *httpProxy
     COAUTH_NO_SSL: "false"
     TZ: *TZ
   secrets:
@@ -167,6 +173,7 @@ core:
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *deploymentEnv
+    << : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
@@ -198,8 +205,10 @@ frontendloader:
   configmap:
     # -- path to static html resources
     PLACE_LOADER_WWW: www
+    GIT_SSL_NO_VERIFY: false
     << : *postgresClientEnv
     << : *deploymentEnv
+    << : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
