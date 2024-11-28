@@ -23,7 +23,7 @@ kube-prometheus:
   node-exporter:
     resources:
       limits:
-        memory: 192MI
+        memory: 192Mi
         cpu: 100m
       requests:
         memory: 128Mi
