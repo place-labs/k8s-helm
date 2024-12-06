@@ -291,6 +291,12 @@ grafana-loki:
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
 grafana-tempo:
   enabled: true
+  traces:
+    otlp:
+      http: true
+    jaeger:
+      http: false
+      grpc: false
   ingester:
     persistence:
       enabled: false
