@@ -22,14 +22,28 @@ def run_cmd(cmd):
 def run_job_from_cron(job, namespace):
     subprocess.run(f"kubectl create job -n {namespace} --from=cronjob/{job} {job}", shell=True, check=True)
 
-    # Wait for the job to complete
-    job_status = ""
-    while job_status != "Complete":
-        puts("Waiting for job to complete...")
+    puts("Waiting for job to complete...")
+    while True:
         time.sleep(5)
-        job_status = run_cmd(f"kubectl get job {job} -n {namespace} -o jsonpath='{{.status.conditions[].type}}'")
-        if job_status == "Failed":
-            puts(f"Job {job} failed")
+        json_status = run_cmd(f"kubectl get job {job} -n {namespace} -o jsonpath='{{.status.conditions}}'")
+
+        if not json_status:
+            continue
+
+        try:
+            conditions = json.loads(json_status)
+        except json.JSONDecodeError:
+            puts("Error parsing job status.")
+            continue
+
+        condition_types = [condition.get('type') for condition in conditions]
+
+        if "Complete" in condition_types:
+            puts(f"Job {job} completed successfully.")
+            break
+
+        if "Failed" in condition_types:
+            puts(f"Job {job} failed.")
             sys.exit(1)
 
 def backup_database(namespace):
