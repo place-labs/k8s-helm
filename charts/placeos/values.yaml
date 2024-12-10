@@ -54,7 +54,7 @@ xredisClientEnv: &redisClientEnv
 
 xrubberSoulClientEnv: &rubberSoulClientEnv
   # -- configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers
-  RUBBER_SOUL_URI: http://search-ingest:3000
+  PLACE_SEARCH_INGEST_URI: http://search-ingest:3000
 
 xsmtpClientEnv: &smtpClientEnv
   # -- configmap value for the SMTP server exposed as environment variables for the trigger service

@@ -80,7 +80,7 @@ configmap:
   ES_PORT: 0
   PLACE_LOADER_URI: null
   REDIS_URL: null
-  RUBBER_SOUL_URI: null
+  PLACE_SEARCH_INGEST_URI: null
   SG_ENV: null
   TZ: Australia/Sydney
   PG_DB: null

@@ -35,7 +35,7 @@ An Umbrella Chart for PlaceOS and its dependencies
 | api.configmap.<<.RETHINKDB_HOST | string | `"rethinkdb-proxy"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.RETHINKDB_PORT | int | `28015` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.RETHINKDB_USER | string | `"admin"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
-| api.configmap.<<.RUBBER_SOUL_URI | string | `"http://search-ingest:3000"` | configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers |
+| api.configmap.<<.PLACE_SEARCH_INGEST_URI | string | `"http://search-ingest:3000"` | configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.SG_ENV | string | `"development"` | configmap value exposed as environment variables to PlaceOS containers |
 | api.configmap.<<.TZ | string | `"Australia/Sydney"` | configmap value exposed as environment variables to PlaceOS containers |
 | api.enabled | bool | `true` | api is a core PlaoceOS chart enabled by default. |
@@ -167,7 +167,7 @@ An Umbrella Chart for PlaceOS and its dependencies
 | xrethinkdbClientEnv.RETHINKDB_USER | string | `"admin"` | configmap value for RethinkDB Service exposed as environment variables to PlaceOS containers |
 | xrethinkdbClientSecrets.RETHINKDB_PASSWORD | string | `"password"` | secret value for the rethinkdb password exposed as environment variables to PlaceOS containers |
 | xrethinkdbPassword | string | `"password"` | yaml anchor for the admin password for RethinkDb. Used to set the admin password in RethinkDB if enabled then passed to multiple containers in a k8s secret |
-| xrubberSoulClientEnv.RUBBER_SOUL_URI | string | `"http://search-ingest:3000"` | configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers |
+| xrubberSoulClientEnv.PLACE_SEARCH_INGEST_URI | string | `"http://search-ingest:3000"` | configmap value for the Rubber Soul service exposed as environment variables to PlaceOS containers |
 | xserverSecret | string | `"development"` | yaml anchor for the dispatch service |
 | xsmtpClientEnv.SMTP_PORT | int | `587` | configmap value for the SMTP server exposed as environment variables for the trigger service |
 | xsmtpClientEnv.SMTP_SECURE | string | `""` | configmap value for the SMTP server exposed as environment variables for the trigger service |
