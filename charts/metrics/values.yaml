@@ -254,12 +254,6 @@ grafana-loki:
               - __meta_kubernetes_pod_container_name
               target_label: __path__
           pipeline_stages:
-            - multiline:
-                firstline: '(^\{(.*))|([^\}\s]\s$)'
-                max_wait_time: 1s
-            - replace:
-                expression: '(\\n)'
-                replace: ""
             - json:
                 expressions:
                   timestamp: time
@@ -269,10 +263,6 @@ grafana-loki:
                   message: message
                   exception: exception
                 drop_malformed: false
-            - multiline:
-                # Identify timestamps as first line of a multiline block. Enclose the string in single quotes.
-                firstline: '^\[\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\]'
-                max_wait_time: 3s
             - regex:
                 # Flag (?s:.*) needs to be set for regex stage to capture full traceback log in the extracted map.
                 expression: '^(?P<time>\[\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\]) (?P<message>(?s:.*))$'
