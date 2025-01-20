@@ -193,7 +193,10 @@ grafana-loki:
         # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
         - job_name: kubernetes-pods
           kubernetes_sd_configs:
-            - role: pod
+            - namespaces:
+                names:
+                  - placeos
+              role: pod
           relabel_configs:
             - source_labels:
                 - __meta_kubernetes_pod_controller_name
