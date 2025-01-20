@@ -254,6 +254,7 @@ grafana-loki:
               - __meta_kubernetes_pod_container_name
               target_label: __path__
           pipeline_stages:
+            - cri: {}
             - json:
                 expressions:
                   timestamp: time
@@ -273,9 +274,6 @@ grafana-loki:
                 message:
                 exception:
                 timestamp:
-            - timestamp:
-                format: RFC3339
-                source: time
 
 # Tempo ingests tracing from PlaceOS services
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
