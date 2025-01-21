@@ -266,6 +266,14 @@ grafana-loki:
                   source: source
                   message: message
                   exception: exception
+                  client_ip: client_ip
+                  request_id: request_id
+                  user_id: user_id
+                  event: event
+                  method: method
+                  path: path
+                  status: status
+                  duration: duration
                 drop_malformed: false
             - regex:
                 # Flag (?s:.*) needs to be set for regex stage to capture full traceback log in the extracted map.
