@@ -286,7 +286,7 @@ grafana-loki:
 # Tempo ingests tracing from PlaceOS services
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
 grafana-tempo:
-  enabled: true
+  enabled: false
   traces:
     otlp:
       http: true
