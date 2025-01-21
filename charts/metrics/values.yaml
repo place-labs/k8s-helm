@@ -274,9 +274,6 @@ grafana-loki:
                 level:
                 program:
                 source:
-                message:
-                exception:
-                timestamp:
 
 # Tempo ingests tracing from PlaceOS services
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
