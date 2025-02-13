@@ -27,7 +27,7 @@ spec:
               args:
                 - >
                   /app/bin/task backup:az host=$PG_HOST user=$PG_USER
-                  password=$PG_PASSWORD db=$PG_DB 2>&1 | awk '/failed/ { exit 1 }'
+                  password=$PG_PASSWORD db=$PG_DB 2>&1 | tee /dev/stderr | awk '/failed/ { exit 1 }'
               envFrom:
                 - secretRef:
                     name: postgres-client
