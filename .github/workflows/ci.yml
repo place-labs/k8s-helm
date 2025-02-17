@@ -24,6 +24,16 @@ jobs:
         directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Set Up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.16.3
+
+      - name: Template Helm Charts
+        run: |
+          mkdir -p rendered-templates/${{ matrix.directory }}
+          helm template lint-release ./${{ matrix.directory }} -f ./${{ matrix.directory }}/values.yaml --set global.placeDomain="test.domain" > rendered-templates/${{ matrix.directory }}/rendered.yaml
 
       # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
       - name: Create ../results directory for SARIF report files
@@ -35,7 +45,7 @@ jobs:
         uses: stackrox/kube-linter-action@v1.0.5
         id: kube-linter-action-scan
         with:
-          directory: ${{ matrix.directory }}
+          directory: rendered-templates/${{ matrix.directory }}
           format: sarif
           output-file: ../results/kube-linter.sarif
 
