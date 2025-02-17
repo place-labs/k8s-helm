@@ -4,24 +4,11 @@ on:
   push:
 
 jobs:
-  chart-directories:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: kanga333/json-array-builder@main
-        id: array
-        with:
-          cmd: 'find charts/placeos/charts -mindepth 1 -type d -not -name tests -not -name templates'
-    outputs:
-      directories: ${{ steps.array.outputs.build }}
 
   kube-lint:
-    needs: chart-directories
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        directory: ${{ fromJson(needs.chart-directories.outputs.directories) }}
     steps:
       - uses: actions/checkout@v4
       
@@ -33,7 +20,7 @@ jobs:
       - name: Template Helm Charts
         run: |
           mkdir -p rendered-templates/${{ matrix.directory }}
-          helm template lint-release ./${{ matrix.directory }} -f ./${{ matrix.directory }}/values.yaml --set global.placeDomain="test.domain" > rendered-templates/${{ matrix.directory }}/rendered.yaml
+          helm template lint-release ./charts/placeos -f ./charts/placeos/values.yaml --set global.placeDomain="test.domain" > rendered-templates/rendered.yaml
 
       # This prepares directory where github/codeql-action/upload-sarif@v1 looks up report files by default.
       - name: Create ../results directory for SARIF report files
@@ -45,7 +32,7 @@ jobs:
         uses: stackrox/kube-linter-action@v1.0.5
         id: kube-linter-action-scan
         with:
-          directory: rendered-templates/${{ matrix.directory }}
+          directory: rendered-templates
           format: sarif
           output-file: ../results/kube-linter.sarif
 
