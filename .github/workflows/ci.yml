@@ -11,6 +11,12 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
+
+      - name: Remove third-party dependencies from Chart.yaml
+        run: |
+          # Delete everything below the third party charts line in Chart.yaml
+          awk '/# Third party helm charts/ { exit } { print }' charts/placeos/Chart.yaml > charts/placeos/Chart.yaml.tmp
+          mv charts/placeos/Chart.yaml.tmp charts/placeos/Chart.yaml
       
       - name: Set Up Helm
         uses: azure/setup-helm@v1
