@@ -29,7 +29,7 @@ httpDeployment:
     fsGroup: 10001
 
   securityContext:
-    allowPrivilegeEscalation: true
+    allowPrivilegeEscalation: false
     # -- Linux Capabilities for the container
     capabilities:
       add:
@@ -39,6 +39,7 @@ httpDeployment:
     readOnlyRootFilesystem: false
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
+    runAsNonRoot: true
   # -- Pod resources request and limits
   resources: {}
   # limits:
