@@ -58,6 +58,8 @@ spec:
         volumeMounts:
         - mountPath: /app/www
           name: {{ .Values.persistentVolumeClaim.name }}
+        - mountPath: /tmp
+          name: frontend-tmp
       {{- if .Values.httpSidecar }}
       - name: nginx
         image: "{{ .Values.httpDeployment.image.repository }}:{{ .Values.httpDeployment.image.tag }}"
@@ -76,6 +78,10 @@ spec:
         - mountPath: /etc/nginx/conf.d/
           name: default-conf
           readOnly: true
+        - mountPath: /var/cache/nginx
+          name: cache
+        - mountPath: /tmp
+          name: nginx-tmp
       {{- end }}
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
@@ -90,6 +96,12 @@ spec:
       {{- end }}
       restartPolicy: Always
       volumes:
+      - name: cache
+        emptyDir: {}
+      - name: nginx-tmp
+        emptyDir: {}
+      - name: frontend-tmp
+        emptyDir: {}
       - name: default-conf
         configMap:
           name: {{ include "frontend-loader.fullname" . }}-nginx-conf

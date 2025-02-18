@@ -66,8 +66,8 @@ spec:
           readOnly: true
         - mountPath: /var/cache/nginx
           name: cache
-        - mountPath: /var/run/
-          name: pid
+        - mountPath: /tmp
+          name: tmp
       {{- if .Values.httpDeployment.podPriorityClassName }}
       priorityClassName: {{ .Values.httpDeployment.podPriorityClassName }}
       {{ end }}
@@ -87,7 +87,7 @@ spec:
       volumes:
       - name: cache
         emptyDir: {}
-      - name: pid
+      - name: tmp
         emptyDir: {}
       - name: www
         persistentVolumeClaim:

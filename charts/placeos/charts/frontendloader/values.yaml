@@ -36,7 +36,7 @@ httpDeployment:
       - NET_BIND_SERVICE
       drop:
       - ALL
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
     runAsNonRoot: true
