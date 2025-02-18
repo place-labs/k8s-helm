@@ -13,9 +13,9 @@ httpDeployment:
   podPriorityClassName: medium
   image:
     registry: docker.io
-    repository: nginx
+    repository: nginxinc/nginx-unprivileged
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    tag: "1.18"
+    tag: alpine
     pullPolicy: IfNotPresent
 
   imagePullSecrets: []

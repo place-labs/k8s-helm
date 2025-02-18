@@ -60,7 +60,7 @@ spec:
           name: {{ .Values.persistentVolumeClaim.name }}
       {{- if .Values.httpSidecar }}
       - name: nginx
-        image: nginx:1.18
+        image: "{{ .Values.httpDeployment.image.repository }}:{{ .Values.httpDeployment.image.tag }}"
         imagePullPolicy: ""
         {{/* securityContext:
           {{- toYaml .Values.deployment.securityContext | nindent 12 }} */}}
