@@ -62,8 +62,8 @@ spec:
       - name: nginx
         image: "{{ .Values.httpDeployment.image.repository }}:{{ .Values.httpDeployment.image.tag }}"
         imagePullPolicy: ""
-        {{/* securityContext:
-          {{- toYaml .Values.deployment.securityContext | nindent 12 }} */}}
+        securityContext:
+          {{- toYaml .Values.httpDeployment.securityContext | nindent 12 }}
         ports:
         - containerPort: 8080
           name: http-nginx
