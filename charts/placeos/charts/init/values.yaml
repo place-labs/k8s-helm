@@ -35,13 +35,13 @@ deployment:
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
   # -- Pod resources request and limits
-  resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 serviceAccount:
   # -- Specifies whether a service account should be created
