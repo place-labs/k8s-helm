@@ -25,6 +25,9 @@ spec:
         core: {{ include "core.fullname" . }}
         {{- include "core.labels" . | nindent 8 }}
     spec:
+      volumes:
+        - name: tmp
+          emptyDir: {}
       {{- with .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -80,6 +83,8 @@ spec:
         volumeMounts:
         - mountPath: /app/bin/drivers/
           name: {{ include "core.fullname" . }}
+        - name: tmp
+          mountPath: /tmp
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
       {{ end }}
