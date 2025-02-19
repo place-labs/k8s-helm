@@ -40,6 +40,9 @@ spec:
           - name: http
             containerPort: 3000
             protocol: TCP
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
         livenessProbe:
           httpGet:
             path: /api/engine/v2/
@@ -66,3 +69,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       restartPolicy: Always
+      volumes:
+      - name: tmp
+        emptyDir: {}
