@@ -68,12 +68,12 @@ spec:
             protocol: TCP
         livenessProbe:
           httpGet:
-            path: /api/core/v1
+            path: /api/core/v1?liveness
             port: http
           initialDelaySeconds: 30
         readinessProbe:
           httpGet:
-            path: /api/core/v1
+            path: /api/core/v1?readiness
             port: http
           initialDelaySeconds: 30
           periodSeconds: 15
