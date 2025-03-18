@@ -12,13 +12,17 @@ spec:
     spec:
       containers:
       - name: init
+<<<<<<< HEAD
         image: placeos/init:placeos-2.2407.1
+=======
+        image: placeos/init:placeos-2.2412.2
+>>>>>>> master
         imagePullPolicy: IfNotPresent
         env:
-          # Set PLACE_SKIP_PLACEHOLDERS to false to create domain/user/backoffice
+          # Set PLACE_SKIP_PLACEHOLDERS to false to create systems/zones/drivers examples
           - name: PLACE_SKIP_PLACEHOLDERS
             value: "true"
-          # PLACE_DOMAIN can be left blank unless PLACE_SKIP_PLACEHOLDERS is false
+          # PLACE_DOMAIN can be set to create a domain (placeos authority)
           - name: PLACE_DOMAIN
             value: ""
           - name: PLACE_EMAIL

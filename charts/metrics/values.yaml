@@ -1,0 +1,352 @@
+## Metrics
+
+# Prometheus collects node & k8s metrics
+# https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus
+kube-prometheus:
+  enabled: true
+  operator:
+    # This creates a Service in the kube-system namespace which exposes a set of prometheus data to grafana with a `service` label 
+    # If you have incorrect (2x, 3x, etc) CONTAINER values in grafana dashboards you likely have orphaned Services from previous deployments
+    kubeletService:
+      enabled: true 
+  prometheus:
+    persistence:
+      enabled: true
+      size: 50Gi
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
+        cpu: 10m
+  node-exporter:
+    resources:
+      limits:
+        memory: 192Mi
+        cpu: 100m
+      requests:
+        memory: 128Mi
+        cpu: 10m
+
+# Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana
+grafana:
+  enabled: true
+  persistence:
+    size: 100Mi
+  ingress:
+    enabled: true
+    hostname: metrics.local
+    annotations: {}
+    ingressClassName: nginx
+    tls: true
+    selfSigned: true
+  admin:
+    user: place-admin
+    password: "" # leave blank for random
+  datasources:
+    secretName: placeos-grafana-datasources
+  dashboardsProvider:
+    enabled: true
+    configMapName: placeos-grafana-dashboard-provider
+  dashboardsConfigMaps:
+    - configMapName: placeos-grafana-dashboards-alertmanager
+      fileName: alertmanager.json
+      folderName: Alerts
+    - configMapName: placeos-grafana-dashboards-postgres
+      fileName: postgres.json
+      folderName: Database
+    - configMapName: placeos-grafana-dashboards-elasticsearch
+      fileName: elasticsearch.json
+      folderName: Database
+    - configMapName: placeos-grafana-dashboards-api-server
+      fileName: api-server.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-cluster-monitoring
+      fileName: cluster-monitoring.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-node-exporter
+      fileName: node-exporter.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-volumes
+      fileName: volumes.json
+      folderName: Kubernetes
+    - configMapName: placeos-grafana-dashboards-placeos-logs
+      fileName: placeos-logs.json
+      folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-placeos-service-metrics
+      fileName: placeos-service-metrics.json
+      folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-core-error-breakdown
+      fileName: core-error-breakdown.json
+      folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-pod-resources
+      fileName: pod-resources.json
+      folderName: PlaceOS
+    - configMapName: placeos-grafana-dashboards-metrics-pod-resources
+      fileName: metrics-pod-resources.json
+
+# Loki collects pod logs
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
+grafana-loki:
+  enabled: true
+  compactor:
+    persistence:
+      enabled: true
+      size: 100Mi
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  ingester:
+    persistence:
+      enabled: false
+      size: 1Gi
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
+        cpu: 10m
+  querier:
+    persistence:
+      enabled: false
+      size: 100Mi
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  queryFrontend:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  gateway:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  distributor:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  memcachedchunks:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  memcachedfrontend:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  promtail:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+    configuration: |
+      server:
+        log_level: {{ .Values.promtail.logLevel }}
+        http_listen_port: {{ .Values.promtail.containerPorts.http }}
+        grpc_listen_port: {{ .Values.promtail.containerPorts.grpc }}
+
+      clients:
+        - url: http://{{ include "grafana-loki.gateway.fullname" . }}:{{ .Values.gateway.service.ports.http }}/loki/api/v1/push
+          {{- if .Values.gateway.auth.enabled }}
+          basic_auth:
+            # The username to use for basic auth
+            username: {{ .Values.gateway.auth.username }}
+            password_file: /bitnami/promtail/conf/secrets/password
+          {{- end }}
+      positions:
+        filename: /run/promtail/positions.yaml
+
+      scrape_configs:
+        # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
+        - job_name: kubernetes-pods
+          kubernetes_sd_configs:
+            - namespaces:
+                names:
+                  - placeos
+              role: pod
+          relabel_configs:
+            - source_labels:
+                - __meta_kubernetes_pod_controller_name
+              regex: ([0-9a-z-.]+?)(-[0-9a-f]{8,10})?
+              action: replace
+              target_label: __tmp_controller_name
+            - source_labels:
+                - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                - __meta_kubernetes_pod_label_app
+                - __tmp_controller_name
+                - __meta_kubernetes_pod_name
+              regex: ^;*([^;]+)(;.*)?$
+              action: replace
+              target_label: app
+            - source_labels:
+                - __meta_kubernetes_pod_label_app_kubernetes_io_component
+                - __meta_kubernetes_pod_label_component
+              regex: ^;*([^;]+)(;.*)?$
+              action: replace
+              target_label: component
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_pod_node_name
+              target_label: node_name
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_namespace
+              target_label: namespace
+            - action: replace
+              replacement: $1
+              separator: /
+              source_labels:
+              - namespace
+              - app
+              target_label: job
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_pod_name
+              target_label: pod
+            - action: replace
+              source_labels:
+              - __meta_kubernetes_pod_container_name
+              target_label: container
+            - action: replace
+              replacement: /var/log/pods/*$1/*.log
+              separator: /
+              source_labels:
+              - __meta_kubernetes_pod_uid
+              - __meta_kubernetes_pod_container_name
+              target_label: __path__
+            - action: replace
+              regex: true/(.*)
+              replacement: /var/log/pods/*$1/*.log
+              separator: /
+              source_labels:
+              - __meta_kubernetes_pod_annotationpresent_kubernetes_io_config_hash
+              - __meta_kubernetes_pod_annotation_kubernetes_io_config_hash
+              - __meta_kubernetes_pod_container_name
+              target_label: __path__
+          pipeline_stages:
+            - cri: {}
+            - json:
+                expressions:
+                  timestamp: time
+                  level: level
+                  program: program
+                  source: source
+                  message: message
+                  exception: exception
+                  client_ip: client_ip
+                  request_id: request_id
+                  user_id: user_id
+                  event: event
+                  method: method
+                  path: path
+                  status: status
+                  duration: duration
+                drop_malformed: false
+            - regex:
+                # Flag (?s:.*) needs to be set for regex stage to capture full traceback log in the extracted map.
+                expression: '^(?P<time>\[\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\]) (?P<message>(?s:.*))$'
+            - labels:
+                level:
+                program:
+                source:
+
+# Tempo ingests tracing from PlaceOS services
+# https://github.com/bitnami/charts/tree/main/bitnami/grafana-tempo
+grafana-tempo:
+  enabled: false
+  traces:
+    otlp:
+      http: true
+    jaeger:
+      http: false
+      grpc: false
+  ingester:
+    persistence:
+      enabled: false
+      size: 1Gi
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  compactor:
+    persistence:
+      enabled: true
+      size: 100Mi
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  querier:
+    persistence:
+      enabled: false
+      size: 100Mi
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  queryFrontend:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  distributor:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  vulture:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m

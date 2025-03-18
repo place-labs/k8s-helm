@@ -75,6 +75,10 @@ xsmtpClientSecrets: &smtpClientSecrets
 xdispatchSecrets: &dispatchSecrets
   SERVER_SECRET: *serverSecret
 
+xhttpProxy: &httpProxy
+  HTTP_PROXY: ""
+  HTTPS_PROXY: ""
+
 placeos:
   enabled: true
   # api is the overide configuration for the embedded api subchart
@@ -84,6 +88,7 @@ placeos:
       << : *elasticClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
+      << : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -91,6 +96,7 @@ placeos:
   auth:
     configmap:
       << : *postgresClientEnv
+      << : *httpProxy
     secrets:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *postgresClientSecrets
@@ -100,6 +106,7 @@ placeos:
       # Service Hosts
       << : *redisClientEnv
       << : *postgresClientEnv
+      << : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -112,6 +119,7 @@ placeos:
     httpSidecar: true
     configmap:
       << : *postgresClientEnv
+      << : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret

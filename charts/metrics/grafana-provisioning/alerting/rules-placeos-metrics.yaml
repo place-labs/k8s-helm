@@ -1,0 +1,260 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: Metrics
+      folder: PlaceOS
+      interval: 5m
+      rules:
+        - uid: aeapjpnz2ls74a
+          title: Pod Memory Limit %
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: prometheus
+              model:
+                datasource:
+                    type: prometheus
+                    uid: prometheus
+                editorMode: code
+                expr: "100 * sum(container_memory_working_set_bytes{pod=~\".*\",namespace=\"placeos\",container=\"\"}) by (pod)\r\n/\r\nsum(kube_pod_container_resource_limits{pod=~\".*\",namespace=\"placeos\",resource=\"memory\"}) by (pod)"
+                interval: ""
+                intervalMs: 15000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: B
+                settings:
+                    mode: dropNN
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 90
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: pod-resources
+          panelId: 469
+          noDataState: KeepLast
+          execErrState: Error
+          for: 15m
+          annotations:
+            __dashboardUid__: pod-resources
+            __panelId__: "469"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - Metrics Alerts
+        - uid: eeapjs24i17uoe
+          title: Pod CPU Request %
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: prometheus
+              model:
+                datasource:
+                    type: prometheus
+                    uid: prometheus
+                editorMode: code
+                expr: "100 * sum(rate(container_cpu_usage_seconds_total{pod=~\".*\",namespace=\"placeos\",container=\"\"}[1m])) by (pod)\r\n/\r\nsum(kube_pod_container_resource_requests{pod=~\".*\",namespace=\"placeos\",resource=\"cpu\"}) by (pod)"
+                interval: ""
+                intervalMs: 15000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: B
+                settings:
+                    mode: dropNN
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 150
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: pod-resources
+          panelId: 470
+          noDataState: NoData
+          execErrState: Error
+          for: 15m
+          annotations:
+            __dashboardUid__: pod-resources
+            __panelId__: "470"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - Metrics Alerts
+        - uid: eeapk1unnn8xsf
+          title: Volume Use %
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: prometheus
+              model:
+                datasource:
+                    type: prometheus
+                    uid: prometheus
+                editorMode: code
+                expr: "100 * sum(kubelet_volume_stats_used_bytes{namespace=\"placeos\"}) by (persistentvolumeclaim)\r\n  /\r\nsum(kubelet_volume_stats_capacity_bytes{namespace=\"placeos\"}) by (persistentvolumeclaim)"
+                interval: ""
+                intervalMs: 15000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 80
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: pod-resources
+          panelId: 402
+          noDataState: NoData
+          execErrState: Error
+          for: 15m
+          annotations:
+            __dashboardUid__: pod-resources
+            __panelId__: "402"
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - Metrics Alerts

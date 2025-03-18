@@ -55,11 +55,11 @@ spec:
         {{/*
         livenessProbe:
           httpGet:
-            path: /
+            path: /?liveness
             port: http
         readinessProbe:
           httpGet:
-            path: /
+            path: /?readiness
             port: http 
         */}}
         resources:
