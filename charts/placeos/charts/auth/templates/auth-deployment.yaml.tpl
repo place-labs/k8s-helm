@@ -42,11 +42,11 @@ spec:
             protocol: TCP
         livenessProbe:
           httpGet:
-            path: /auth/authority?health=true
+            path: /auth/authority?health=true&liveness
             port: http
         readinessProbe:
           httpGet:
-            path: /auth/authority?health=true
+            path: /auth/authority?health=true&readiness
             port: http
         resources:
           {{- toYaml .Values.deployment.resources | nindent 12 }}

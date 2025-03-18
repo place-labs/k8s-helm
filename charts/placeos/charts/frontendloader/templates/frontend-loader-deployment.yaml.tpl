@@ -47,23 +47,25 @@ spec:
             protocol: TCP
         livenessProbe:
           httpGet:
-            path: /api/frontend-loader/v1
+            path: /api/frontend-loader/v1?liveness
             port: http
         readinessProbe:
           httpGet:
-            path: /api/frontend-loader/v1
+            path: /api/frontend-loader/v1?readiness
             port: http
         resources:
           {{- toYaml .Values.deployment.resources | nindent 12 }}
         volumeMounts:
         - mountPath: /app/www
           name: {{ .Values.persistentVolumeClaim.name }}
+        - mountPath: /tmp
+          name: frontend-tmp
       {{- if .Values.httpSidecar }}
       - name: nginx
-        image: nginx:1.18
+        image: "{{ .Values.httpDeployment.image.repository }}:{{ .Values.httpDeployment.image.tag }}"
         imagePullPolicy: ""
-        {{/* securityContext:
-          {{- toYaml .Values.deployment.securityContext | nindent 12 }} */}}
+        securityContext:
+          {{- toYaml .Values.httpDeployment.securityContext | nindent 12 }}
         ports:
         - containerPort: 8080
           name: http-nginx
@@ -76,6 +78,10 @@ spec:
         - mountPath: /etc/nginx/conf.d/
           name: default-conf
           readOnly: true
+        - mountPath: /var/cache/nginx
+          name: cache
+        - mountPath: /tmp
+          name: nginx-tmp
       {{- end }}
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
@@ -90,6 +96,12 @@ spec:
       {{- end }}
       restartPolicy: Always
       volumes:
+      - name: cache
+        emptyDir: {}
+      - name: nginx-tmp
+        emptyDir: {}
+      - name: frontend-tmp
+        emptyDir: {}
       - name: default-conf
         configMap:
           name: {{ include "frontend-loader.fullname" . }}-nginx-conf

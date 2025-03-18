@@ -13,7 +13,7 @@ deployment:
     repository: placeos/core
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-2.2407.1
+    #tag: placeos-2.2412.2
 
   imagePullSecrets: []
   nameOverride: ""
@@ -31,7 +31,7 @@ deployment:
     capabilities:
       drop:
       - ALL
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
     runAsNonRoot: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001

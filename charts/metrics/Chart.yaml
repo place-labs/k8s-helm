@@ -1,0 +1,27 @@
+apiVersion: v2
+name: placeos-metrics
+description: A chart to deploy cluster metrics, monitoring and alerting
+
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: kube-prometheus
+    version: ~9.2.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: kube-prometheus.enabled
+
+  - name: grafana
+    version: ~11.2.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana.enabled
+
+  - name: grafana-loki
+    version: ~4.2.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana-loki.enabled
+
+  - name: grafana-tempo
+    version: ~3.4.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: grafana-tempo.enabled

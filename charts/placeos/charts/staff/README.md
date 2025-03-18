@@ -21,7 +21,7 @@ A PlaceOS helm chart for the STAFF-API component
 | configmap.RETHINKDB_HOST | string | `nil` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_PORT | string | `nil` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_USER | string | `nil` | value exposed as environment variable to the pod |
-| configmap.RUBBER_SOUL_URI | string | `nil` | value exposed as environment variable to the pod |
+| configmap.PLACE_SEARCH_INGEST_URI | string | `nil` | value exposed as environment variable to the pod |
 | configmap.SG_ENV | string | `nil` | value exposed as environment variable to the pod |
 | configmap.TZ | string | `"Australia/Sydney"` | value exposed as environment variable to the pod |
 | deployment.affinity | object | `{}` |  |

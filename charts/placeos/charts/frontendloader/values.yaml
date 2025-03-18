@@ -13,9 +13,9 @@ httpDeployment:
   podPriorityClassName: medium
   image:
     registry: docker.io
-    repository: nginx
+    repository: nginxinc/nginx-unprivileged
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    tag: "1.18"
+    tag: alpine
     pullPolicy: IfNotPresent
 
   imagePullSecrets: []
@@ -29,16 +29,17 @@ httpDeployment:
     fsGroup: 10001
 
   securityContext:
-    allowPrivilegeEscalation: true
+    allowPrivilegeEscalation: false
     # -- Linux Capabilities for the container
     capabilities:
       add:
       - NET_BIND_SERVICE
       drop:
       - ALL
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001
+    runAsNonRoot: true
   # -- Pod resources request and limits
   resources: {}
   # limits:
@@ -60,7 +61,7 @@ httpDeployment:
         podAffinityTerm:
           labelSelector:
             matchExpressions:
-            - key: name
+            - key: app.kubernetes.io/name
               operator: In
               values:
               - frontend-loader
@@ -86,7 +87,7 @@ deployment:
     repository: placeos/frontend-loader
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-2.2407.1
+    #tag: placeos-2.2412.2
 
   imagePullSecrets: []
   nameOverride: ""
@@ -102,7 +103,7 @@ deployment:
     capabilities:
       drop:
       - ALL
-    readOnlyRootFilesystem: false
+    readOnlyRootFilesystem: true
     runAsNonRoot: true
     # -- runAsUser is defined at container build time and in most circumstances should not be changed
     runAsUser: 10001

@@ -1,0 +1,10 @@
+apiVersion: 1
+contactPoints:
+    - orgId: 1
+      name: Google Chat - Metrics Alerts
+      receivers:
+        - uid: eeapjol1e2z29b
+          type: googlechat
+          settings:
+            url: GOOGLE_CHAT_WEBHOOK_URL_HERE
+          disableResolveMessage: false

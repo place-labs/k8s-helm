@@ -27,6 +27,25 @@ kubectl apply --filename init.yaml --namespace placeos
 
 ---
 
+## Add domain
+
+Run the add-domain job to:
+- Create a PlaceOS Authority for a given domain
+
+This is primarily useful if you need to create a domain after deployment but before having web access (ie. to resolve a load balancer health check)
+
+To run the add-domain job:
+1. Edit add-domain.yaml
+ - Set the `image` to the same PlaceOS version as deployed PlaceOS services
+ - Set the `PLACE_DOMAIN` value to the domain to add (do not include http(s)://)
+
+2. Apply add-domain.yaml
+```
+kubectl apply --filename add-domain.yaml --namespace placeos
+```
+
+- The `add-domain` pod logs will contain details about the authority created and will remain for 1 hour
+
 ## rethink-dump
 
 Run the rethink-dump job to:
