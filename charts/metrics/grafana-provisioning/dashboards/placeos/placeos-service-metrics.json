@@ -1341,7 +1341,8 @@
           "expr": "sum(count_over_time({app=\"api\", level=\"ERROR\"} [1m]))",
           "maxLines": 10,
           "queryType": "range",
-          "refId": "A"
+          "refId": "A",
+          "step": "1m"
         }
       ],
       "title": "API Errors / Min",
@@ -1536,7 +1537,8 @@
           "expr": "sum(count_over_time({app=\"core\"} |= `level=[E]` |= `driver` [1m]))",
           "maxLines": 10,
           "queryType": "range",
-          "refId": "A"
+          "refId": "A",
+          "step": "1m"
         }
       ],
       "title": "Driver Errors / Min",
@@ -1633,7 +1635,8 @@
           "expr": "sum(count_over_time({app=\"staff\"} |= `Error` [1m]))",
           "maxLines": 10,
           "queryType": "range",
-          "refId": "A"
+          "refId": "A",
+          "step": "1m"
         }
       ],
       "title": "Staff Errors / Min",
@@ -2220,6 +2223,6 @@
   "timezone": "",
   "title": "PlaceOS Service Metrics",
   "uid": "placeos-service-metrics",
-  "version": 20,
+  "version": 21,
   "weekStart": ""
 }
