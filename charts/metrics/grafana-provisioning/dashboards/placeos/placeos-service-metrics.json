@@ -1268,8 +1268,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1365,8 +1365,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1438,7 +1438,8 @@
           "expr": "sum(count_over_time({namespace=\"placeos\", app=\"core\", level=\"ERROR\"} [1m]))",
           "maxLines": 10,
           "queryType": "range",
-          "refId": "A"
+          "refId": "A",
+          "step": "1m"
         }
       ],
       "title": "Core Errors / Min",
@@ -1462,8 +1463,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1559,8 +1560,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -2211,7 +2212,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timeRangeUpdatedDuringEditOrView": false,
@@ -2219,6 +2220,6 @@
   "timezone": "",
   "title": "PlaceOS Service Metrics",
   "uid": "placeos-service-metrics",
-  "version": 19,
+  "version": 20,
   "weekStart": ""
 }
