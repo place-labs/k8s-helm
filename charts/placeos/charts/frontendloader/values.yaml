@@ -61,11 +61,7 @@ httpDeployment:
         podAffinityTerm:
           labelSelector:
             matchExpressions:
-<<<<<<< HEAD
-            - key: name
-=======
             - key: app.kubernetes.io/name
->>>>>>> master
               operator: In
               values:
               - frontend-loader
@@ -91,11 +87,7 @@ deployment:
     repository: placeos/frontend-loader
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-<<<<<<< HEAD
-    #tag: placeos-2.2407.1
-=======
     #tag: placeos-2.2412.2
->>>>>>> master
 
   imagePullSecrets: []
   nameOverride: ""
