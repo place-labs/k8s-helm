@@ -5,12 +5,13 @@
 ############################
 xseccompProfileType: &seccompProfileType RuntimeDefault
 xstorageClassName: &storageClassName default
+xserviceAccountName: &serviceAccountName placeos-anyuid
 
 ############################
 ##### PlaceOS Services #####
 ############################
 api:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -18,7 +19,7 @@ api:
         type: *seccompProfileType
     podPriorityClassName: ""
 auth:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -26,7 +27,7 @@ auth:
         type: *seccompProfileType
     podPriorityClassName: ""
 core:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -34,7 +35,7 @@ core:
         type: *seccompProfileType
     podPriorityClassName: ""
 dispatch:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -42,7 +43,7 @@ dispatch:
         type: *seccompProfileType
     podPriorityClassName: ""
 frontendloader:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   httpSidecar: true
   deployment:
     securityContext:
@@ -57,7 +58,7 @@ frontendloader:
         type: *seccompProfileType
     podPriorityClassName: ""
 searchingest:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -65,7 +66,7 @@ searchingest:
         type: *seccompProfileType
     podPriorityClassName: ""
 triggers:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -73,7 +74,7 @@ triggers:
         type: *seccompProfileType
     podPriorityClassName: ""
 staff:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -81,7 +82,7 @@ staff:
         type: *seccompProfileType
     podPriorityClassName: ""
 source:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -89,7 +90,7 @@ source:
         type: *seccompProfileType
     podPriorityClassName: ""
 init:
-  serviceAccountName: placeos-anyuid
+  serviceAccountName: *serviceAccountName
   deployment:
     securityContext:
       runAsUser: null
@@ -113,7 +114,7 @@ elasticsearch:
     replicas: 3
     serviceAccount:
       create: false
-      name: placeos-anyuid
+      name: *serviceAccountName
     resources:
       limits:
         cpu: 1000m
@@ -131,7 +132,7 @@ elasticsearch:
     replicas: 0
     serviceAccount:
       create: false
-      name: placeos-anyuid
+      name: *serviceAccountName
     resources:
       limits:
         cpu: 100m
@@ -145,7 +146,7 @@ elasticsearch:
     replicas: 2
     serviceAccount:
       create: false
-      name: placeos-anyuid
+      name: *serviceAccountName
     resources:
       limits:
         cpu: 1
@@ -164,7 +165,7 @@ redis:
   enabled: true
   serviceAccount:
     create: false
-    name: placeos-anyuid
+    name: *serviceAccountName
   podSecurityContext:
     fsgroup: null
   containerSecurityContext:
@@ -186,7 +187,7 @@ postgresql:
   enabled: true
   serviceAccount:
     create: false
-    name: placeos-anyuid
+    name: *serviceAccountName
   podSecurityContext:
     seccompProfile:
       type: *seccompProfileType
