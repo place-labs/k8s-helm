@@ -126,7 +126,7 @@ elasticsearch:
       storageClass: *storageClassName
       accessModes:
         - ReadWriteOnce
-      size: 8Gi
+      size: 1Gi
   coordinating:
     replicas: 0
     serviceAccount:
@@ -158,7 +158,7 @@ elasticsearch:
       storageClass: *storageClassName
       accessModes:
         - ReadWriteOnce
-      size: 8Gi
+      size: 1Gi
 
 redis:
   enabled: true
