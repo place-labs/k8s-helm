@@ -9052,7 +9052,7 @@
   },
   "timezone": "",
   "title": "PostgresQL",
-  "uid": "cloudnative-pg",
+  "uid": "postgres",
   "version": 6,
   "weekStart": ""
 }
