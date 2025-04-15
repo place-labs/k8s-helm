@@ -1,3 +1,11 @@
+## Alerting
+
+alerting:
+  enabled: false
+  webhooks:
+    metrics: https://chat.googleapis.com/v1/metrics-hook
+    placeos: https://chat.googleapis.com/v1/placeos-hook
+
 ## Metrics
 
 # Prometheus collects node & k8s metrics

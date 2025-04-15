@@ -1,3 +1,4 @@
+{{ if .Values.alerting.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,3 +19,6 @@ data:
   {{ base $path }}: |-
 {{ $.Files.Get $path | indent 4 }}
 {{- end }}
+  contact-points.yaml: |-
+    {{ .Files.Get "grafana-provisioning/alerting/contact-points.yaml" | replace "<metrics-webhook-url>" .Values.alerting.webhooks.metrics | replace "<placeos-webhook-url>" .Values.alerting.webhooks.placeos | indent 4 }}
+{{ end }}
