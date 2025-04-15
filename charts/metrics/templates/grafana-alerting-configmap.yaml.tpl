@@ -14,6 +14,7 @@ metadata:
     meta.helm.sh/release-namespace: placeos-metrics
 type: Opaque
 data:
-{{ range $filename, $content := (.Files.Glob "grafana-provisioning/alerting/*") }}
-  {{ $filename }}: {{ $content }}
-{{ end }}
+{{- range $path, $bytes := .Files.Glob "grafana-provisioning/alerting/*" }}
+  {{ base $path }}: |-
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
