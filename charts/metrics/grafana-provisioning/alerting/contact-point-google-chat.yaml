@@ -8,3 +8,11 @@ contactPoints:
           settings:
             url: GOOGLE_CHAT_WEBHOOK_URL_HERE
           disableResolveMessage: false
+    - orgId: 1
+      name: Google Chat - PlaceOS Alerts
+      receivers:
+        - uid: eeapjol1e2z29c
+          type: googlechat
+          settings:
+            url: GOOGLE_CHAT_WEBHOOK_URL_HERE
+          disableResolveMessage: false

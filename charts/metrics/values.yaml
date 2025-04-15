@@ -86,6 +86,8 @@ grafana:
       folderName: PlaceOS
     - configMapName: placeos-grafana-dashboards-metrics-pod-resources
       fileName: metrics-pod-resources.json
+  alerting:
+    configMapName: placeos-grafana-alerting
 
 # Loki collects pod logs
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
