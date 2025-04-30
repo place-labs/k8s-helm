@@ -134,6 +134,7 @@ api:
   # -- api is a core PlaoceOS chart enabled by default.
   enabled: true
   fullnameOverride: api
+  replicaCount: 2
   configmap:
     << : *deploymentEnv
     << : *elasticClientEnv
@@ -157,6 +158,7 @@ auth:
  # -- auth is a core PlaoceOS chart enabled by default.
   enabled: true
   fullnameOverride: auth
+  replicaCount: 2
   configmap:
     << : *postgresClientEnv
     << : *httpProxy
@@ -177,6 +179,7 @@ core:
   # -- core is a core PlaoceOS chart enabled by default.
   enabled: true
   fullnameOverride: core
+  replicaCount: 2
   configmap:
     << : *redisClientEnv
     << : *postgresClientEnv
@@ -206,13 +209,14 @@ dispatch:
         memory: 5Mi
       limits:
         cpu: 100m
-        memory: 250Gi
+        memory: 250Mi
 # frontend-loader is the overide configuration for the embedded frontend-loader subchart
 frontendloader:
   # -- frontend-loader is a core PlaoceOS chart enabled by default.
   enabled: true
   httpSidecar: true
   fullnameOverride: frontend-loader
+  replicaCount: 2
   configmap:
     # -- path to static html resources
     PLACE_LOADER_WWW: www
@@ -298,6 +302,7 @@ staff:
   # -- staff is an optional PlaoceOS chart enabled by default.
   enabled: true
   fullnameOverride: staff
+  replicaCount: 2
   << : *postgresValues
   configmap:
     << : *postgresClientEnv
@@ -352,12 +357,12 @@ elasticsearch:
   # -- templateOverrides. A work around to override the full name of the ElasticSearch master. See templates/_helpers.tpl
     elasticsearchMasterfullName: elasticsearch-master
   master:
-    replicaCount: 1
+    replicaCount: 3
     persistence:
       enabled: true
       size: 100M
   data:
-    replicaCount: 1
+    replicaCount: 2
     persistence:
       enabled: true
       size: 500M
