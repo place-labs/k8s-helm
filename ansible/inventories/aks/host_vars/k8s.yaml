@@ -103,8 +103,8 @@ placeos:
           cpu: 750m
           memory: 2Gi
         requests:
-          cpu: 100m
-          memory: 500Mi
+          cpu: 10m
+          memory: 100Mi
   # auth is the overide configuration for the embedded auth subchart
   auth:
     ingress:
@@ -138,11 +138,11 @@ placeos:
     deployment:
       resources:
         limits:
-          cpu: 1500m
-          memory: 4Gi
+          cpu: 1
+          memory: 2Gi
         requests:
           cpu: 500m
-          memory: 4Gi
+          memory: 2Gi
   # dispatch is the overide configuration for the embedded dispatch subchart
   dispatch:
     udpLoadbalancer:
@@ -190,7 +190,7 @@ placeos:
           memory: 500Mi
         requests:
           cpu: 50m
-          memory: 500Mi
+          memory: 100Mi
   # search-ingest is the overide configuration for the embedded search-ingest subchart
   searchingest:
     configmap:
@@ -218,7 +218,7 @@ placeos:
       resources:
         requests:
           cpu: 10m
-          memory: 250Mi
+          memory: 50Mi
   # init is the overide configuration for the embedded init subchart
   init:
     config:
@@ -246,9 +246,9 @@ placeos:
       resources:
         limits:
           cpu: 500m
-          memory: 1Gi
+          memory: 500Mi
         requests:
-          cpu: 50m
+          cpu: 10m
           memory: 100Mi
   # source is the overide configuration for the embedded source subchart
   source:
@@ -292,7 +292,7 @@ ingress-nginx:
 elasticsearch:
   enabled: true
   master:
-    replicaCount: 3
+    replicaCount: 1
     persistence:
       enabled: true
       size: 100M
@@ -301,14 +301,14 @@ elasticsearch:
         cpu: 25m
         memory: 250Mi
   data:
-    replicaCount: 2
+    replicaCount: 1
     persistence:
       enabled: true
       size: 500M
     resources:
       requests:
         cpu: 25m
-        memory: 2Gi
+        memory: 1536Mi
   coordinating:
     replicaCount: 0
   ingest:
