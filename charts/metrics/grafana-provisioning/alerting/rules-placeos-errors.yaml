@@ -1,0 +1,280 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: Errors
+      folder: PlaceOS
+      interval: 5m
+      rules:
+        - uid: deh1z1eswwkjkb
+          title: Error Launching Driver Errors / Min
+          condition: C
+          data:
+            - refId: A
+              queryType: range
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: loki
+              model:
+                datasource:
+                    type: loki
+                    uid: loki
+                editorMode: builder
+                expr: sum(count_over_time({namespace="placeos", app="core", level="ERROR"} |= `error launching driver` [1m]))
+                intervalMs: 1000
+                maxDataPoints: 43200
+                maxLines: 10
+                queryType: range
+                refId: A
+                step: 1m
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: replaceNN
+                    replaceWithValue: 0
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: de2vn8xbpmcxsf
+          panelId: 7
+          noDataState: OK
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: de2vn8xbpmcxsf
+            __panelId__: "7"
+            summary: |-
+                ---
+                Driver failing to run.
+                ---
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - PlaceOS Alerts
+        - uid: eehnpavvpsutcb
+          title: Module Load Failure Errors / Min
+          condition: C
+          data:
+            - refId: A
+              queryType: range
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: loki
+              model:
+                datasource:
+                    type: loki
+                    uid: loki
+                editorMode: builder
+                expr: 'sum(count_over_time({namespace="placeos", app="core", level="ERROR"} |= `cluster rebalance: module load failure` [1m]))'
+                intervalMs: 1000
+                maxDataPoints: 43200
+                maxLines: 10
+                queryType: range
+                refId: A
+                step: 1m
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: replaceNN
+                    replaceWithValue: 0
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: de2vn8xbpmcxsf
+          panelId: 13
+          noDataState: OK
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: de2vn8xbpmcxsf
+            __panelId__: "13"
+            summary: |-
+                ---
+                Module failing to load.
+                ---
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - PlaceOS Alerts
+        - uid: aehnpd7fs0x6oa
+          title: Failed to Compile Driver Errors / Min
+          condition: C
+          data:
+            - refId: A
+              queryType: range
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: loki
+              model:
+                datasource:
+                    type: loki
+                    uid: loki
+                editorMode: builder
+                expr: sum(count_over_time({namespace="placeos", app="core", level="ERROR"} |= `failed to compile driver` [1m]))
+                intervalMs: 1000
+                maxDataPoints: 43200
+                maxLines: 10
+                queryType: range
+                refId: A
+                step: 1m
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: replaceNN
+                    replaceWithValue: 0
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 0
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: de2vn8xbpmcxsf
+          panelId: 15
+          noDataState: OK
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: de2vn8xbpmcxsf
+            __panelId__: "15"
+            summary: |-
+                ---
+                Driver failing to compile.
+                ---
+          labels: {}
+          isPaused: false
+          notification_settings:
+            receiver: Google Chat - PlaceOS Alerts
