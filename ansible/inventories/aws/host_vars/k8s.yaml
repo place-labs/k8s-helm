@@ -36,16 +36,24 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 250Mi
+    pdb:
+      create: false
   pgpool:
     numInitChildren: 500
     replicaCount: 0
+    pdb:
+      create: false
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
   PG_HOST: postgresql-postgresql
   PG_PORT: 5432
   PG_USER: *pgUsername
-  PG_QUERY: "?initial_pool_size=10&max_idle_pool_size=10"
+  PG_QUERY: "?initial_pool_size=1&max_idle_pool_size=20&retry_attempts=2"
 
 xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
@@ -128,10 +136,10 @@ placeos:
       resources:
         limits:
           cpu: 1
-          memory: 2Gi
+          memory: 4Gi
         requests:
           cpu: 1
-          memory: 2Gi
+          memory: 4Gi
   # dispatch is the overide configuration for the embedded dispatch subchart
   dispatch:
     udpLoadbalancer:
@@ -237,9 +245,9 @@ placeos:
       resources:
         limits:
           cpu: 500m
-          memory: 500Mi
+          memory: 1Gi
         requests:
-          cpu: 10m
+          cpu: 100m
           memory: 100Mi
   # source is the overide configuration for the embedded source subchart
   source:
@@ -291,7 +299,7 @@ elasticsearch:
     resources:
       requests:
         cpu: 25m
-        memory: 1536Mi
+        memory: 2Gi
   coordinating:
     replicaCount: 0
   ingest:
@@ -308,7 +316,6 @@ redis:
     persistence:
       enabled: true
       size: 100M
-  fullnameOverride: redis
 influxdb:
   fullnameOverride: influxdb
   enabled: true
