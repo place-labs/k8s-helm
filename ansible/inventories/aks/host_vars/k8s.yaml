@@ -275,6 +275,8 @@ ingress-nginx:
   fullnameOverride: "ingress-nginx"
   controller:
     allowSnippetAnnotations: true
+    config:
+      annotations-risk-level: Critical
     service:
       annotations:
         "service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path": "/healthz"

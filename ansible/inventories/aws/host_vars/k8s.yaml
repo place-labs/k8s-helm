@@ -274,6 +274,8 @@ ingress-nginx:
   fullnameOverride: "ingress-nginx"
   controller:
     allowSnippetAnnotations: true
+    config:
+      annotations-risk-level: Critical
 elasticsearch:
   enabled: true
   master:
