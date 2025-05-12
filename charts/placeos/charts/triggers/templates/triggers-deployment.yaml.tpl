@@ -50,6 +50,9 @@ spec:
             port: http
         resources:
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- if .Values.deployment.podPriorityClassName }}
+      priorityClassName: {{ .Values.deployment.podPriorityClassName }}
+      {{ end }}
       {{- with .Values.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
