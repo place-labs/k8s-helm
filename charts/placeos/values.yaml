@@ -358,11 +358,13 @@ elasticsearch:
     elasticsearchMasterfullName: elasticsearch-master
   master:
     replicaCount: 3
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 100M
   data:
     replicaCount: 2
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 500M
@@ -385,6 +387,8 @@ redis:
   commonConfiguration: |-
     notify-keyspace-events Kg$
   master:
+    podPriorityClassName: high
+  podPriorityClassName: high
     persistence:
       enabled: true
       size: 100M
@@ -402,6 +406,7 @@ influxdb:
   # influxdb chart disabled by default. included for testing purposes only
   enabled: false
   fullnameOverride: influxdb
+  podPriorityClassName: high
 # mosquitto third party chart overrides
 mosquitto:
   # -- mosquitto chart disabled by default. included for testing purposes only
@@ -412,6 +417,7 @@ postgresql:
   # -- postgres chart disabled by default. included for testing purposes only
   enabled: false
   fullnameOverride: postgresql
+  podPriorityClassName: high
   << : *postgresValues
 
 global:
