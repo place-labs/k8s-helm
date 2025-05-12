@@ -9,6 +9,13 @@ kube-prometheus:
     # If you have incorrect (2x, 3x, etc) CONTAINER values in grafana dashboards you likely have orphaned Services from previous deployments
     kubeletService:
       enabled: true 
+    resources:
+      limits:
+        cpu: 150m
+        memory: 192Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
   prometheus:
     persistence:
       enabled: true
@@ -28,6 +35,16 @@ kube-prometheus:
       requests:
         memory: 128Mi
         cpu: 10m
+  blackboxExporter:
+    resources:
+      limits:
+        memory: 192Mi
+        cpu: 100m
+      requests:
+        memory: 128Mi
+        cpu: 10m
+  alertmanager:
+    enabled: false # use grafana alerting
 
 # Grafana provides dashboards and logging via providers (prometheus, loki, tempo, influx)
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
@@ -141,6 +158,14 @@ grafana-loki:
         memory: 100Mi
         cpu: 10m
   distributor:
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1
+      requests:
+        memory: 100Mi
+        cpu: 10m
+  memcached:
     resources:
       limits:
         memory: 512Mi
