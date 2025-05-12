@@ -27,6 +27,14 @@ kube-prometheus:
       requests:
         memory: 512Mi
         cpu: 10m
+  kube-state-metrics:
+    resources:
+      limits:
+        memory: 192Mi
+        cpu: 100m
+      requests:
+        memory: 128Mi
+        cpu: 10m
   node-exporter:
     resources:
       limits:
@@ -374,4 +382,12 @@ grafana-tempo:
         cpu: 1
       requests:
         memory: 100Mi
+        cpu: 10m
+  memcached:
+    resources:
+      limits:
+        memory: 192Mi
+        cpu: 150m
+      requests:
+        memory: 128Mi
         cpu: 10m
