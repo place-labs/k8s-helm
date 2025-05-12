@@ -303,11 +303,13 @@ ingress-nginx:
 elasticsearch:
   enabled: true
   master:
+    podPriorityClassName: high
     replicaCount: 1
     persistence:
       enabled: true
       size: 100M
   data:
+    podPriorityClassName: high
     replicaCount: 1
     persistence:
       enabled: true
@@ -329,12 +331,14 @@ redis:
   commonConfiguration: |-
     notify-keyspace-events Kg$
   master:
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 100M
 influxdb:
   fullnameOverride: influxdb
   enabled: true
+  podPriorityClassName: high
   auth:
     admin:
       token: *influxAdminToken
@@ -344,4 +348,5 @@ mosquitto:
 postgresql-ha:
   enabled: true
   fullnameOverride: postgresql
+  podPriorityClassName: high
   << : *postgresValues

@@ -293,11 +293,13 @@ elasticsearch:
   enabled: true
   master:
     replicaCount: 1
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 100M
   data:
     replicaCount: 1
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 500M
@@ -318,12 +320,14 @@ redis:
   commonConfiguration: |-
     notify-keyspace-events Kg$
   master:
+    podPriorityClassName: high
     persistence:
       enabled: true
       size: 100M
 influxdb:
   fullnameOverride: influxdb
   enabled: true
+  podPriorityClassName: high
   auth:
     admin:
       token: *influxAdminToken
@@ -333,4 +337,5 @@ mosquitto:
 postgresql-ha:
   enabled: true
   fullnameOverride: postgresql
+  podPriorityClassName: high
   << : *postgresValues
