@@ -62,7 +62,7 @@ xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
 
 xinfluxClientEnv: &influxClientEnv
-  INFLUX_HOST: http://influx:8086
+  INFLUX_HOST: http://influxdb:8086
   INFLUX_ORG: PlaceOS
   INFLUX_BUCKET: placeos
 
@@ -93,7 +93,7 @@ placeos:
       << : *elasticClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
-      << : *httpProxy
+      #<< : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -113,7 +113,7 @@ placeos:
         ingress.kubernetes.io/ssl-redirect: "true"
     configmap:
       << : *postgresClientEnv
-      << : *httpProxy
+      #<< : *httpProxy
     secrets:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *postgresClientSecrets
@@ -131,7 +131,7 @@ placeos:
       # Service Hosts
       << : *redisClientEnv
       << : *postgresClientEnv
-      << : *httpProxy
+      #<< : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -167,7 +167,7 @@ placeos:
         ingress.kubernetes.io/ssl-redirect: "true"
     configmap:
       << : *postgresClientEnv
-      << : *httpProxy
+      #<< : *httpProxy
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
