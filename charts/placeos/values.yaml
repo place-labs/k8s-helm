@@ -142,7 +142,7 @@ api:
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *rubberSoulClientEnv
-    << : *httpProxy
+    #<< : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
@@ -161,7 +161,7 @@ auth:
   replicaCount: 2
   configmap:
     << : *postgresClientEnv
-    << : *httpProxy
+    #<< : *httpProxy
     COAUTH_NO_SSL: "false"
     TZ: *TZ
   secrets:
@@ -184,7 +184,7 @@ core:
     << : *redisClientEnv
     << : *postgresClientEnv
     << : *deploymentEnv
-    << : *httpProxy
+    #<< : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
@@ -223,7 +223,7 @@ frontendloader:
     GIT_SSL_NO_VERIFY: false
     << : *postgresClientEnv
     << : *deploymentEnv
-    << : *httpProxy
+    #<< : *httpProxy
   secrets:
     << : *postgresClientSecrets
   deployment:
