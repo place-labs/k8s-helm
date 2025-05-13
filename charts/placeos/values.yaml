@@ -117,7 +117,7 @@ xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
 
 xinfluxClientEnv: &influxClientEnv
-  INFLUX_HOST: http://influx:8086
+  INFLUX_HOST: http://influxdb:8086
   INFLUX_ORG: PlaceOS
   INFLUX_BUCKET: placeos
 
