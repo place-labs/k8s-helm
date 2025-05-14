@@ -125,11 +125,11 @@ def upgrade_placeos(namespace, resources, new_version):
     # Patch the placeos-migrations cron job
     patch_placeos_migrations_cmd = f"kubectl patch cronjob {migrations_job} -n {namespace} --type='json' " + \
                                   f"""-p='[{{"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/image", "value": "placeos/init:{new_version}"}}]'"""
-    puts("Patching placeos-migrations: ")
+    puts(f"Patching {migrations_job}: ")
     subprocess.run(patch_placeos_migrations_cmd, shell=True, check=True)
 
     # Run the placeos-migrations job
-    puts("Running placeos-migrations: ")
+    puts(f"Running {migrations_job}: ")
     migrate_database(namespace)
 
     # Patch the placeos statefulsets and deployments
@@ -152,7 +152,7 @@ def main():
 
     patch_placeos_backup_cmd = f"kubectl patch cronjob {backup_job} -n {namespace} --type='json' " + \
                                   f"""-p='[{{"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/image", "value": "placeos/init:{new_version}"}}]'"""
-    puts("Patching placeos-migrations: ")
+    puts(f"Patching {backup_job}: ")
     subprocess.run(patch_placeos_backup_cmd, shell=True, check=True)
 
     puts("Retrieving resources...")
