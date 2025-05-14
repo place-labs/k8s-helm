@@ -173,14 +173,6 @@ grafana-loki:
       requests:
         memory: 100Mi
         cpu: 10m
-  memcached:
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: 1
-      requests:
-        memory: 100Mi
-        cpu: 10m
   memcachedchunks:
     resources:
       limits:
