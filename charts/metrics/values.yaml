@@ -111,6 +111,12 @@ grafana:
       folderName: PlaceOS
     - configMapName: placeos-grafana-dashboards-metrics-pod-resources
       fileName: metrics-pod-resources.json
+    - configMapName: placeos-grafana-dashboards-ingress-nginx
+      fileName: ingress-nginx.json
+      folderName: Ingress
+    - configMapName: placeos-grafana-dashboards-ingress-nginx-requests
+      fileName: ingress-nginx-requests.json
+      folderName: Ingress
 
 # Loki collects pod logs
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana-loki
