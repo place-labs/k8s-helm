@@ -305,7 +305,10 @@ elasticsearch:
     resources:
       requests:
         cpu: 25m
-        memory: 250Mi
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1Gi
   data:
     replicaCount: 2
     priorityClassName: high
@@ -314,7 +317,10 @@ elasticsearch:
       size: 500M
     resources:
       requests:
-        cpu: 25m
+        cpu: 50m
+        memory: 2Gi
+      limits:
+        cpu: 1
         memory: 2Gi
   coordinating:
     replicaCount: 0
@@ -333,6 +339,13 @@ redis:
     persistence:
       enabled: true
       size: 100M
+    resources:
+      limits:
+        cpu: '1'
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
 influxdb:
   fullnameOverride: influxdb
   enabled: true
@@ -340,6 +353,13 @@ influxdb:
   auth:
     admin:
       token: *influxAdminToken
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 150m
+      memory: 512Mi
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
