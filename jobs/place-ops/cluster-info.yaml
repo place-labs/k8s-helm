@@ -5,6 +5,6 @@ metadata:
   namespace: placeos
 data:
   name: "Cluster Name"
-  version: "placeos-2.2412.2"
+  version: "placeos-2.2504.2"
   environment: "staging"
   region: "uksouth"
