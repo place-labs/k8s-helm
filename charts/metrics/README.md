@@ -126,14 +126,24 @@ grafana-tempo:
 
 ---
 
-## Install
+## Install to sub domain
 
 ```
 helm install metrics . -f values.yaml -n placeos-metrics --create-namespace --set grafana.ingress.hostname="metrics.dev.example.com"
 ```
 
+## Install to sub path
+In `values-subpath.yaml`:
+- Set `grafana.ingress.hostname` to the domain
+- Set `grafana.grafana.extraEnvVars` - `GF_SERVER_ROOT_URL` to "https://domain.com/analytics"
+
+```
+helm install metrics . -f values-subpath.yaml -n placeos-metrics --create-namespace --set
+```
+
 ## Upgrade
 - Make sure to set the grafana password
+- Use `values.yaml` or `values-subpath.yaml` as required
 ```
 helm upgrade --install metrics . -f values.yaml -n placeos-metrics --create-namespace --set grafana.ingress.hostname="metrics.dev.example.com" --set grafana.admin.password="existing-password"
 ```
