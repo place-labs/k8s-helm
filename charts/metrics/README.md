@@ -138,7 +138,7 @@ In `values-subpath.yaml`:
 - Set `grafana.grafana.extraEnvVars` - `GF_SERVER_ROOT_URL` to "https://domain.com/analytics"
 
 ```
-helm install metrics . -f values-subpath.yaml -n placeos-metrics --create-namespace --set
+helm install metrics . -f values-subpath.yaml -n placeos-metrics --create-namespace
 ```
 
 ## Upgrade
