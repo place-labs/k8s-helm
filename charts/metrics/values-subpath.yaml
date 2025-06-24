@@ -2,6 +2,11 @@ grafana:
   ingress:
     hostname: metrics.local
     path: /analytics
+    pathType: Prefix
+    ingressClassName: nginx
+    selfSigned: true
+    #annotations:
+    #  cert-manager.io/cluster-issuer: letsencrypt-prod
   grafana:
     extraEnvVars:
       - name: GF_SERVER_ROOT_URL
