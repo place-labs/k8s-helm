@@ -6,7 +6,7 @@ ingress_nginx_chart_version: "~4.12.1"
 
 postgresql_namespace: "placeos"
 postgresql_release_name: "postgresql-ha"
-postgresql_chart_version: "~11.2.1"
+postgresql_chart_version: "16.0.16"
 
 elasticsearch_namespace: "placeos"
 elasticsearch_release_name: "elasticsearch"
