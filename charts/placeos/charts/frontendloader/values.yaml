@@ -64,7 +64,7 @@ httpDeployment:
             - key: app.kubernetes.io/name
               operator: In
               values:
-              - frontend-loader
+              - frontendloader
           topologyKey: kubernetes.io/hostname
 
 # autoscaling configuration for pod
@@ -128,7 +128,18 @@ deployment:
 
   tolerations: []
 
-  affinity: {}
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - frontendloader
+          topologyKey: kubernetes.io/hostname
 
 serviceAccount:
   # -- Specifies whether a service account should be created

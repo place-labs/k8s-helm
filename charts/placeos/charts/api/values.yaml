@@ -47,7 +47,22 @@ deployment:
 
   tolerations: []
 
-  affinity: {}
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - placeos
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - api
+            topologyKey: kubernetes.io/hostname
 
 # autoscaling configuration for pod
 autoscaling:
