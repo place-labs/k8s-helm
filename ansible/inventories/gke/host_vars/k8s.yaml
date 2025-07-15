@@ -303,6 +303,7 @@ elasticsearch:
     persistence:
       enabled: true
       size: 100M
+    podAntiAffinityPreset: soft
   data:
     priorityClassName: high
     replicaCount: 1
@@ -313,6 +314,7 @@ elasticsearch:
       requests:
         cpu: 25m
         memory: 1536Gi
+    podAntiAffinityPreset: soft
   coordinating:
     replicaCount: 0
   ingest:

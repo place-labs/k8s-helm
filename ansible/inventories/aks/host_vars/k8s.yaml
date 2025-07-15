@@ -301,6 +301,7 @@ elasticsearch:
       requests:
         cpu: 25m
         memory: 250Mi
+    podAntiAffinityPreset: soft
   data:
     replicaCount: 1
     priorityClassName: high
@@ -311,6 +312,7 @@ elasticsearch:
       requests:
         cpu: 25m
         memory: 1536Mi
+    podAntiAffinityPreset: soft
   coordinating:
     replicaCount: 0
   ingest:

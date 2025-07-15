@@ -359,6 +359,7 @@ elasticsearch:
       size: 100M
     replicaCount: 1
     priorityClassName: high
+    podAntiAffinityPreset: soft
     persistence:
       enabled: true
       size: 500M
@@ -366,6 +367,8 @@ elasticsearch:
       requests:
         cpu: 25m
         memory: 1536Gi
+  data:
+    podAntiAffinityPreset: soft
   coordinating:
     replicaCount: 0
   ingest:
