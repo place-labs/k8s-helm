@@ -23,9 +23,9 @@ Contains 4 roles:
 
 Note: Tested with:
 
-- Ansible collection `community.kubernetes:1.0.0`
-- k8s versions 1.19 - 1.23
-- Helm v3.3.1
+- Ansible collection `community.kubernetes:2.0.1`
+- k8s versions 1.27 - 1.33
+- Helm v3.17.3
 
 ## Executing
 
