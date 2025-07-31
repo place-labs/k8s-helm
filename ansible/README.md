@@ -75,6 +75,15 @@ ansible-playbook placeos.yaml -i inventories/aks/ -e "internalLB=true"
 ansible-playbook placeos-network-policies.yaml
 ```
 
+### AWS deployment
+```sh
+# Check first be for deploying
+ansible-playbook placeos.yaml -i inventories/gke/  --check
+# Define the placeDomain value when running:
+ansible-playbook placeos.yaml -i inventories/gke/ -e "placeDomain={domain/{external IP.sslip.io}}"
+ansible-playbook placeos-network-policies.yaml
+```
+
 To cleanup:
 
 ```sh
