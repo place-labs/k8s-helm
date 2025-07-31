@@ -20,6 +20,8 @@
   roles:
   ## Override random rethinkdbPassword if it already exists
   - role: placeos.helm.releasevars
+    vars:
+      chart_release_name: "placeos"
   ## Deploy Nginx Ingress Controller
   - role: placeos.helm.thirdparty
     vars:
