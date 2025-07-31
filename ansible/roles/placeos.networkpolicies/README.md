@@ -8,4 +8,4 @@ Requirements
 
 - python3
 - openshift python module
-- Ansible collection community.kubernetes.k8s
+- Ansible collection kubernetes.core.k8s

@@ -15,7 +15,7 @@
   - chart_ref is defined
 
 - name: "manage chart {{ chart_ref }}"
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     release_name: "{{ chart_release_name }}"
     chart_repo_url: "{{ chart_repo_url }}"
     chart_ref: "{{ chart_ref }}"

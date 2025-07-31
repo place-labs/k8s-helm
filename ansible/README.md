@@ -15,17 +15,18 @@ Contains 4 roles:
 
 - Openshift python library. To install `pip install openshift`
 
-- Install the community.kubernetes Ansible collection: `ansible-galaxy collection install community.kubernetes`
+- Install the kubernetes.core Ansible collection: `ansible-galaxy collection install kubernetes.core`
 
-- Review the requirements for the [Ansible helm wrapper](https://docs.ansible.com/ansible/2.10/collections/community/kubernetes/helm_module.html)
+- Review the requirements for the [Ansible helm wrapper](https://docs.ansible.com/ansible/2.10/collections/kubernetes.core/helm_module.html)
 
 - GKE: a Cloud Armor Security must exist for the Load Balancer to associate with
 
 Note: Tested with:
 
-- Ansible collection `community.kubernetes:2.0.1`
-- k8s versions 1.27 - 1.33
-- Helm v3.17.3
+- Ansible: 2.17
+- Ansible collection: `kubernetes.core:6.0.0`
+- Kubernetes: 1.27 - 1.33
+- Helm: v3.17.3
 
 ## Executing
 
@@ -33,7 +34,7 @@ To deploy:
 
 ```sh
 # Install reprequisites
-ansible-galaxy collection install community.kubernetes
+ansible-galaxy collection install kubernetes.core
 
 # Update helm dependencies from charts directory
 helm dependency update ./charts/placeos
