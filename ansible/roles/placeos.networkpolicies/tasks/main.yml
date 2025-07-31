@@ -1,6 +1,6 @@
 ---
 - name: patch the placeos ns with a label
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: present
     name: "{{ placeos_namespace }}"
     api_version: v1
@@ -11,7 +11,7 @@
           networking/namespace: "{{ placeos_namespace }}"
 
 #- name: patch the placeos ns with a label
-#  community.kubernetes.k8s:
+#  kubernetes.core.k8s:
 #    state: present
 #    name: "{{ ingress_namespace }}"
 #    api_version: v1
@@ -22,7 +22,7 @@
 #          networking/namespace: "{{ ingress_namespace }}"
 
 - name: patch the ingress pod with allow-external label
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: present
     name: "{{ ingress_deployment }}"
     api_version: v1
@@ -37,13 +37,13 @@
   when: gke is not defined
 
 - name: service for dispatch
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ placeos_namespace }}"
     definition: "{{ lookup('template', 'allow-external.yaml') | from_yaml }}"
 
 - name: allow load balancer and deny gcp private IP range to placeos
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ placeos_namespace }}"
     definition: "{{ lookup('template', 'allow-gcp-lb.yaml') | from_yaml }}"
@@ -51,7 +51,7 @@
 
 # tasks file for placeos.networkpolicies
 #- name: placeos ns to service ns
-#  community.kubernetes.k8s:
+#  kubernetes.core.k8s:
 #    state: "{{ policy_state }}"
 #    namespace: "{{ ns }}"
 #    definition: "{{ lookup('template', 'placeos-to-namespace.yaml') | from_yaml }}"
@@ -61,7 +61,7 @@
 #    loop_var: "ns"
 
 - name: pod to pod in same ns
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ ns }}"
     definition: "{{ lookup('template', 'allow-same-namespace.yaml') | from_yaml }}"
@@ -71,7 +71,7 @@
     loop_var: "ns"
 
 - name: deny all
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ ns }}"
     definition: "{{ lookup('template', 'deny-all.yaml') | from_yaml }}"
@@ -81,7 +81,7 @@
     loop_var: "ns"
 
 - name: ingress access to upstream apps
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     state: "{{ policy_state }}"
     namespace: "{{ placeos_namespace }}"
     definition: "{{ lookup('template', 'ingress-to-placeos.yaml') | from_yaml }}"

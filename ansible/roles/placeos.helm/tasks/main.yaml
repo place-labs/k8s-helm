@@ -4,7 +4,7 @@
   block:
   - name: Get the ingress service endpoint for the place domain
     set_fact:
-      ingress: "{{ lookup('community.kubernetes.k8s',
+      ingress: "{{ lookup('kubernetes.core.k8s',
         kind='Service',
         namespace=ingress_namespace,
         resource_name=ingress_service_name ) }}"
@@ -24,7 +24,7 @@
     - not ansible_check_mode
 
 - name: check release current state
-  community.kubernetes.helm_info:
+  kubernetes.core.helm_info:
     name: "{{ chart_release_name }}"
     release_namespace: "{{ placeos_release_namespace }}"
   register: release_state
@@ -44,7 +44,7 @@
     verbosity: 1
 
 - name: manage placeos charts from local filesystem
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     release_name: "{{ chart_release_name }}"
     chart_ref: "{{ placeos_chart_ref }}"
     chart_version: "0.1.0"

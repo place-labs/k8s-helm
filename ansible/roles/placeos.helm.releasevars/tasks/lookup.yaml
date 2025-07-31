@@ -1,7 +1,7 @@
 ---
 # tasks file for placeos.helm.releasevars
 - name: check release current state
-  community.kubernetes.helm_info:
+  kubernetes.core.helm_info:
     name: "{{ chart_release_name }}"
     release_namespace: "{{ checkvars[ 'chart_release_namespace' ] }}"
   register: release_state
