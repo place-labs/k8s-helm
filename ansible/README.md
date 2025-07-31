@@ -11,7 +11,7 @@ Contains 4 roles:
 
 ## Prerequisites
 
-- Ansible >= 2.9 on Python 3
+- Ansible >= 2.17 on Python 3
 
 - Openshift python library. To install `pip install openshift`
 
