@@ -81,7 +81,6 @@ placeos:
   enabled: true
   # api is the overide configuration for the embedded api subchart
   api:
-    replicaCount: 2
     ingress:
       enabled: false
       annotations:
@@ -97,6 +96,7 @@ placeos:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
     deployment:
+      replicaCount: 2
       resources:
         limits:
           cpu: 100m
@@ -106,7 +106,6 @@ placeos:
           memory: 100Mi
   # auth is the overide configuration for the embedded auth subchart
   auth:
-    replicaCount: 2
     ingress:
       enabled: false
       annotations:
@@ -119,6 +118,7 @@ placeos:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *postgresClientSecrets
     deployment:
+      replicaCount: 2
       resources:
         limits:
           cpu: 1
@@ -128,7 +128,6 @@ placeos:
           memory: 400Mi
   # core is the overide configuration for the embedded core subchart
   core:
-    replicaCount: 2
     configmap:
       # Service Hosts
       << : *redisClientEnv
@@ -138,6 +137,7 @@ placeos:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
     deployment:
+      replicaCount: 2
       resources:
         limits:
           cpu: 1
@@ -162,7 +162,6 @@ placeos:
           memory: 5Mi
   # frontend-loader is the overide configuration for the embedded frontend-loader subchart
   frontendloader:
-    replicaCount: 2
     httpSidecar: false
     ingress:
       enabled: false
@@ -180,6 +179,7 @@ placeos:
       accessModes:
         - ReadWriteOnce
     deployment:
+      replicaCount: 2
       resources:
         limits:
           cpu: 500m
@@ -235,7 +235,6 @@ placeos:
       << : *postgresClientSecrets
   # staff is the overide configuration for the embedded staff subchart
   staff:
-    replicaCount: 2
     ingress:
       enabled: false
       annotations:
@@ -248,6 +247,7 @@ placeos:
       PLACE_SERVER_SECRET: *placeServerSecret
       << : *postgresClientSecrets
     deployment:
+      replicaCount: 2
       resources:
         limits:
           cpu: 500m
@@ -304,7 +304,7 @@ elasticsearch:
   enabled: true
   master:
     priorityClassName: high
-    replicaCount: 1
+    replicaCount: 3
     persistence:
       enabled: true
       size: 100M
@@ -318,7 +318,7 @@ elasticsearch:
     podAntiAffinityPreset: soft
   data:
     priorityClassName: high
-    replicaCount: 1
+    replicaCount: 2
     persistence:
       enabled: true
       size: 500M
