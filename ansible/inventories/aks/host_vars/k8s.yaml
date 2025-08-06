@@ -287,6 +287,7 @@ ingress-nginx:
   enabled: true
   fullnameOverride: "ingress-nginx"
   controller:
+    replicaCount: 2
     allowSnippetAnnotations: true
     config:
       annotations-risk-level: Critical
