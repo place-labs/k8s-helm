@@ -48,5 +48,4 @@ spec:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
       restartPolicy: OnFailure
   backoffLimit: 10
-  ttlSecondsAfterFinished: 3600
 {{- end }}
