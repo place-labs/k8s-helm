@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: placeos
+spec:
+  # Run this Job with `kubectl create job -n placeos --from cronjob/postgres-backup postgres-backup` 
+  # Runs a postgres backup, exported to the `backup` Volume
+  # Requires `place-ops` ServiceAccount with get,list,patch permissions on statefulset,deployment,cronjob + create on job
+  # ^ permissions from migration task - update for requirements here - exec on pod?
+  schedule: "0 0 1 1 *" # Suspended so it never runs on line below
+  suspend: true
+  jobTemplate:
+    spec:
+      completions: 1
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 3600
+      template:
+        metadata:
+          name: postgres-backup
+        spec:
+          serviceAccountName: place-ops
+          securityContext:
+            fsGroup: 1001
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            imagePullPolicy: IfNotPresent
+
+            envFrom:
+              - configMapRef:
+                  name: postgres-client
+              - secretRef:
+                  name: postgres-client
+            env:
+              - name: POSTGRES_POD
+                value: "postgresql-single-0"
+            command: ["/bin/sh", "-c"]
+            args:
+            - |
+              timestamp=$(date +"%Y-%m-%d_%H-%M")
+              echo "Executing postgres backup in postgres pod..."
+              kubectl exec $POSTGRES_POD -- /bin/sh -c "PGPASSWORD='$PG_PASSWORD' pg_dump --format tar -U '$PG_USER' '$PG_DB' > /tmp/postgres-dump_'$timestamp'.tar"
+              echo "Copying postgres backup to backup volume..."
+              kubectl cp $POSTGRES_POD:/tmp/postgres-dump_$timestamp.tar /backup/postgres-dump_$timestamp.tar
+              if [ ! -f /backup/postgres-dump_$timestamp.tar ]; then
+                echo "Backup file not found, exiting with error status"
+                exit 1
+              fi
+              echo "Backup file copied:"
+              ls -lh /backup/postgres-dump_$timestamp.tar
+              echo "Removing backup file from postgres pod..."
+              kubectl exec $POSTGRES_POD -- /bin/sh -c 'rm /tmp/postgres-dump_'$timestamp'.tar'
+              echo "Backup complete"
+            volumeMounts:
+              - name: backup
+                mountPath: /backup
+          restartPolicy: Never
+          volumes:
+            - name: backup
+              persistentVolumeClaim:
+                claimName: backup
