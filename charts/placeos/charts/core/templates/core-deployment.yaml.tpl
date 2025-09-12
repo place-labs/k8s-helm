@@ -57,9 +57,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: CORE_HOST
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
+            value: $(POD_NAME).core.$(POD_NAMESPACE).svc.cluster.local
         image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         ports:
