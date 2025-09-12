@@ -1,0 +1,40 @@
+# Disabled CronJob to restart the api deployment daily at 5am
+# To enable change `suspend` to `false`
+# For other pods change the `name` and set the final line of the `command` to `deployment/name` or `statefulset/name`
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: api-restart
+  namespace: placeos
+spec:
+  timeZone: Australia/Sydney
+  schedule: '0 5 * * *'
+  suspend: true
+  concurrencyPolicy: Replace
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 120
+      template:
+        spec:
+          serviceAccountName: place-ops
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl
+              imagePullPolicy: IfNotPresent
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 32Mi
+                requests:
+                  cpu: 10m
+                  memory: 16Mi
+              command:
+                - 'kubectl'
+                - 'rollout'
+                - 'restart'
+                - 'deployment/api'
