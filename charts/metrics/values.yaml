@@ -5,6 +5,8 @@
 kube-prometheus:
   enabled: true
   operator:
+    image:
+      repository: bitnamilegacy/prometheus-operator
     # This creates a Service in the kube-system namespace which exposes a set of prometheus data to grafana with a `service` label 
     # If you have incorrect (2x, 3x, etc) CONTAINER values in grafana dashboards you likely have orphaned Services from previous deployments
     kubeletService:
@@ -17,6 +19,8 @@ kube-prometheus:
         cpu: 10m
         memory: 128Mi
   prometheus:
+    image:
+      repository: bitnamilegacy/prometheus
     persistence:
       enabled: true
       size: 50Gi
@@ -28,6 +32,8 @@ kube-prometheus:
         memory: 512Mi
         cpu: 10m
   kube-state-metrics:
+    image:
+      repository: bitnamilegacy/kube-state-metrics
     resources:
       limits:
         memory: 192Mi
@@ -36,6 +42,8 @@ kube-prometheus:
         memory: 128Mi
         cpu: 10m
   node-exporter:
+    image:
+      repository: bitnamilegacy/node-exporter
     resources:
       limits:
         memory: 192Mi
@@ -44,6 +52,8 @@ kube-prometheus:
         memory: 128Mi
         cpu: 10m
   blackboxExporter:
+    image:
+      repository: bitnamilegacy/blackbox-exporter
     resources:
       limits:
         memory: 192Mi
@@ -58,6 +68,8 @@ kube-prometheus:
 # https://github.com/bitnami/charts/tree/main/bitnami/grafana
 grafana:
   enabled: true
+  image:
+    repository: bitnamilegacy/grafana
   persistence:
     size: 100Mi
   ingress:
@@ -67,6 +79,8 @@ grafana:
     ingressClassName: nginx
     tls: true
     selfSigned: true
+  updateStrategy:
+    type: Recreate
   admin:
     user: place-admin
     password: "" # leave blank for random
