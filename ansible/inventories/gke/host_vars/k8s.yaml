@@ -49,20 +49,20 @@ xpostgresValues: &postgresValues
     pdb:
       create: false
     image:
-      repository: docker.io/bitnamilegacy/postgresql-repmgr
+      repository: bitnamilegacy/postgresql-repmgr
   pgpool:
     numInitChildren: 500
     replicaCount: 0
     pdb:
       create: false
     image:
-      repository: docker.io/bitnamilegacy/pgpool
+      repository: bitnamilegacy/pgpool
   volumePermissions:
     image:
-      repository: docker.io/bitnamilegacy/os-shell
+      repository: bitnamilegacy/os-shell
   metrics:
     image:
-      repository: docker.io/bitnamilegacy/postgres-exporter
+      repository: bitnamilegacy/postgres-exporter
   global:
     security:
       allowInsecureImages: true
@@ -354,15 +354,15 @@ elasticsearch:
   ingest:
     replicaCount: 0
   image:
-    repository: docker.io/bitnamilegacy/elasticsearch
+    repository: bitnamilegacy/elasticsearch
   sysctlImage:
-    repository: docker.io/bitnamilegacy/os-shell
+    repository: bitnamilegacy/os-shell
   volumePermissions:
     image:
-      repository: docker.io/bitnamilegacy/os-shell
+      repository: bitnamilegacy/os-shell
   metrics:
     image:
-      repository: docker.io/bitnamilegacy/elasticsearch-exporter
+      repository: bitnamilegacy/elasticsearch-exporter
   global:
     security:
       allowInsecureImages: true
@@ -387,7 +387,8 @@ redis:
         cpu: 50m
         memory: 64Mi
   image:
-    repository: public.ecr.aws/bitnami/redis
+    registry: public.ecr.aws
+    repository: bitnami/redis
   global:
     security:
       allowInsecureImages: true
@@ -406,7 +407,7 @@ influxdb:
       cpu: 150m
       memory: 512Mi
   image:
-    repository: docker.io/bitnamilegacy/influxdb
+    repository: bitnamilegacy/influxdb
   global:
     security:
       allowInsecureImages: true
