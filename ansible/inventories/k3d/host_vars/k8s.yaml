@@ -58,6 +58,9 @@ xpostgresValues: &postgresValues
   metrics:
     image:
       repository: docker.io/bitnamilegacy/postgres-exporter
+  global:
+    security:
+      allowInsecureImages: true
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
@@ -222,6 +225,9 @@ elasticsearch:
   metrics:
     image:
       repository: docker.io/bitnamilegacy/elasticsearch-exporter
+  global:
+    security:
+      allowInsecureImages: true
 redis:
   enabled: true
   fullnameOverride: redis
@@ -236,6 +242,9 @@ redis:
       size: 100M
   image:
     repository: public.ecr.aws/bitnami/redis
+  global:
+    security:
+      allowInsecureImages: true
 influxdb:
   fullnameOverride: influxdb
   enabled: true
@@ -244,6 +253,9 @@ influxdb:
       token: *influxAdminToken
   image:
     repository: docker.io/bitnamilegacy/influxdb
+  global:
+    security:
+      allowInsecureImages: true
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
