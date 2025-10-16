@@ -1,3 +1,9 @@
+# Cluster Info ConfigMap (used by admins and upgrade jobs)
+cluster_info:
+  name: "default" # eg. PlaceOS PROD
+  environment: "default" # eg. production, staging, development
+  region: "default" # eg. australiaeast
+
 #Domain variables set for a local install
 placeDomain: "localhost"
 customRedirectPort: 8443

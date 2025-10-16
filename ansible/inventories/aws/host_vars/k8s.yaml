@@ -1,3 +1,9 @@
+# Cluster Info ConfigMap (used by admins and upgrade jobs)
+cluster_info:
+  name: "default" # eg. PlaceOS PROD
+  environment: "default" # eg. production, staging, development
+  region: "default" # eg. australiaeast
+
 #  Used to set the user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
 xpostgresPassword: &pgPassword "{{ postgresqlPassword }}"
 

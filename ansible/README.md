@@ -43,6 +43,17 @@ helm dependency update ./charts/placeos
 cd ansible
 ```
 
+Set cluster info values in the relevant inventory `host_vars/k8s.yaml` file:
+(or use `-e` flags to set when running the playbook)
+
+```yaml
+# Cluster Info ConfigMap (used by admins and upgrade jobs)
+cluster_info:
+  name: "default" # eg. PlaceOS PROD
+  environment: "default" # eg. production, staging, development
+  region: "default" # eg. australiaeast
+```
+
 ### Local deployment to k3d
 ```sh
 # Check first be for deploying
