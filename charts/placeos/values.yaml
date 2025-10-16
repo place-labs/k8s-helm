@@ -4,6 +4,13 @@
 ###############################
 ##### Configmap Variable ######
 ###############################
+
+# Cluster Info ConfigMap (used by admins and upgrade jobs)
+cluster_info:
+  name: "default" # eg. PlaceOS PROD
+  environment: "default" # eg. production, staging, development
+  region: "default" # eg. australiaeast
+
 # -- yaml anchor for the user password for postgres.
 # Used to set the user password in postgres if enabled then passed to multiple containers in a k8s secret
 xpostgresPassword: &pgPassword "development"
@@ -100,11 +107,21 @@ xpostgresValues: &postgresValues
         memory: 250Mi
     pdb:
       create: false
+    image:
+      repository: docker.io/bitnamilegacy/postgresql-repmgr
   pgpool:
     numInitChildren: 500
     replicaCount: 0
     pdb:
       create: false
+    image:
+      repository: docker.io/bitnamilegacy/pgpool
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/postgres-exporter
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
@@ -379,6 +396,16 @@ elasticsearch:
     replicaCount: 0
   ingest:
     replicaCount: 0
+  image:
+    repository: docker.io/bitnamilegacy/elasticsearch
+  sysctlImage:
+    repository: docker.io/bitnamilegacy/os-shell
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/elasticsearch-exporter
 # redis third party chart overrides
 redis:
   # -- redis chart disabled by default. included for testing purposes only
@@ -403,12 +430,16 @@ redis:
         cpu: 100m
         ephemeral-storage: 50Mi
         memory: 128Mi
+  image:
+    repository: public.ecr.aws/bitnami/redis
 # influxdb third party chart overrides
 influxdb:
   # influxdb chart disabled by default. included for testing purposes only
   enabled: false
   fullnameOverride: influxdb
   priorityClassName: high
+  image:
+    repository: docker.io/bitnamilegacy/influxdb
 # mosquitto third party chart overrides
 mosquitto:
   # -- mosquitto chart disabled by default. included for testing purposes only

@@ -38,6 +38,17 @@ helm dependency update .
 
 ```
 
+Set cluster info values in the `values.yaml` file:
+(or use `--set` flags to set when running helm install/upgrade)
+
+```yaml
+# Cluster Info ConfigMap (used by admins and upgrade jobs)
+cluster_info:
+  name: "default" # eg. PlaceOS PROD
+  environment: "default" # eg. production, staging, development
+  region: "default" # eg. australiaeast
+```
+
 ### Local Deployment with K3d
 
 We use k3d in this example however it should work with any local k8s deployment assumimg you adjust your deployment for the exposed host and port mapping via the `global.domain` and `global.customRedirectPort`
