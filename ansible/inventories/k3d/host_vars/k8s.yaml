@@ -46,8 +46,18 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
+    image:
+      repository: docker.io/bitnamilegacy/postgresql-repmgr
   pgpool:
     numInitChildren: 500
+    image:
+      repository: docker.io/bitnamilegacy/pgpool
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/postgres-exporter
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
@@ -202,6 +212,16 @@ elasticsearch:
       size: 100Mib
   coordinating:
     replicas: 0
+  image:
+    repository: docker.io/bitnamilegacy/elasticsearch
+  sysctlImage:
+    repository: docker.io/bitnamilegacy/os-shell
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/elasticsearch-exporter
 redis:
   enabled: true
   fullnameOverride: redis
@@ -214,12 +234,16 @@ redis:
     persistence:
       enabled: true
       size: 100M
+  image:
+    repository: public.ecr.aws/bitnami/redis
 influxdb:
   fullnameOverride: influxdb
   enabled: true
   auth:
     admin:
       token: *influxAdminToken
+  image:
+    repository: docker.io/bitnamilegacy/influxdb
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto

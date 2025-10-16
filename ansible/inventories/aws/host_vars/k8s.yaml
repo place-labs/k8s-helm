@@ -48,11 +48,21 @@ xpostgresValues: &postgresValues
         memory: 250Mi
     pdb:
       create: false
+    image:
+      repository: docker.io/bitnamilegacy/postgresql-repmgr
   pgpool:
     numInitChildren: 500
     replicaCount: 0
     pdb:
       create: false
+    image:
+      repository: docker.io/bitnamilegacy/pgpool
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/postgres-exporter
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
@@ -321,11 +331,19 @@ elasticsearch:
     replicaCount: 0
   ingest:
     replicaCount: 0
+  image:
+    repository: docker.io/bitnamilegacy/elasticsearch
+  sysctlImage:
+    repository: docker.io/bitnamilegacy/os-shell
+  volumePermissions:
+    image:
+      repository: docker.io/bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: docker.io/bitnamilegacy/elasticsearch-exporter
 redis:
   enabled: true
   fullnameOverride: redis
-  global:
-    defaultStorageClass: *storageClass
   auth:
     enabled: false
   architecture: standalone
@@ -336,6 +354,15 @@ redis:
     persistence:
       enabled: true
       size: 100M
+    resources:
+      limits:
+        cpu: '1'
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+  image:
+    repository: public.ecr.aws/bitnami/redis
 influxdb:
   fullnameOverride: influxdb
   enabled: true
@@ -345,6 +372,15 @@ influxdb:
   auth:
     admin:
       token: *influxAdminToken
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 150m
+      memory: 512Mi
+  image:
+    repository: docker.io/bitnamilegacy/influxdb
 mosquitto:
   enabled: false
   fullnameOverride: mosquitto
