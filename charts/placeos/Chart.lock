@@ -28,7 +28,7 @@ dependencies:
   version: 0.1.0
 - name: elasticsearch
   repository: https://charts.bitnami.com/bitnami
-  version: 22.0.3
+  version: 22.0.15
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 20.13.4
@@ -41,5 +41,5 @@ dependencies:
 - name: postgresql-ha
   repository: https://charts.bitnami.com/bitnami
   version: 11.2.1
-digest: sha256:211e0d607a870ed2b7f93c3da5a083e639e004f7d65367c13acc94ac8acfd4e0
-generated: "2025-05-12T13:03:58.399715417+10:00"
+digest: sha256:b15740037fe6385910c3a9a69a27d6beb25f9fa4a3bf4437c3be62256b21529d
+generated: "2025-10-16T19:29:26.801538869+11:00"
