@@ -122,6 +122,9 @@ xpostgresValues: &postgresValues
   metrics:
     image:
       repository: docker.io/bitnamilegacy/postgres-exporter
+  global:
+    security:
+      allowInsecureImages: true
 
 xpostgresClientEnv: &postgresClientEnv
   PG_DB: *pgDatabase
@@ -406,6 +409,9 @@ elasticsearch:
   metrics:
     image:
       repository: docker.io/bitnamilegacy/elasticsearch-exporter
+  global:
+    security:
+      allowInsecureImages: true
 # redis third party chart overrides
 redis:
   # -- redis chart disabled by default. included for testing purposes only
@@ -432,6 +438,9 @@ redis:
         memory: 128Mi
   image:
     repository: public.ecr.aws/bitnami/redis
+  global:
+    security:
+      allowInsecureImages: true
 # influxdb third party chart overrides
 influxdb:
   # influxdb chart disabled by default. included for testing purposes only
@@ -440,6 +449,9 @@ influxdb:
   priorityClassName: high
   image:
     repository: docker.io/bitnamilegacy/influxdb
+  global:
+    security:
+      allowInsecureImages: true
 # mosquitto third party chart overrides
 mosquitto:
   # -- mosquitto chart disabled by default. included for testing purposes only
