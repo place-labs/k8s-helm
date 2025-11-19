@@ -4,7 +4,7 @@ description: An Umbrella Chart for PlaceOS and its dependencies
 
 type: application
 version: 0.1.0
-appVersion: placeos-2.2509.2
+appVersion: placeos-2.2511.1
 
 dependencies:
 # PlaceOS components
