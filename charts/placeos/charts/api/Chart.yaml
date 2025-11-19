@@ -7,4 +7,4 @@ type: application
 version: 0.1.0
 
 # This number is reflected in the container version deployed
-appVersion: placeos-2.2509.2
+appVersion: placeos-2.2511.1
