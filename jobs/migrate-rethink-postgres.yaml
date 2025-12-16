@@ -11,6 +11,8 @@ spec:
     metadata:
       name: migrate
     spec:
+      securityContext:
+        runAsNonRoot: true
       restartPolicy: Never
       containers:
       - name: init

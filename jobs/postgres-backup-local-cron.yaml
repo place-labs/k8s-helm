@@ -22,6 +22,7 @@ spec:
           serviceAccountName: place-ops
           securityContext:
             fsGroup: 1001
+            runAsNonRoot: true
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest

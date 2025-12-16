@@ -12,6 +12,8 @@ spec:
     metadata:
       name: add-domain
     spec:
+      securityContext:
+        runAsNonRoot: true
       restartPolicy: Never
       containers:
       - name: init
