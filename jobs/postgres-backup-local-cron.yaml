@@ -26,7 +26,7 @@ spec:
             runAsUser: 1001
           containers:
           - name: kubectl
-            image: bitnami/kubectl:latest
+            image: bitnami/kubectl@sha256:18afd60803f437663a4f70a94c193ff8da9d4579e77a3e9a6b5f668bd4dc0570
             imagePullPolicy: IfNotPresent
 
             envFrom:
