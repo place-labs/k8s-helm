@@ -23,6 +23,7 @@ spec:
           securityContext:
             fsGroup: 1001
             runAsNonRoot: true
+            runAsUser: 1001
           containers:
           - name: kubectl
             image: bitnami/kubectl:latest
