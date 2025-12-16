@@ -11,6 +11,9 @@ spec:
     metadata:
       name: add-user
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       restartPolicy: Never
       containers:
       - name: init

@@ -12,6 +12,9 @@ spec:
     metadata:
       name: add-domain
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       restartPolicy: Never
       containers:
       - name: init
