@@ -25,7 +25,7 @@ spec:
                 defaultMode: 420
           containers:
             - name: k8s-tools
-              image: placeos/k8s-tools:latest@sha256:168a453fc1b4ea93503ddb7f0f8ed8ac5340dd6ab9a74b8b6db5b46b54eda13f
+              image: placeos/k8s-tools@sha256:168a453fc1b4ea93503ddb7f0f8ed8ac5340dd6ab9a74b8b6db5b46b54eda13f
               command:
                 - /bin/python
                 - /script/placeos-upgrade.py
