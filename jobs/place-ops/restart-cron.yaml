@@ -19,6 +19,8 @@ spec:
       activeDeadlineSeconds: 120
       template:
         spec:
+          securityContext:
+            runAsNonRoot: true
           serviceAccountName: place-ops
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
