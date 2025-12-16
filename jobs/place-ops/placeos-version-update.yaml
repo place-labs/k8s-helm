@@ -49,6 +49,7 @@ spec:
           serviceAccount: place-ops
           securityContext:
             runAsNonRoot: true
+            runAsUser: 1000
       ttlSecondsAfterFinished: 3600
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
