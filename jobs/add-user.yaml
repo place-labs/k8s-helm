@@ -21,9 +21,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
         command: ["bash", "-c"]
-        args:
-        - |
-          /app/bin/task create:user authority_id="s0mek1nd4UUID" email="support@place.tech" username="burger" password="burgerR00lz" sys_admin=true support=true
+        args: [ "/app/bin/task create:user authority_id='s0mek1nd4UUID' email='support@place.tech' username='burger' password='burgerR00lz' sys_admin=true support=true" ] #gitleaks:allow
         env:
         # These env vars are not required for the task but init requires they are set to run any task
           - name: PLACE_DOMAIN
