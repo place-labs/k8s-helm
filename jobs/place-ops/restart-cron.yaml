@@ -28,6 +28,8 @@ spec:
             - name: kubectl
               image: bitnami/kubectl
               imagePullPolicy: IfNotPresent
+              securityContext:
+                allowPrivilegeEscalation: false
               resources:
                 limits:
                   cpu: 100m

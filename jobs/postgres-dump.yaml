@@ -18,6 +18,8 @@ spec:
       - name: kubectl
         image: bitnami/kubectl:latest
         imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
           - name: POSTGRES_USER
             value: "placeos"

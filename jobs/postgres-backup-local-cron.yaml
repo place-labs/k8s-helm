@@ -28,6 +28,8 @@ spec:
           - name: kubectl
             image: bitnami/kubectl:latest
             imagePullPolicy: IfNotPresent
+            securityContext:
+              allowPrivilegeEscalation: false
 
             envFrom:
               - configMapRef:

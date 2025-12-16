@@ -18,6 +18,8 @@ spec:
       - name: init
         image: placeos/init:placeos-1.2111.1
         imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
           - name: RETHINKDB_HOST
             valueFrom:
