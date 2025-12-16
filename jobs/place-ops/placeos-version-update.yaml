@@ -47,7 +47,8 @@ spec:
           restartPolicy: Never
           serviceAccountName: place-ops
           serviceAccount: place-ops
-          securityContext: {}
+          securityContext:
+            runAsNonRoot: true
       ttlSecondsAfterFinished: 3600
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1

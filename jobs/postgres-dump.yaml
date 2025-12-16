@@ -11,6 +11,8 @@ spec:
     metadata:
       name: postgres-dump
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
       - name: kubectl
         image: bitnami/kubectl:latest

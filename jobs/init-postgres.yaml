@@ -11,6 +11,8 @@ spec:
     metadata:
       name: init-postgres
     spec:
+      securityContext:
+        runAsNonRoot: true
       restartPolicy: Never
       containers:
       - name: init

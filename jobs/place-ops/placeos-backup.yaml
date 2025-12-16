@@ -18,6 +18,8 @@ spec:
           name: placeos-backup
           creationTimestamp: null
         spec:
+          securityContext:
+            runAsNonRoot: true
           containers:
             - name: init
               image: placeos/init:placeos-2.2511.1
