@@ -11,10 +11,15 @@ spec:
     metadata:
       name: postgres-dump
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - name: kubectl
         image: bitnami/kubectl:latest
         imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
           - name: POSTGRES_USER
             value: "placeos"

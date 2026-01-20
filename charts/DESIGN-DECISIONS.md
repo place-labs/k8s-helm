@@ -1,6 +1,7 @@
 # Design Decisions
 
-Sub chart for each container
+## Sub chart for each container
+
 ==================================
 
 - more flexibility
@@ -10,13 +11,15 @@ Sub chart for each container
 - sub charts can be extracted easily and managed as seperate repositories if required.
 - duplication across charts can be managed by adding a library chart
 
-Seperate Secrets file for each deployment with same values
+## Seperate Secrets file for each deployment with same values
+
 ============================================================
 
 - Each subcart is independant , ie no global secrets chart required.
 - Each subchart may require its own secrets in the future.
 
-Nginx as the Ingress Controller
+## Nginx as the Ingress Controller
+
 ===================================
 
 - Each cloud provider has a different native option.

@@ -9,7 +9,8 @@ Currently supported deployment scenarios are:
 - Azure deployment to AKS
 - Openshift v4
 
-Currently compatible with k8s 1.22.x - 1.26.x 
+Currently compatible with k8s 1.22.x - 1.26.x
+
 - this repo aims to support the most recent stable kubernetes version available from cloud providers
 - although it can work with certain older versions, upgrading to the most recent version is highly recommended for optimal compatibility, performance and security.
 
@@ -102,7 +103,9 @@ If no ingress has been deployed yet ( works for Azure ):
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm install -n placeos ingress-nginx --create-namespace  ingress-nginx/ingress-nginx --set controller.allowSnippetAnnotations=true --set controller.service.annotations.""service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz
 ```
-If an internal Azure load balancer is required add 
+
+If an internal Azure load balancer is required add
+
 ```sh
  --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"=true
 ```
@@ -185,7 +188,7 @@ Solution:
 
 1. Delete all the PVCs as part of the cleanup to ensure a fresh deployment
 
-### ElasticSearch returns an error:
+### ElasticSearch returns an error
 
 > max file descriptors [###] for elasticsearch process is too low, increase to at least [65535]
 
