@@ -19,13 +19,17 @@ spec:
       activeDeadlineSeconds: 120
       template:
         spec:
+          securityContext:
+            runAsNonRoot: true
           serviceAccountName: place-ops
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
             - name: kubectl
-              image: bitnami/kubectl
+              image: bitnami/kubectl:latest
               imagePullPolicy: IfNotPresent
+              securityContext:
+                allowPrivilegeEscalation: false
               resources:
                 limits:
                   cpu: 100m
