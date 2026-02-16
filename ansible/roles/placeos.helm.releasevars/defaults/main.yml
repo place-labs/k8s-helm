@@ -1,6 +1,31 @@
 ---
 # defaults file for placeos.helm.releasevars
+
+# Lookup variables from Helm release values with nested paths
 lookup_release_vars:
-    - chart_release_namespace: "placeos"
+    - chart_release_name: "placeos"
+      chart_release_namespace: "placeos"
       chart_release_vars:
-        - "rethinkdbPassword"
+        - var_name: "placeServerSecret"
+          helm_path: "api.secrets.PLACE_SERVER_SECRET"
+        - var_name: "authSecretKeyBase"
+          helm_path: "auth.secrets.SECRET_KEY_BASE"
+        - var_name: "serverSecret"
+          helm_path: "dispatch.secrets.SERVER_SECRET"
+        - var_name: "placePassword"
+          helm_path: "init.secrets.PLACE_PASSWORD"
+        - var_name: "postgresqlPassword"
+          helm_path: "api.secrets.PG_PASSWORD"
+        - var_name: "influxdbAdminToken"
+          helm_path: "source.secrets.INFLUX_API_KEY"
+        - var_name: "cluster_info_name"
+          helm_path: "cluster_info.name"
+        - var_name: "cluster_info_environment"
+          helm_path: "cluster_info.environment"
+        - var_name: "cluster_info_region"
+          helm_path: "cluster_info.region"
+    - chart_release_name: "{{ postgresql_release_name | default('postgresql-ha') }}"
+      chart_release_namespace: "{{ postgresql_namespace | default('placeos') }}"
+      chart_release_vars:
+        - var_name: "postgresqlPostgresPassword"
+          helm_path: "postgresql.postgresPassword"

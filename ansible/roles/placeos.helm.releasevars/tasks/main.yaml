@@ -1,8 +1,40 @@
 ---
-- name: include value check
+# Lookup values from Helm releases
+- name: include Helm release value check
   include_tasks:
     file: lookup.yaml
-  loop:
-    "{{ lookup_release_vars }}"
+  loop: "{{ lookup_release_vars }}"
   loop_control:
     loop_var: "checkvars"
+
+# Get cluster_info from existing ConfigMap
+- name: Get cluster-info ConfigMap values
+  shell: |
+    kubectl get configmap cluster-info -n {{ placeos_namespace | default('placeos') }} -o jsonpath='{.data}' 2>/dev/null || echo '{}'
+  register: cluster_info_json
+  changed_when: false
+  failed_when: false
+
+- name: Parse cluster-info ConfigMap
+  set_fact:
+    cluster_info_data: "{{ cluster_info_json.stdout | from_json }}"
+  when: cluster_info_json.stdout != ''
+
+# Set cluster_info from ConfigMap or fallback to inventory defaults
+- name: Set cluster_info from ConfigMap or inventory defaults
+  set_fact:
+    cluster_info:
+      name: "{{ cluster_info_data.name | default(cluster_info.name, true) | default('default', true) }}"
+      environment: "{{ cluster_info_data.environment | default(cluster_info.environment, true) | default('development', true) }}"
+      region: "{{ cluster_info_data.region | default(cluster_info.region, true) | default('default', true) }}"
+
+# Set passwords: override > helm release > random
+- name: Set passwords for services (override > helm release > random)
+  set_fact:
+    placeServerSecret: "{{ placeServerSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
+    authSecretKeyBase: "{{ authSecretKeyBase | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
+    serverSecret: "{{ serverSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+    placePassword: "{{ placePassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+    postgresqlPassword: "{{ postgresqlPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+    postgresqlPostgresPassword: "{{ postgresqlPostgresPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+    influxdbAdminToken: "{{ influxdbAdminToken | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
