@@ -180,6 +180,7 @@ placeos:
           memory: 5Mi
   # frontend-loader is the overide configuration for the embedded frontend-loader subchart
   frontendloader:
+    enabled: true
     httpSidecar: true
     ingress:
       annotations:
@@ -358,6 +359,9 @@ redis:
   architecture: standalone
   commonConfiguration: |-
     notify-keyspace-events Kg$
+    client-output-buffer-limit normal 0 0 0
+    client-output-buffer-limit replica 256mb 64mb 60
+    client-output-buffer-limit pubsub 512mb 128mb 60
   master:
     priorityClassName: high
     persistence:
