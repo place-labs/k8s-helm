@@ -38,6 +38,11 @@
   set_fact:
     placeos_profile: "{{ placeos | from_yaml }}"
 
+- name: merge cluster_info into placeos profile
+  set_fact:
+    placeos_profile: "{{ placeos_profile | combine({'cluster_info': cluster_info}) }}"
+  when: cluster_info is defined
+
 - name: show placeos vars
   debug:
     var: placeos_profile

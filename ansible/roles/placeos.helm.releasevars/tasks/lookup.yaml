@@ -2,19 +2,23 @@
 # tasks file for placeos.helm.releasevars
 - name: check release current state
   kubernetes.core.helm_info:
-    name: "{{ chart_release_name }}"
-    release_namespace: "{{ checkvars[ 'chart_release_namespace' ] }}"
+    name: "{{ checkvars['chart_release_name'] }}"
+    release_namespace: "{{ checkvars['chart_release_namespace'] }}"
   register: release_state
+  ignore_errors: yes
 
-- name: "get the existing release var"
+- name: "get existing release var from Helm values"
   set_fact:
-    parsed: "{{ release_state.status[ 'values' ] }}"
+    "{{ item.var_name }}": "{{ lookup_result }}"
+  vars:
+    parts: "{{ item.helm_path.split('.') }}"
+    val0: "{{ release_state.status['values'][parts[0]] | default('') }}"
+    val1: "{{ val0[parts[1]] | default('') if parts|length > 1 and val0 is mapping else '' }}"
+    val2: "{{ val1[parts[2]] | default('') if parts|length > 2 and val1 is mapping else '' }}"
+    lookup_result: "{{ val2 if parts|length > 2 else (val1 if parts|length > 1 else val0) }}"
   when:
     - release_state.status is defined
-
-- name: "get the existing release var"
-  set_fact:
-    "{{ item }}": "{{ parsed[ item ] }}"
-  when:
-    - parsed[ item ] is defined
-  loop: "{{ checkvars[ 'chart_release_vars' ] }}"
+    - release_state.status['values'] is defined
+    - vars[item.var_name] is not defined
+    - lookup_result | default('', true) != ''
+  loop: "{{ checkvars['chart_release_vars'] }}"

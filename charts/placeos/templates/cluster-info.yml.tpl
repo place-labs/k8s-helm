@@ -12,4 +12,4 @@ data:
   environment: {{ .Values.cluster_info.environment | default "development" }}
   name: {{ .Values.cluster_info.name | default "default" }}
   region: {{ .Values.cluster_info.region | default "default" }}
-  version: {{ .Chart.AppVersion }}
+  version: {{ .Values.cluster_info.version | default .Chart.AppVersion }}
