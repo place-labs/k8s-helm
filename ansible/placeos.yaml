@@ -9,13 +9,13 @@
   pre_tasks:
   - name: set passwords for services
     set_fact:
-      placeServerSecret: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
-      authSecretKeyBase: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
-      serverSecret: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
-      placePassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
-      postgresqlPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
-      postgresqlPostgresPassword: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits') }}"
-      influxdbAdminToken: "{{ lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64') }}"
+      placeServerSecret: "{{ placeServerSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
+      authSecretKeyBase: "{{ authSecretKeyBase | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
+      serverSecret: "{{ serverSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+      placePassword: "{{ placePassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+      postgresqlPassword: "{{ postgresqlPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+      postgresqlPostgresPassword: "{{ postgresqlPostgresPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+      influxdbAdminToken: "{{ influxdbAdminToken | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
 
   roles:
   ## Override random rethinkdbPassword if it already exists
