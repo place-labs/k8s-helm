@@ -1,9 +1,21 @@
 ---
 # tasks file for placeos.helm.thirdparty
 
-- name: "set the release vars for {{ chart_ref }}"
+- name: "set the base release vars for {{ chart_ref }}"
   set_fact:
-    release_values: "{{ lookup( 'vars', chart_ref | from_yaml ) }}"
+    base_release_values: "{{ lookup('vars', (chart_ref | replace('-', '_')) + '_base', default={}) }}"
+  when:
+  - chart_ref is defined
+
+- name: "set the override release vars for {{ chart_ref }}"
+  set_fact:
+    override_release_values: "{{ lookup('vars', chart_ref | replace('-', '_'), default={}) }}"
+  when:
+  - chart_ref is defined
+
+- name: "merge base and override release vars for {{ chart_ref }}"
+  set_fact:
+    release_values: "{{ base_release_values | combine(override_release_values, recursive=True) }}"
   when:
   - chart_ref is defined
 

@@ -34,6 +34,11 @@
     var: release_state
     verbosity: 1
 
+- name: Merge base PlaceOS configuration with inventory overrides
+  set_fact:
+    placeos: "{{ placeos_base | combine(placeos_override | default({}), recursive=True) }}"
+  when: placeos_base is defined
+
 - name: load the PlaceOS Profile vars
   set_fact:
     placeos_profile: "{{ placeos | from_yaml }}"

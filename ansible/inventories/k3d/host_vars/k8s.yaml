@@ -1,269 +1,88 @@
+# K3D-specific overrides for PlaceOS (local development environment)
+# This file contains only the differences from the base configuration in group_vars/all/k8s_base.yaml
+# The final configuration is created by: placeos = placeos_base | combine(placeos_override, recursive=True)
+
 # Cluster Info ConfigMap (used by admins and upgrade jobs)
 cluster_info:
   name: "default" # eg. PlaceOS PROD
   environment: "default" # eg. production, staging, development
   region: "default" # eg. australiaeast
 
-#Domain variables set for a local install
+# Domain variables set for a local install
 placeDomain: "localhost"
 customRedirectPort: 8443
 
-#  Used to set the user password in PostgresQL if enabled then passed to multiple containers in a k8s secret
-xpostgresPassword: &pgPassword "{{ postgresqlPassword }}"
-
-#  Used to set the admin "postgres" user password in PostgresQL if enabled
-xpostgresPostgresPassword: &pgPostgresPassword "{{ postgresqlPostgresPassword }}"
-
-# xsmtpPassword. the smtp password used by triggers
-xsmtpPassword: &smtpPassword "{{ smtpPassword | default( '', true ) }}"
-
-# xplaceServerSecret for the placeos service
-xplaceServerSecret: &placeServerSecret "{{ placeServerSecret | default( '', true ) }}"
-
-# xplaceServerSecret for the placeos service
-xauthSecretKeyBase: &authSecretKeyBase "{{ authSecretKeyBase | default( '', true ) }}"
-
-# xplacePassword. The value used by the init subchart to set the default domain users password
-xplacePassword: &placePassword "{{ placePassword | default( '', true ) }}"
-
-# xserverSecret for the dispatch service
-xserverSecret: &serverSecret "{{ serverSecret | default( '', true ) }}"
-
-# xelasticClientEnv configmap values for ElasticSearch Service exposed as environment variables to PlaceOS containers
-xelasticClientEnv: &elasticClientEnv
-  ES_HOST: "{{ elasticsearch_release_name }}.{{ elasticsearch_namespace }}"
-  ES_PORT: 9200
-
-# xredisClientEnv configmap values for the redis Service exposed as environment variables to PlaceOS containers
-xredisClientEnv: &redisClientEnv
-  REDIS_URL: "redis://redis-headless.{{ redis_namespace }}:6379"
-
-xpostgresValues: &postgresValues
-  postgresql:
-    username: &pgUsername placeos
-    database: &pgDatabase placeos
-    password: *pgPassword
-    postgresPassword: *pgPostgresPassword
-    maxConnections: 500
-    replicaCount: 1
-    image:
-      repository: bitnamilegacy/postgresql-repmgr
-  pgpool:
-    numInitChildren: 500
-    image:
-      repository: bitnamilegacy/pgpool
-  volumePermissions:
-    image:
-      repository: bitnamilegacy/os-shell
-  metrics:
-    image:
-      repository: bitnamilegacy/postgres-exporter
-  global:
-    security:
-      allowInsecureImages: true
-
-xpostgresClientEnv: &postgresClientEnv
-  PG_DB: *pgDatabase
-  PG_HOST: postgresql-pgpool
-  PG_PORT: 5432
-  PG_USER: *pgUsername
-  PG_QUERY: "?initial_pool_size=10&max_idle_pool_size=10"
-
-xpostgresClientSecrets: &postgresClientSecrets
-  PG_PASSWORD: *pgPassword
-
-xinfluxClientEnv: &influxClientEnv
-  INFLUX_HOST: http://influx:8086
-  INFLUX_ORG: PlaceOS
-  INFLUX_BUCKET: placeos
-
-xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
-
-xinfluxClientEnv: &influxClientEnv
-  INFLUX_HOST: http://influx:8086
-  INFLUX_ORG: PlaceOS
-  INFLUX_BUCKET: placeos
-
-xinfluxAdminToken: &influxAdminToken "{{ influxdbAdminToken }}"
-
-# xsmtpClientSecrets secrets values exposed as environment variables for the trigger service
-xsmtpClientSecrets: &smtpClientSecrets
-  SMTP_PASS: *smtpPassword
-
-# dispatchSecrets secret values exposed as environment variables for the dispatch service
-xdispatchSecrets: &dispatchSecrets
-  SERVER_SECRET: *serverSecret
-
-xhttpProxy: &httpProxy
-  HTTP_PROXY: ""
-  HTTPS_PROXY: ""
-
-placeos:
-  enabled: true
-  # api is the overide configuration for the embedded api subchart
+# Override PlaceOS services with K3D-specific configuration (development setup)
+placeos_override:
+  # api - No resource limits for local dev
   api:
-    configmap:
-      # Service Hosts
-      << : *elasticClientEnv
-      << : *redisClientEnv
-      << : *postgresClientEnv
-      << : *httpProxy
-    secrets:
-      << : *postgresClientSecrets
-      PLACE_SERVER_SECRET: *placeServerSecret
-  # auth is the overide configuration for the embedded auth subchart
+    deployment:
+      resources: {}
+  
+  # auth - No resource limits for local dev
   auth:
-    configmap:
-      << : *postgresClientEnv
-      << : *httpProxy
-    secrets:
-      SECRET_KEY_BASE: *authSecretKeyBase
-      << : *postgresClientSecrets
-  # core is the overide configuration for the embedded core subchart
+    deployment:
+      resources: {}
+  
+  # core - No resource limits for local dev
   core:
-    configmap:
-      # Service Hosts
-      << : *redisClientEnv
-      << : *postgresClientEnv
-      << : *httpProxy
-    secrets:
-      << : *postgresClientSecrets
-      PLACE_SERVER_SECRET: *placeServerSecret
-  # dispatch is the overide configuration for the embedded dispatch subchart
+    deployment:
+      resources: {}
+  
+  # dispatch - No resource limits for local dev
   dispatch:
-    secrets:
-      << : *dispatchSecrets
-  # frontend-loader is the overide configuration for the embedded frontend-loader subchart
+    deployment:
+      resources: {}
+  
+  # frontendloader - No resource limits for local dev
   frontendloader:
-    httpSidecar: true
-    configmap:
-      << : *postgresClientEnv
-      << : *httpProxy
-    secrets:
-      << : *postgresClientSecrets
-      PLACE_SERVER_SECRET: *placeServerSecret
-  # search-ingest is the overide configuration for the embedded search-ingest subchart
+    deployment:
+      resources: {}
+    httpDeployment:
+      resources: {}
+  
+  # searchingest - No resource limits for local dev
   searchingest:
-    configmap:
-      # Service Hosts
-      << : *postgresClientEnv
-      << : *elasticClientEnv
-    secrets:
-      << : *postgresClientSecrets
-  # triggers is the overide configuration for the embedded triggers subchart
+    deployment:
+      resources: {}
+  
+  # triggers - No resource limits for local dev
   triggers:
-    configmap:
-      # Service Hosts
-      << : *redisClientEnv
-      << : *postgresClientEnv
-    secrets:
-      << : *postgresClientSecrets
-      << : *smtpClientSecrets
-      PLACE_SERVER_SECRET: *placeServerSecret
-  # init is the overide configuration for the embedded init subchart
-  init:
-    config:
-      # Service Hosts
-      << : *postgresClientEnv
-      << : *elasticClientEnv
-      << : *postgresClientSecrets
-    secrets:
-      PLACE_PASSWORD: *placePassword
-      PLACE_SERVER_SECRET: *placeServerSecret
-  # staff is the overide configuration for the embedded staff subchart
+    deployment:
+      resources: {}
+  
+  # staff - Ingress enabled for local access
   staff:
     ingress:
       enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        ingress.kubernetes.io/ssl-redirect: "true"
-    secrets:
-      PLACE_PASSWORD: *placePassword
-      PLACE_SERVER_SECRET: *placeServerSecret
-    << : *postgresqlValues
-  # source is the overide configuration for the embedded source subchart
+    deployment:
+      resources: {}
+  
+  # source - No resource limits for local dev
   source:
-    configmap:
-      << : *redisClientEnv
-      << : *postgresClientEnv
-      << : *influxClientEnv
-    secrets:
-      << : *postgresClientSecrets
-      PLACE_SERVER_SECRET: *placeServerSecret
-      INFLUX_API_KEY: *influxAdminToken
-    serviceAccount:
-      name: null
-  global:
-    placeDomain: "{{ placeDomain }}"
-    customRedirectPort: "{{ customRedirectPort | default( omit ) }}"
+    deployment:
+      resources: {}
 
-###########################################
-##### Third Party Supporting Services #####
-###########################################
-
-ingress-nginx:
+# Third-party service overrides for K3D (minimal local setup)
+ingress_nginx:
   enabled: false
+
 elasticsearch:
-  enabled: true
   master:
     replicas: 1
     persistence:
       size: 100Mib
+    resources: {}
   data:
     replicas: 1
     persistence:
       size: 100Mib
-  coordinating:
-    replicas: 0
-  image:
-    repository: bitnamilegacy/elasticsearch
-  sysctlImage:
-    repository: bitnamilegacy/os-shell
-  volumePermissions:
-    image:
-      repository: bitnamilegacy/os-shell
-  metrics:
-    image:
-      repository: bitnamilegacy/elasticsearch-exporter
-  global:
-    security:
-      allowInsecureImages: true
+    resources: {}
+
 redis:
-  enabled: true
-  fullnameOverride: redis
-  auth:
-    enabled: false
-  architecture: standalone
-  commonConfiguration: |-
-    notify-keyspace-events Kg$
-    client-output-buffer-limit normal 0 0 0
-    client-output-buffer-limit replica 256mb 64mb 60
-    client-output-buffer-limit pubsub 512mb 128mb 60
   master:
-    persistence:
-      enabled: true
-      size: 100M
-  image:
-    registry: public.ecr.aws
-    repository: bitnami/redis
-  global:
-    security:
-      allowInsecureImages: true
+    resources: {}
+
 influxdb:
-  fullnameOverride: influxdb
-  enabled: true
-  auth:
-    admin:
-      token: *influxAdminToken
-  image:
-    repository: bitnamilegacy/influxdb
-  global:
-    security:
-      allowInsecureImages: true
-mosquitto:
-  enabled: false
-  fullnameOverride: mosquitto
-postgresql-ha:
-  enabled: true
-  fullnameOverride: postgresql
-  << : *postgresValues
+  priorityClassName: null
+  resources: {}
