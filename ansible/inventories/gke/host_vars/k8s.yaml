@@ -332,7 +332,7 @@ elasticsearch:
     resources:
       requests:
         cpu: 25m
-        memory: 1536Gi
+        memory: 1536Mi
     podAntiAffinityPreset: soft
   coordinating:
     replicaCount: 0
