@@ -23,6 +23,9 @@ xauthSecretKeyBase: &authSecretKeyBase "{{ authSecretKeyBase | default( '', true
 # xserverSecret for the dispatch service
 xserverSecret: &serverSecret "{{ serverSecret | default( '', true ) }}"
 
+# xjwtSecret for JWT signing (base64 encoded RSA private key)
+xjwtSecret: &jwtSecret "{{ jwtSecret | default( '', true ) }}"
+
 # xelasticClientEnv configmap values for ElasticSearch Service exposed as environment variables to PlaceOS containers
 xelasticClientEnv: &elasticClientEnv
   ES_HOST: "{{ elasticsearch_release_name }}.{{ elasticsearch_namespace }}"
@@ -121,6 +124,7 @@ placeos_base:
     secrets:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
+      JWT_SECRET: *jwtSecret
     deployment:
       resources:
         limits:
@@ -142,6 +146,7 @@ placeos_base:
     secrets:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *postgresClientSecrets
+      JWT_SECRET: *jwtSecret
     deployment:
       resources:
         limits:
@@ -277,6 +282,7 @@ placeos_base:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
       << : *postgresClientSecrets
+      JWT_SECRET: *jwtSecret
     deployment:
       resources:
         limits:

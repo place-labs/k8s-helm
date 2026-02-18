@@ -10,6 +10,8 @@ lookup_release_vars:
           helm_path: "api.secrets.PLACE_SERVER_SECRET"
         - var_name: "authSecretKeyBase"
           helm_path: "auth.secrets.SECRET_KEY_BASE"
+        - var_name: "jwtSecret"
+          helm_path: "api.secrets.JWT_SECRET"
         - var_name: "serverSecret"
           helm_path: "dispatch.secrets.SERVER_SECRET"
         - var_name: "placePassword"
