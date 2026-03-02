@@ -123,8 +123,13 @@ def patch_resource(resource_name, resource_type, namespace, new_version):
 
 def upgrade_placeos(namespace, resources, new_version):
     # Patch the placeos-migrations cron job
+    # Get current image name to preserve it (e.g., init_pg17 instead of hardcoding placeos/init)
+    current_migrations_image = run_cmd(f"kubectl get cronjob {migrations_job} -n {namespace} -o jsonpath='{{.spec.jobTemplate.spec.template.spec.containers[0].image}}'")
+    current_migrations_image_name = current_migrations_image.split(':')[0]
+    new_migrations_image = f"{current_migrations_image_name}:{new_version}"
+    
     patch_placeos_migrations_cmd = f"kubectl patch cronjob {migrations_job} -n {namespace} --type='json' " + \
-                                  f"""-p='[{{"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/image", "value": "placeos/init:{new_version}"}}]'"""
+                                  f"""-p='[{{"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/image", "value": "{new_migrations_image}"}}]'"""
     puts(f"Patching {migrations_job}: ")
     subprocess.run(patch_placeos_migrations_cmd, shell=True, check=True)
 
