@@ -6,7 +6,7 @@ metadata:
     core: {{ include "core.fullname" . }}
     {{- include "core.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount | default (ternary 2 1 (eq (.Values.global.env | default "") "prod")) }}
   selector:
     matchLabels:
       core: {{ include "core.fullname" . }}

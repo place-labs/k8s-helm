@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "staff.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount | default (ternary 3 1 (eq (.Values.global.env | default "") "prod")) }}
   selector:
     matchLabels:
       {{- include "staff.selectorLabels" . | nindent 6 }}

@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "frontend-loader.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount | default (ternary 2 1 (eq (.Values.global.env | default "") "prod")) }}
   selector:
     matchLabels:
       {{- include "frontend-loader.selectorLabels" . | nindent 6 }}
