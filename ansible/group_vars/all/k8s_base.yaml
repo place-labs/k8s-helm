@@ -314,6 +314,7 @@ placeos_base:
       name: null
   
   global:
+    env: "{{ env | default('dev', true ) }}"  # Environment: dev, staging, prod (affects default replica counts)
     placeDomain: "{{ placeDomain | default('localhost', true ) }}"
     customRedirectPort: "{{ customRedirectPort | default( omit ) }}"
 

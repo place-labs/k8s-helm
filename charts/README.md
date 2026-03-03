@@ -49,6 +49,22 @@ cluster_info:
   region: "default" # eg. australiaeast
 ```
 
+### Replica Count Configuration
+
+By default, all PlaceOS services deploy with 1 replica. For production deployments, set `global.env=prod` to automatically scale appropriate services to 3 replicas:
+
+```sh
+# Production deployment with 3 replicas per service
+helm install placeos placeos/ --set global.env=prod
+```
+
+You can also override individual service replica counts:
+
+```sh
+# Set environment to prod (3 replicas default), but override API to 5 replicas
+helm install placeos placeos/ --set global.env=prod --set api.deployment.replicaCount=5
+```
+
 ### Local Deployment with K3d
 
 We use k3d in this example however it should work with any local k8s deployment assumimg you adjust your deployment for the exposed host and port mapping via the `global.domain` and `global.customRedirectPort`

@@ -54,6 +54,24 @@ cluster_info:
   region: "default" # eg. australiaeast
 ```
 
+### Replica Count Configuration
+
+By default, all services are deployed with 1 replica. For production deployments, set `env=prod` to automatically scale appropriate services to 3 replicas:
+
+```sh
+# Production deployment with 3 replicas per service
+ansible-playbook placeos.yaml -i inventories/aks/ -e "env=prod"
+```
+
+You can also override individual service replica counts in the inventory `host_vars/k8s.yaml`:
+
+```yaml
+placeos_override:
+  api:
+    deployment:
+      replicaCount: 5  # Override API to 5 replicas
+```
+
 ### Local deployment to k3d
 ```sh
 # Check first be for deploying
