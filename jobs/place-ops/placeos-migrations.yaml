@@ -20,10 +20,10 @@ spec:
           containers:
           - name: init
             image: placeos/init:placeos-2.2602.5
-            command: ["bash", "-c"]
+            command:
+              - /app/bin/task
             args:
-            - |
-              /app/bin/task db:init host=$PG_HOST user=$PG_USER password=$PG_PASSWORD db=$PG_DB
+              - db:init
             imagePullPolicy: IfNotPresent
             env:
               - name: PLACE_SKIP_PLACEHOLDERS
