@@ -74,11 +74,11 @@ placeos_override:
 
 ### Resource Configuration
 
-Resource requests and limits are environment-aware:
+Resource requests and limits follow the same pattern. When `env=prod`, production-appropriate resource limits are automatically applied for both PlaceOS services and third-party dependencies (PostgreSQL, Elasticsearch, Redis, InfluxDB).
 
-**PlaceOS Services**: Resources are defined in Helm templates with dev defaults. When `env=prod`, the Helm templates use production resource placeholders (currently empty - update them in the deployment templates).
+**PlaceOS Services**: Resources are defined in Helm templates with dev defaults.
 
-**Third-Party Services**: Default to development resources in `group_vars/all/k8s_base.yaml`. For production, uncomment the production resource blocks in the base vars file or override them in your inventory.
+**Third-Party Services**: Resources are conditionally set in `group_vars/all/k8s_base.yaml` using Jinja2 templates based on the `env` variable.
 
 You can override individual service resources in the inventory `host_vars/k8s.yaml`:
 
