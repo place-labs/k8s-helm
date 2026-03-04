@@ -46,15 +46,18 @@ xpostgresValues: &postgresValues
     resources:
 {% if env|default('dev') == 'prod' %}
       requests:
-        cpu: 500m
-        memory: 500Mi
+        cpu: 250m
+        memory: 2Gi
       limits:
-        cpu: 2
-        memory: 1Gi
+        cpu: 1
+        memory: 3Gi
 {% else %}
       requests:
         cpu: 250m
         memory: 250Mi
+      limits:
+        cpu: 1
+        memory: 2Gi
 {% endif %}
     pdb:
       create: false
@@ -430,10 +433,10 @@ redis_base:
     resources:
 {% if env|default('dev') == 'prod' %}
       limits:
-        cpu: '2'
+        cpu: '1'
         memory: 256Mi
       requests:
-        cpu: 100m
+        cpu: 50m
         memory: 128Mi
 {% else %}
       limits:
@@ -462,17 +465,17 @@ influxdb_base:
   resources:
 {% if env|default('dev') == 'prod' %}
     limits:
-      cpu: 2
+      cpu: 1
       memory: 2Gi
     requests:
-      cpu: 500m
+      cpu: 10m
       memory: 1Gi
 {% else %}
     limits:
       cpu: 1
       memory: 1Gi
     requests:
-      cpu: 150m
+      cpu: 10m
       memory: 512Mi
 {% endif %}
   image:
