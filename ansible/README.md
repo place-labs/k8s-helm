@@ -74,7 +74,11 @@ placeos_override:
 
 ### Resource Configuration
 
-Resource requests and limits follow the same pattern. When `env=prod`, production-appropriate resource limits are automatically applied. Otherwise, no resource limits are set by default.
+Resource requests and limits are environment-aware:
+
+**PlaceOS Services**: Resources are defined in Helm templates with dev defaults. When `env=prod`, the Helm templates use production resource placeholders (currently empty - update them in the deployment templates).
+
+**Third-Party Services**: Default to development resources in `group_vars/all/k8s_base.yaml`. For production, uncomment the production resource blocks in the base vars file or override them in your inventory.
 
 You can override individual service resources in the inventory `host_vars/k8s.yaml`:
 
@@ -89,6 +93,14 @@ placeos_override:
         requests:
           cpu: 100m
           memory: 256Mi
+
+# Third-party service overrides
+elasticsearch:
+  data:
+    resources:
+      limits:
+        cpu: 4
+        memory: 8Gi
 ```
 
 ### Local deployment to k3d

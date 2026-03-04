@@ -69,6 +69,8 @@ helm install placeos placeos/ --set global.env=prod --set api.deployment.replica
 
 Resource requests and limits follow the same pattern. When `global.env=prod`, production-appropriate resource limits are automatically applied. Otherwise, no resource limits are set (allowing for flexible local development).
 
+**Note:** This applies to PlaceOS services only. Third-party service resources (PostgreSQL, Elasticsearch, Redis, etc.) should be configured directly in their respective values files or via the Ansible deployment.
+
 ```sh
 # Production deployment with resource limits
 helm install placeos placeos/ --set global.env=prod

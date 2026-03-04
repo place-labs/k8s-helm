@@ -44,9 +44,18 @@ xpostgresValues: &postgresValues
     maxConnections: 500
     replicaCount: 1
     resources:
+{% if env|default('dev') == 'prod' %}
+      requests:
+        cpu: 500m
+        memory: 500Mi
+      limits:
+        cpu: 2
+        memory: 1Gi
+{% else %}
       requests:
         cpu: 250m
         memory: 250Mi
+{% endif %}
     pdb:
       create: false
     image:
@@ -346,25 +355,42 @@ ingress_nginx_base:
 elasticsearch_base:
   enabled: true
   master:
+{% if env|default('dev') == 'prod' %}
+    replicaCount: 3
+{% else %}
     replicaCount: 1
+{% endif %}
     priorityClassName: high
     persistence:
       enabled: true
       size: 100M
     podAntiAffinityPreset: soft
   data:
+{% if env|default('dev') == 'prod' %}
+    replicaCount: 2
+{% else %}
     replicaCount: 1
+{% endif %}
     priorityClassName: high
     persistence:
       enabled: true
       size: 500M
     resources:
+{% if env|default('dev') == 'prod' %}
+      limits:
+        cpu: 2
+        memory: 4Gi
+      requests:
+        cpu: 100m
+        memory: 2Gi
+{% else %}
       limits:
         cpu: 1
         memory: 2Gi
       requests:
         cpu: 25m
         memory: 1536Mi
+{% endif %}
     podAntiAffinityPreset: soft
   coordinating:
     replicaCount: 0
@@ -402,12 +428,21 @@ redis_base:
       enabled: true
       size: 100M
     resources:
+{% if env|default('dev') == 'prod' %}
+      limits:
+        cpu: '2'
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+{% else %}
       limits:
         cpu: '1'
         memory: 128Mi
       requests:
         cpu: 50m
         memory: 64Mi
+{% endif %}
   image:
     registry: public.ecr.aws
     repository: bitnami/redis
@@ -425,12 +460,21 @@ influxdb_base:
     admin:
       token: *influxAdminToken
   resources:
+{% if env|default('dev') == 'prod' %}
+    limits:
+      cpu: 2
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+{% else %}
     limits:
       cpu: 1
       memory: 1Gi
     requests:
       cpu: 150m
       memory: 512Mi
+{% endif %}
   image:
     repository: bitnamilegacy/influxdb
   global:
