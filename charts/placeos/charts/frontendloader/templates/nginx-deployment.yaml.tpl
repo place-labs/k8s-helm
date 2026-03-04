@@ -56,7 +56,23 @@ spec:
           initialDelaySeconds: 10
           failureThreshold: 3
         resources:
+        {{- if .Values.httpDeployment.resources }}
           {{- toYaml .Values.httpDeployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1
+            memory: 256Mi
+          requests:
+            cpu: 10m
+            memory: 96Mi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        {{- end }}
         volumeMounts:
         - mountPath: /usr/share/nginx/html/
           name: www

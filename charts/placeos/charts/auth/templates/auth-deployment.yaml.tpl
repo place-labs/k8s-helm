@@ -49,7 +49,23 @@ spec:
             path: /auth/authority?health=true&readiness
             port: http
         resources:
+        {{- if .Values.deployment.resources }}
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 192Mi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 96Mi
+        {{- end }}
         volumeMounts:
         - mountPath: /app/tmp/
           name: app-tmp

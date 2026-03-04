@@ -49,7 +49,23 @@ spec:
             path: /api/search-ingest/v1?readiness
             port: http
         resources:
+        {{- if .Values.deployment.resources }}
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        {{- end }}
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
       {{ end }}

@@ -54,7 +54,23 @@ spec:
             path: /api/frontend-loader/v1?readiness
             port: http
         resources:
+        {{- if .Values.deployment.resources }}
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 10m
+            memory: 768Mi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 768Mi
+          requests:
+            cpu: 10m
+            memory: 256Mi
+        {{- end }}
         volumeMounts:
         - mountPath: /app/www
           name: {{ .Values.persistentVolumeClaim.name }}
@@ -70,7 +86,19 @@ spec:
         - containerPort: 8080
           name: http-nginx
         resources:
+        {{- if .Values.httpDeployment.resources }}
           {{- toYaml .Values.httpDeployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          # TODO: Define production resource limits
+          {}
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        {{- end }}
         volumeMounts:
         - mountPath: /usr/share/nginx/html/
           name: {{ .Values.persistentVolumeClaim.name }}

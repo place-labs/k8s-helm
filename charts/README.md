@@ -65,6 +65,38 @@ You can also override individual service replica counts:
 helm install placeos placeos/ --set global.env=prod --set api.deployment.replicaCount=5
 ```
 
+### Resource Configuration
+
+Resource requests and limits follow the same pattern. When `global.env=prod`, production-appropriate resource limits are automatically applied. Otherwise, no resource limits are set (allowing for flexible local development).
+
+```sh
+# Production deployment with resource limits
+helm install placeos placeos/ --set global.env=prod
+```
+
+You can also override individual service resources:
+
+```sh
+# Set environment to prod, but override API resources
+helm install placeos placeos/ --set global.env=prod \
+  --set api.deployment.resources.limits.cpu=2 \
+  --set api.deployment.resources.limits.memory=1Gi
+```
+
+Or define custom resources in your values file:
+
+```yaml
+api:
+  deployment:
+    resources:
+      limits:
+        cpu: 2
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+```
+
 ### Local Deployment with K3d
 
 We use k3d in this example however it should work with any local k8s deployment assumimg you adjust your deployment for the exposed host and port mapping via the `global.domain` and `global.customRedirectPort`

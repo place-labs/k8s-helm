@@ -72,6 +72,25 @@ placeos_override:
       replicaCount: 5  # Override API to 5 replicas
 ```
 
+### Resource Configuration
+
+Resource requests and limits follow the same pattern. When `env=prod`, production-appropriate resource limits are automatically applied. Otherwise, no resource limits are set by default.
+
+You can override individual service resources in the inventory `host_vars/k8s.yaml`:
+
+```yaml
+placeos_override:
+  api:
+    deployment:
+      resources:
+        limits:
+          cpu: 2
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+```
+
 ### Local deployment to k3d
 ```sh
 # Check first be for deploying

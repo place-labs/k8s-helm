@@ -52,7 +52,23 @@ spec:
             path: /api/staff/v1
             port: 8080
         resources:
+        {{- if .Values.deployment.resources }}
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1
+            memory: 256Mi
+          requests:
+            cpu: 20m
+            memory: 128Mi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 256Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        {{- end }}
       {{- if .Values.deployment.podPriorityClassName }}
       priorityClassName: {{ .Values.deployment.podPriorityClassName }}
       {{ end }}

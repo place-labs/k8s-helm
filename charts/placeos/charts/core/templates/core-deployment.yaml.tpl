@@ -71,7 +71,23 @@ spec:
           periodSeconds: 15
           failureThreshold: 10
         resources:
+        {{- if .Values.deployment.resources }}
           {{- toYaml .Values.deployment.resources | nindent 12 }}
+        {{- else if eq (.Values.global.env | default "") "prod" }}
+          limits:
+            cpu: 1500m
+            memory: 4Gi
+          requests:
+            cpu: 500m
+            memory: 2Gi
+        {{- else }}
+          limits:
+            cpu: 1
+            memory: 2Gi
+          requests:
+            cpu: 50m
+            memory: 1Gi
+        {{- end }}
         volumeMounts:
         - mountPath: /app/bin/drivers/
           name: {{ include "core.fullname" . }}
