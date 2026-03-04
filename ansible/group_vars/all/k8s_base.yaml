@@ -125,14 +125,15 @@ placeos_base:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
       JWT_SECRET: *jwtSecret
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 512Mi
-        requests:
-          cpu: 10m
-          memory: 96Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 512Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 96Mi
   
   # auth is the overide configuration for the embedded auth subchart
   auth:
@@ -147,14 +148,15 @@ placeos_base:
       SECRET_KEY_BASE: *authSecretKeyBase
       << : *postgresClientSecrets
       JWT_SECRET: *jwtSecret
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 512Mi
-        requests:
-          cpu: 10m
-          memory: 96Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 512Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 96Mi
   
   # core is the overide configuration for the embedded core subchart
   core:
@@ -168,24 +170,26 @@ placeos_base:
       PLACE_SERVER_SECRET: *placeServerSecret
     persistentVolumeClaim:
       storageClassName: *storageClass
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 2Gi
-        requests:
-          cpu: 1
-          memory: 2Gi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 2Gi
+      #   requests:
+      #     cpu: 1
+      #     memory: 2Gi
   
   # dispatch is the overide configuration for the embedded dispatch subchart
   dispatch:
     secrets:
       << : *dispatchSecrets
-    deployment:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 5Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   requests:
+      #     cpu: 10m
+      #     memory: 5Mi
   
   # frontend-loader is the overide configuration for the embedded frontend-loader subchart
   frontendloader:
@@ -205,22 +209,24 @@ placeos_base:
       accessModes:
         - ReadWriteOnce
       storageClassName: *storageClass
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 1Gi
-        requests:
-          cpu: 10m
-          memory: 256Mi
-    httpDeployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 128Mi
-        requests:
-          cpu: 10m
-          memory: 64Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 1Gi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 256Mi
+    httpDeployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 128Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 64Mi
   
   # search-ingest is the overide configuration for the embedded search-ingest subchart
   searchingest:
@@ -230,14 +236,15 @@ placeos_base:
       << : *elasticClientEnv
     secrets:
       << : *postgresClientSecrets
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 512Mi
-        requests:
-          cpu: 10m
-          memory: 256Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 512Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 256Mi
   
   # triggers is the overide configuration for the embedded triggers subchart
   triggers:
@@ -249,14 +256,15 @@ placeos_base:
       << : *postgresClientSecrets
       << : *smtpClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 256Mi
-        requests:
-          cpu: 10m
-          memory: 128Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 256Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 128Mi
   
   # init is the overide configuration for the embedded init subchart
   init:
@@ -283,14 +291,15 @@ placeos_base:
       PLACE_SERVER_SECRET: *placeServerSecret
       << : *postgresClientSecrets
       JWT_SECRET: *jwtSecret
-    deployment:
-      resources:
-        limits:
-          cpu: 1
-          memory: 256Mi
-        requests:
-          cpu: 10m
-          memory: 128Mi
+    deployment: {}
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     cpu: 1
+      #     memory: 256Mi
+      #   requests:
+      #     cpu: 10m
+      #     memory: 128Mi
   
   # source is the overide configuration for the embedded source subchart
   source:
@@ -303,13 +312,14 @@ placeos_base:
       PLACE_SERVER_SECRET: *placeServerSecret
       INFLUX_API_KEY: *influxAdminToken
     deployment:
-      resources:
-        limits:
-          memory: 512Mi
-          cpu: 1
-        requests:
-          cpu: 10m
-          memory: 256Mi
+      # Uncomment to override default resources
+      # resources:
+      #   limits:
+      #     memory: 512Mi
+      #     cpu: 1
+      #   requests:
+      #     cpu: 10m
+      #     memory: 256Mi
     serviceAccount:
       name: null
   
