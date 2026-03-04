@@ -56,7 +56,7 @@ cluster_info:
 
 ### Replica Count Configuration
 
-By default, all services are deployed with 1 replica. For production deployments, set `env=prod` to automatically scale appropriate services to 3 replicas:
+By default, all services are deployed with 1 replica. For production deployments, set `env=prod` to automatically scale appropriate services to 2 replicas:
 
 ```sh
 # Production deployment with 3 replicas per service
