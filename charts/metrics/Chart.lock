@@ -4,12 +4,12 @@ dependencies:
   version: 9.2.1
 - name: grafana
   repository: https://charts.bitnami.com/bitnami
-  version: 12.0.5
+  version: 12.1.8
 - name: grafana-loki
   repository: https://charts.bitnami.com/bitnami
   version: 4.2.1
 - name: grafana-tempo
   repository: https://charts.bitnami.com/bitnami
   version: 3.4.1
-digest: sha256:d17daf47df12cede0e2350487bb5857bccbcfb3695e15ae81e845bbcad40a599
-generated: "2025-06-11T11:35:07.217869924+10:00"
+digest: sha256:9c857f4cded988f71d7fb377d97665224b6e9acba585c1f9793a60e44f9d3e99
+generated: "2026-03-13T17:15:04.324899503+11:00"
