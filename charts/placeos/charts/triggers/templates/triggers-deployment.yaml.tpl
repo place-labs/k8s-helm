@@ -18,6 +18,9 @@ spec:
       labels:
         {{- include "triggers.selectorLabels" . | nindent 8 }}
     spec:
+      volumes:
+        - name: tmp
+          emptyDir: {}
       {{- with .Values.deployment.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -40,6 +43,9 @@ spec:
           - name: http
             containerPort: 3000
             protocol: TCP
+        volumeMounts:
+            - name: tmp
+              mountPath: /repositories
         livenessProbe:
           httpGet:
             path: /api/triggers/v2
