@@ -47,6 +47,8 @@ spec:
               name:  {{ include "core.fullname" . }}
           - secretRef:
               name: {{ include "core.fullname" . }}
+          - configMapRef:
+              name:  placeos
         env:
           - name: CORE_HOST
             valueFrom:
