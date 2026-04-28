@@ -329,9 +329,6 @@ grafana-loki:
                   status: status
                   duration: duration
                 drop_malformed: false
-            - regex:
-                # Flag (?s:.*) needs to be set for regex stage to capture full traceback log in the extracted map.
-                expression: '^(?P<time>\[\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}\]) (?P<message>(?s:.*))$'
             - labels:
                 level:
                 program:

@@ -34,6 +34,8 @@ spec:
               name:  {{ include "auth.fullname" . }}
           - secretRef:
               name: {{ include "auth.fullname" . }}
+          - configMapRef:
+              name:  placeos
         image: "{{ .Values.deployment.image.registry }}/{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
         ports:

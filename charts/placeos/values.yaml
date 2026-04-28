@@ -11,6 +11,9 @@ cluster_info:
   environment: "default" # eg. production, staging, development
   region: "default" # eg. australiaeast
 
+placeos_config:
+  log_format: "JSON"
+
 # -- yaml anchor for the user password for postgres.
 # Used to set the user password in postgres if enabled then passed to multiple containers in a k8s secret
 xpostgresPassword: &pgPassword "development"
