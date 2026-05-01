@@ -17,7 +17,7 @@ spec:
         image: placeos/init:placeos-2.2602.5
         command:
           - /app/bin/task
-          - creat:user
+          - create:user
         args:
           - authority_id=authority-xxx
           - email=support@place.tech
