@@ -156,10 +156,7 @@ ansible-playbook placeos-network-policies.yaml  -e "policy_state=absent"
 
 ## Limitations
 
-The role `placeos.helm.releasevars` is a convenience method to prevent overiding the rethinkdb password.
+The role `placeos.helm.releasevars` is a convenience method to prevent overiding secrets.
 
-In a real world situation the admin password would not be shared
+**Make sure to delete PVCs left over by StatefulSets when when uninstalling charts**
 
-Each charts should be managed seperately as seperate playbooks.
-
-Make sure to delete PVCs left over by StatefulSets when when uninstalling charts
