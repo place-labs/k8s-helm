@@ -59,7 +59,7 @@ cluster_info:
 By default, all services are deployed with 1 replica. For production deployments, set `env=prod` to automatically scale appropriate services to 2 replicas:
 
 ```sh
-# Production deployment with 3 replicas per service
+# Production deployment with 2 replicas per service
 ansible-playbook placeos.yaml -i inventories/aks/ -e "env=prod"
 ```
 
