@@ -11,7 +11,7 @@ Contains 4 roles:
 
 ## Prerequisites
 
-- Ansible >= 2.17 on Python 3
+- Ansible >= 2.17 on Python 3. TO install `pip install ansible`
 
 - Openshift python library. To install `pip install openshift`
 
@@ -23,10 +23,10 @@ Contains 4 roles:
 
 Note: Tested with:
 
-- Ansible: 2.17
-- Ansible collection: `kubernetes.core:6.0.0`
-- Kubernetes: 1.27 - 1.33
-- Helm: v3.17.3
+- Ansible: 2.20.x
+- Ansible collection: `kubernetes.core:6.4.0`
+- Kubernetes: v1.36.x
+- Helm: v3.20.x
 
 ## Executing
 
