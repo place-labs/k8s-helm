@@ -62,9 +62,11 @@ spec:
             protocol: TCP
         livenessProbe:
           httpGet:
-            path: /api/core/v1?liveness
+            path: /?liveness
             port: http
           initialDelaySeconds: 30
+          timeoutSeconds: 1
+          periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /api/core/v1?readiness
