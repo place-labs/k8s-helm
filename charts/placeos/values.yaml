@@ -134,7 +134,7 @@ xpostgresClientEnv: &postgresClientEnv
   PG_HOST: postgresql-postgresql
   PG_PORT: 5432
   PG_USER: *pgUsername
-  PG_QUERY: "?initial_pool_size=1&max_idle_pool_size=20&retry_attempts=2"
+  PG_QUERY: "?initial_pool_size=20&max_idle_pool_size=20&max_pool_size=30&retry_attempts=2"
 
 xpostgresClientSecrets: &postgresClientSecrets
   PG_PASSWORD: *pgPassword
