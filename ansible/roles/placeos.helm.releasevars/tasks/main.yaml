@@ -43,11 +43,11 @@
 # Set passwords: override > helm release > random
 - name: Set passwords for services (override > helm release > random)
   set_fact:
-    placeServerSecret: "{{ placeServerSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
-    authSecretKeyBase: "{{ authSecretKeyBase | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
-    serverSecret: "{{ serverSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
+    placeServerSecret: "{{ placeServerSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"            # PLACE_SERVER_SECRET is used by rest-api, core, fe-loader to en/decrypt Settings and encrypted DB fields. NOT SAFE TO CHANGE - as encrypted settings will be lost.
+    authSecretKeyBase: "{{ authSecretKeyBase | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"            # SECRET_KEY_BASE is used by auth to encrypt session cookies. Safe to change because it will just re-initiate auth session.
+    serverSecret: "{{ serverSecret | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"                                # SERVER_SECRET is used by dispatch. Module settings must a matching setting in order to use dispatch.
     placePassword: "{{ placePassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
     postgresqlPassword: "{{ postgresqlPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
     postgresqlPostgresPassword: "{{ postgresqlPostgresPassword | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits')) }}"
     influxdbAdminToken: "{{ influxdbAdminToken | default(lookup('password', '/dev/null chars=ascii_letters,digits,hexdigits length=64')) }}"
-    jwtSecret: "{{ jwtSecret | default(jwtSecret_generated | default('')) }}"
+    jwtSecret: "{{ jwtSecret | default(jwtSecret_generated | default('')) }}"                                                                         # JWT_SECRET is an RSA private key used by auth, rest-api, staff-api to encrypt JWT/Oauth (bearer) Tokens, which are used by FE apps with sso/local login
