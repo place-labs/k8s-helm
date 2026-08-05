@@ -57,14 +57,6 @@ frontendloader:
       seccompProfile:
         type: *seccompProfileType
     podPriorityClassName: ""
-searchingest:
-  serviceAccountName: *serviceAccountName
-  deployment:
-    securityContext:
-      runAsUser: null
-      seccompProfile:
-        type: *seccompProfileType
-    podPriorityClassName: ""
 triggers:
   serviceAccountName: *serviceAccountName
   deployment:
@@ -101,66 +93,6 @@ init:
 ###########################################
 ##### Third Party Supporting Services #####
 ###########################################
-elasticsearch:
-  enabled: true
-  # Sets vm.max_map_count on the host node
-  # Not required on Openshift v4
-  sysctlImage:
-    enabled: false
-  podSecurityContext:
-    seccompProfile:
-      type: *seccompProfileType
-  master:
-    replicas: 3
-    serviceAccount:
-      create: false
-      name: *serviceAccountName
-    resources:
-      limits:
-        cpu: 1000m
-        memory: 2Gi
-      requests:
-        cpu: 25m
-        memory: 256Mi
-    persistence:
-      enabled: true
-      storageClass: *storageClassName
-      accessModes:
-        - ReadWriteOnce
-      size: 1Gi
-  coordinating:
-    replicas: 0
-    serviceAccount:
-      create: false
-      name: *serviceAccountName
-    resources:
-      limits:
-        cpu: 100m
-        memory: 384Mi
-      requests:
-        cpu: 25m
-        memory: 256Mi
-    securityContext:
-      enabled: false
-  data:
-    replicas: 2
-    serviceAccount:
-      create: false
-      name: *serviceAccountName
-    resources:
-      limits:
-        cpu: 1
-        memory: 2176Mi
-      requests:
-        cpu: 25m
-        memory: 2048Mi
-    persistence:
-      enabled: true
-      storageClass: *storageClassName
-      accessModes:
-        - ReadWriteOnce
-      size: 1Gi
-
 redis:
   enabled: true
   serviceAccount:

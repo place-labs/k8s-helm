@@ -48,12 +48,3 @@ Selector labels
 app.kubernetes.io/parent-name: {{ include "placeos.name" . }}
 app.kubernetes.io/parent-instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-dependent service name overrides.
-This makes the service endpoint predictable as the actual charts do not cater for this
-*/}}
-
-{{- define "elasticsearch.master.fullname" -}}
-{{- printf "%s" .Values.templateOverrides.elasticsearchMasterfullName | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

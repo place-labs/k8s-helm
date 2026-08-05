@@ -7,20 +7,17 @@ xapiImageRepo: &apiImageRepo                "placeos/rest-api"
 xauthImageRepo: &authImageRepo              "placeos/auth"
 xcoreImageRepo: &coreImageRepo              "placeos/core"
 xdispatchImageRepo: &dispatchImageRepo      "placeos/dispatch"
-xsearchingestImageRepo: &searchingestImageRepo  "placeos/search-ingest"
 xtriggersImageRepo: &triggersImageRepo      "placeos/triggers"
 xinitImageRepo: &initImageRepo              "placeos/init"
 xstaffImageRepo: &staffImageRepo            "placeos/staff-api"
 xfrontendloaderImageRepo: &frontendloaderImageRepo    "placeos/frontend-loader"
 
 # Third-party Images
-xelasticImageRepo: &elasticImageRepo        "placeos/elasticsearch"
-xpostgresImageRepo: &postgresImageRepo      "placeos/postgresql"
+xpostgresImageRepo: &postgresImageRepo      "placeos/postgresql-repmgr"
 xredisImageRepo: &redisImageRepo            "placeos/redis"
 
 # Third-party Image Tags
-xelasticTag: &elasticTag                    "7.9.1-debian-10-r10"
-xpostgresTag: &postgresTag                  "11.12.0-debian-10-r13"
+xpostgresTag: &postgresTag                  "16.6.0-debian-12-r3"
 xredisTag: &redisTag                        "6.0.8-debian-10-r0"
 
 
@@ -51,12 +48,6 @@ dispatch:
       registry: *internalRegistry
       repository: *dispatchImageRepo
 
-searchingest:
-  deployment:
-    image:
-      registry: *internalRegistry
-      repository: *searchingestImageRepo
-
 triggers:
   deployment:
     image:
@@ -84,16 +75,14 @@ frontendloader:
 ###########################################
 ##### Third Party Supporting Services #####
 ###########################################
-elasticsearch:
-  image:
-    registry: *internalRegistry
-    repository: *elasticImageRepo
-    tag: *elasticTag
 postgresql:
-  image:
-    registry: *internalRegistry
-    repository: *postgresImageRepo
-    tag: *postgresTag
+  # The umbrella chart deploys the bitnami postgresql-ha (repmgr) chart under the
+  # `postgresql` alias, so the node image lives at postgresql.postgresql.image
+  postgresql:
+    image:
+      registry: *internalRegistry
+      repository: *postgresImageRepo
+      tag: *postgresTag
 redis:
   image:
     registry: *internalRegistry

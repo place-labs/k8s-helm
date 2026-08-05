@@ -41,11 +41,6 @@ placeos_override:
     httpDeployment:
       resources: {}
   
-  # searchingest - No resource limits for local dev
-  searchingest:
-    deployment:
-      resources: {}
-  
   # triggers - No resource limits for local dev
   triggers:
     deployment:
@@ -66,18 +61,6 @@ placeos_override:
 # Third-party service overrides for K3D (minimal local setup)
 ingress_nginx:
   enabled: false
-
-elasticsearch:
-  master:
-    replicas: 1
-    persistence:
-      size: 100Mib
-    resources: {}
-  data:
-    replicas: 1
-    persistence:
-      size: 100Mib
-    resources: {}
 
 redis:
   master:

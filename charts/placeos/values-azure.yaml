@@ -33,8 +33,6 @@ frontendloader:
 ###########################################
 ##### Third Party Supporting Services #####
 ###########################################
-elasticsearch:
-  enabled: true
 redis:
   enabled: true
 postgresql:

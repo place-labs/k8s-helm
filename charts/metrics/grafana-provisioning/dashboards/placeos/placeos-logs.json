@@ -297,59 +297,6 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
-      },
-      "id": 16,
-      "panels": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "gridPos": {
-            "h": 14,
-            "w": 24,
-            "x": 0,
-            "y": 36
-          },
-          "id": 29,
-          "options": {
-            "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": false,
-            "showCommonLabels": false,
-            "showLabels": false,
-            "showTime": false,
-            "sortOrder": "Ascending",
-            "wrapLogMessage": true
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "loki"
-              },
-              "editorMode": "builder",
-              "expr": "{app=\"searchingest\", namespace=\"placeos\"} |= ``",
-              "key": "Q-b2c0eb92-4eea-446a-91bf-ce55b75f5f4b-0",
-              "maxLines": 100,
-              "queryType": "range",
-              "refId": "A"
-            }
-          ],
-          "title": "Search Ingest",
-          "type": "logs"
-        }
-      ],
-      "title": "Search Ingest",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
         "y": 20
       },
       "id": 14,

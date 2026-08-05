@@ -56,8 +56,6 @@ serviceAccount:
 config:
   # -- values exposed as environment variable to the pod
   ENV: null
-  ES_HOST: null
-  ES_PORT: 0
   PLACE_APPLICATION: null
   PLACE_AUTH_HOST: null
   PLACE_EMAIL: null

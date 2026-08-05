@@ -28,7 +28,6 @@
 - health probes for:
   - auth
   - dispatch
-  - search-ingest
   - triggers
 - ~~seperate namespace deployments~~
 - ~~set lifecycle hooks so init only runs once / also possibly passwords/configmaps~~

@@ -28,10 +28,6 @@ dependencies:
     version: 0.1.0
     condition: frontendloader.enabled
 
-  - name: searchingest
-    version: 0.1.0
-    condition: searchingest.enabled
-
   - name: triggers
     version: 0.1.0
     condition: triggers.enabled
@@ -45,13 +41,14 @@ dependencies:
     condition: init.enabled
 
 # Third party helm charts
-  - name: elasticsearch
-    version: ~22.0.2
+  # The bitnami common template library. Loaded ahead of the service charts so that
+  # every bitnami subchart resolves the modern "common.*" template definitions.
+  # (Previously the elasticsearch chart's bundled copy provided this by accident;
+  # without it, influxdb's vendored common 1.x shadows the 2.x definitions the
+  # redis/postgresql-ha templates require and rendering fails.)
+  - name: common
+    version: ~2.31.4
     repository: https://charts.bitnami.com/bitnami
-    condition: elasticsearch.enabled
-    # tags: # (optional)
-    #   - Tags can be used to group charts for enabling/disabling together
-    # alias: (optional) Alias to be used for the chart. Useful when you have to add the same chart multiple times
 
   - name: redis
     version: ~20.13.4
