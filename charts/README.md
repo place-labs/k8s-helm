@@ -69,7 +69,7 @@ helm install placeos placeos/ --set global.env=prod --set api.deployment.replica
 
 Resource requests and limits follow the same pattern. When `global.env=prod`, production-appropriate resource limits are automatically applied. Otherwise, no resource limits are set (allowing for flexible local development).
 
-**Note:** This applies to PlaceOS services only. Third-party service resources (PostgreSQL, Elasticsearch, Redis, etc.) should be configured directly in their respective values files or via the Ansible deployment.
+**Note:** This applies to PlaceOS services only. Third-party service resources (PostgreSQL, Redis, etc.) should be configured directly in their respective values files or via the Ansible deployment.
 
 ```sh
 # Production deployment with resource limits
@@ -235,19 +235,9 @@ Solution:
 
 1. Delete all the PVCs as part of the cleanup to ensure a fresh deployment
 
-### ElasticSearch returns an error:
+### Upgrading from a release that included Elasticsearch
 
-> max file descriptors [###] for elasticsearch process is too low, increase to at least [65535]
-
-Possible Solutions:
-
-1. Ensure the docker daemon user is running with a `ulimit -n` of at least `65535`
-2. Add or modify following to docker daemon start command ( Dont do this in production! )
-
-```sh
---default-ulimit nofile=65535:65535
-
-```
+Elasticsearch and the search-ingest service have been removed from the umbrella chart (search is now backed by PostgreSQL full-text search). Upgrading an existing install that had `elasticsearch.enabled=true` removes the Elasticsearch StatefulSet, but (as above) its PVCs and underlying PVs are retained. Once the upgrade is verified, delete the orphaned Elasticsearch PVCs (e.g. `kubectl delete pvc -l app.kubernetes.io/name=elasticsearch`) to reclaim the storage.
 
 ### k3d fails to launch when OS is running firewalld instead of iptables
 

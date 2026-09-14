@@ -102,9 +102,6 @@ grafana:
     - configMapName: placeos-grafana-dashboards-postgres
       fileName: postgres.json
       folderName: Database
-    - configMapName: placeos-grafana-dashboards-elasticsearch
-      fileName: elasticsearch.json
-      folderName: Database
     - configMapName: placeos-grafana-dashboards-api-server
       fileName: api-server.json
       folderName: Kubernetes

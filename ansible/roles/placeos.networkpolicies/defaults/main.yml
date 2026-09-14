@@ -4,13 +4,11 @@
 placeos_namespace: placeos
 placeos_to_ns:
     # - rethinkdb
-    # - elasticsearch
     # - redis
     # - influxdb
     # - mosquitto
 internal_ns:
     # - rethinkdb
-    # - elasticsearch
     # - redis
     - "{{ placeos_namespace }}"
     # - influxdb

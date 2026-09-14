@@ -121,27 +121,6 @@ init:
       cpu: 100m
       memory: 128Mi
 
-search-ingest:
-  autoscaling:
-    enabled: true
-  serviceAccount:
-    create: true
-  resources:
-    limits:
-      cpu: 1000m
-      memory: 1280Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  deployment:
-    podAnnotations:
-      annotation-0: value-0
-      annotation-1: value-1
-    tolerations:
-      - key: "key"
-        operator: "Exists"
-        effect: "NoSchedule"
-
 triggers:
   autoscaling:
     enabled: true

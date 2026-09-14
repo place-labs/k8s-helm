@@ -8,10 +8,6 @@ postgresql_namespace: "placeos"
 postgresql_release_name: "postgresql-ha"
 postgresql_chart_version: "16.0.16"
 
-elasticsearch_namespace: "placeos"
-elasticsearch_release_name: "elasticsearch"
-elasticsearch_chart_version: "22.0.2"
-
 redis_namespace: "placeos"
 redis_release_name: "redis"
 redis_chart_version: "20.13.4"

@@ -13,7 +13,7 @@ deployment:
     repository: placeos/rest-api
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
-    #tag: placeos-2.2602.5
+    #tag: placeos-2.2609.2
 
   imagePullSecrets: []
   nameOverride: ""
@@ -91,11 +91,8 @@ service:
 configmap:
   # -- values exposed as environment variable to the pod
   ENV: null
-  ES_HOST: null
-  ES_PORT: 0
   PLACE_LOADER_URI: null
   REDIS_URL: null
-  PLACE_SEARCH_INGEST_URI: null
   SG_ENV: null
   TZ: Australia/Sydney
   PG_DB: null

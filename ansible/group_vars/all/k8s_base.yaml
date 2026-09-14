@@ -26,14 +26,60 @@ xserverSecret: &serverSecret "{{ serverSecret | default( '', true ) }}"
 # xjwtSecret for JWT signing (base64 encoded RSA private key)
 xjwtSecret: &jwtSecret "{{ jwtSecret | default( '', true ) }}"
 
-# xelasticClientEnv configmap values for ElasticSearch Service exposed as environment variables to PlaceOS containers
-xelasticClientEnv: &elasticClientEnv
-  ES_HOST: "{{ elasticsearch_release_name }}.{{ elasticsearch_namespace }}"
-  ES_PORT: 9200
-
 # xredisClientEnv configmap values for the redis Service exposed as environment variables to PlaceOS containers
 xredisClientEnv: &redisClientEnv
   REDIS_URL: "redis://redis-headless.{{ redis_namespace }}:6379"
+
+# Resource profiles for the third party charts, selected below by the `env` variable.
+# NOTE: group_vars files are parsed as plain YAML *before* any templating runs, so Jinja
+# block tags are not valid here - a conditional has to live inside a "{{ }}" value.
+xpostgresResourcesProd:
+  requests:
+    cpu: 250m
+    memory: 2Gi
+  limits:
+    cpu: 1
+    memory: 3Gi
+
+xpostgresResourcesDev:
+  requests:
+    cpu: 250m
+    memory: 250Mi
+  limits:
+    cpu: 1
+    memory: 2Gi
+
+xredisResourcesProd:
+  limits:
+    cpu: '1'
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+xredisResourcesDev:
+  limits:
+    cpu: '1'
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+xinfluxResourcesProd:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 10m
+    memory: 1Gi
+
+xinfluxResourcesDev:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 10m
+    memory: 512Mi
 
 xpostgresValues: &postgresValues
   postgresql:
@@ -43,22 +89,7 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
-    resources:
-{% if env|default('dev') == 'prod' %}
-      requests:
-        cpu: 250m
-        memory: 2Gi
-      limits:
-        cpu: 1
-        memory: 3Gi
-{% else %}
-      requests:
-        cpu: 250m
-        memory: 250Mi
-      limits:
-        cpu: 1
-        memory: 2Gi
-{% endif %}
+    resources: "{{ xpostgresResourcesProd if env | default('dev') == 'prod' else xpostgresResourcesDev }}"
     pdb:
       create: false
     image:
@@ -129,7 +160,6 @@ placeos_base:
         ingress.kubernetes.io/ssl-redirect: "true"
     configmap:
       # Service Hosts
-      << : *elasticClientEnv
       << : *redisClientEnv
       << : *postgresClientEnv
       #<< : *httpProxy
@@ -240,24 +270,6 @@ placeos_base:
       #     cpu: 10m
       #     memory: 64Mi
   
-  # search-ingest is the overide configuration for the embedded search-ingest subchart
-  searchingest:
-    configmap:
-      # Service Hosts
-      << : *postgresClientEnv
-      << : *elasticClientEnv
-    secrets:
-      << : *postgresClientSecrets
-    deployment: {}
-      # Uncomment to override default resources
-      # resources:
-      #   limits:
-      #     cpu: 1
-      #     memory: 512Mi
-      #   requests:
-      #     cpu: 10m
-      #     memory: 256Mi
-  
   # triggers is the overide configuration for the embedded triggers subchart
   triggers:
     configmap:
@@ -283,7 +295,6 @@ placeos_base:
     config:
       # Service Hosts
       << : *postgresClientEnv
-      << : *elasticClientEnv
     secrets:
       PLACE_PASSWORD: *placePassword
       PLACE_SERVER_SECRET: *placeServerSecret
@@ -323,7 +334,7 @@ placeos_base:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
       INFLUX_API_KEY: *influxAdminToken
-    deployment:
+    deployment: {}
       # Uncomment to override default resources
       # resources:
       #   limits:
@@ -355,65 +366,6 @@ ingress_nginx_base:
     config:
       annotations-risk-level: Critical
 
-elasticsearch_base:
-  enabled: true
-  master:
-{% if env|default('dev') == 'prod' %}
-    replicaCount: 3
-{% else %}
-    replicaCount: 1
-{% endif %}
-    priorityClassName: high
-    persistence:
-      enabled: true
-      size: 100M
-    podAntiAffinityPreset: soft
-  data:
-{% if env|default('dev') == 'prod' %}
-    replicaCount: 2
-{% else %}
-    replicaCount: 1
-{% endif %}
-    priorityClassName: high
-    persistence:
-      enabled: true
-      size: 500M
-    resources:
-{% if env|default('dev') == 'prod' %}
-      limits:
-        cpu: 2
-        memory: 4Gi
-      requests:
-        cpu: 100m
-        memory: 2Gi
-{% else %}
-      limits:
-        cpu: 1
-        memory: 2Gi
-      requests:
-        cpu: 25m
-        memory: 1536Mi
-{% endif %}
-    podAntiAffinityPreset: soft
-  coordinating:
-    replicaCount: 0
-  ingest:
-    replicaCount: 0
-  image:
-    repository: bitnamilegacy/elasticsearch
-  sysctlImage:
-    repository: bitnamilegacy/os-shell
-  volumePermissions:
-    image:
-      repository: bitnamilegacy/os-shell
-  metrics:
-    image:
-      repository: bitnamilegacy/elasticsearch-exporter
-  global:
-    defaultStorageClass: *storageClass
-    security:
-      allowInsecureImages: true
-
 redis_base:
   enabled: true
   fullnameOverride: redis
@@ -430,22 +382,7 @@ redis_base:
     persistence:
       enabled: true
       size: 100M
-    resources:
-{% if env|default('dev') == 'prod' %}
-      limits:
-        cpu: '1'
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 128Mi
-{% else %}
-      limits:
-        cpu: '1'
-        memory: 128Mi
-      requests:
-        cpu: 50m
-        memory: 64Mi
-{% endif %}
+    resources: "{{ xredisResourcesProd if env | default('dev') == 'prod' else xredisResourcesDev }}"
   image:
     registry: public.ecr.aws
     repository: bitnami/redis
@@ -462,22 +399,7 @@ influxdb_base:
   auth:
     admin:
       token: *influxAdminToken
-  resources:
-{% if env|default('dev') == 'prod' %}
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 10m
-      memory: 1Gi
-{% else %}
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 10m
-      memory: 512Mi
-{% endif %}
+  resources: "{{ xinfluxResourcesProd if env | default('dev') == 'prod' else xinfluxResourcesDev }}"
   image:
     repository: bitnamilegacy/influxdb
   global:

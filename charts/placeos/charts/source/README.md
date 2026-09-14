@@ -13,8 +13,6 @@ A PlaceOS helm chart for the Rubber-Soul component
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configmap.ENV | string | `nil` | value exposed as environment variable to the pod |
-| configmap.ES_HOST | string | `nil` | value exposed as environment variable to the pod |
-| configmap.ES_PORT | int | `0` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_DB | string | `nil` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_HOST | string | `nil` | value exposed as environment variable to the pod |
 | configmap.RETHINKDB_PORT | int | `0` | value exposed as environment variable to the pod |

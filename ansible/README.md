@@ -74,7 +74,7 @@ placeos_override:
 
 ### Resource Configuration
 
-Resource requests and limits follow the same pattern. When `env=prod`, production-appropriate resource limits are automatically applied for both PlaceOS services and third-party dependencies (PostgreSQL, Elasticsearch, Redis, InfluxDB).
+Resource requests and limits follow the same pattern. When `env=prod`, production-appropriate resource limits are automatically applied for both PlaceOS services and third-party dependencies (PostgreSQL, Redis, InfluxDB).
 
 **PlaceOS Services**: Resources are defined in Helm templates with dev defaults.
 
@@ -95,12 +95,12 @@ placeos_override:
           memory: 256Mi
 
 # Third-party service overrides
-elasticsearch:
-  data:
+redis:
+  master:
     resources:
       limits:
-        cpu: 4
-        memory: 8Gi
+        cpu: 1
+        memory: 1Gi
 ```
 
 ### Local deployment to k3d

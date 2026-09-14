@@ -14,9 +14,6 @@ dependencies:
 - name: frontendloader
   repository: ""
   version: 0.1.0
-- name: searchingest
-  repository: ""
-  version: 0.1.0
 - name: triggers
   repository: ""
   version: 0.1.0
@@ -26,9 +23,9 @@ dependencies:
 - name: init
   repository: ""
   version: 0.1.0
-- name: elasticsearch
+- name: common
   repository: https://charts.bitnami.com/bitnami
-  version: 22.0.15
+  version: 2.31.4
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 20.13.4
@@ -41,5 +38,5 @@ dependencies:
 - name: postgresql-ha
   repository: https://charts.bitnami.com/bitnami
   version: 11.2.1
-digest: sha256:b15740037fe6385910c3a9a69a27d6beb25f9fa4a3bf4437c3be62256b21529d
-generated: "2025-10-16T19:29:26.801538869+11:00"
+digest: sha256:498342b7d26e3b0b8cf67a89c9bb92b002ef8034085d2ac0277f9f25603e2430
+generated: "2026-08-06T03:27:32.660769+10:00"

@@ -14,9 +14,6 @@ PlaceOS Services Configured:
 {{ if .Values.frontendloader.enabled -}}
 - frontend-loader
 {{- end }}
-{{ if .Values.searchingest.enabled -}}
-- search-ingest
-{{- end }}
 {{ if .Values.triggers.enabled -}}
 - triggers
 {{- end }}
@@ -27,9 +24,6 @@ PlaceOS Services Configured:
 Third Party Services Configured:
 {{ if .Values.postgresql.enabled -}}
 - postgresql
-{{- end }}
-{{ if .Values.elasticsearch.enabled -}}
-- elasticsearch
 {{- end }}
 {{ if .Values.redis.enabled -}}
 - redis

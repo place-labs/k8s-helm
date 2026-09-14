@@ -9,8 +9,6 @@ A PlaceOS helm chart for the Init component
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.ENV | string | `nil` | value exposed as environment variable to the pod |
-| config.ES_HOST | string | `nil` | value exposed as environment variable to the pod |
-| config.ES_PORT | int | `0` | value exposed as environment variable to the pod |
 | config.PLACE_APPLICATION | string | `nil` | value exposed as environment variable to the pod |
 | config.PLACE_AUTH_HOST | string | `nil` | value exposed as environment variable to the pod |
 | config.PLACE_EMAIL | string | `nil` | value exposed as environment variable to the pod |
