@@ -64,8 +64,10 @@ ingress_nginx:
 
 redis:
   master:
-    resources: {}
+    # null (not {}) - an empty dict is a no-op under combine(recursive=True),
+    # which would leave the env-derived defaults from k8s_base.yaml in place
+    resources: null
 
 influxdb:
   priorityClassName: null
-  resources: {}
+  resources: null

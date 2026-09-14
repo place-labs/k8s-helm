@@ -30,6 +30,57 @@ xjwtSecret: &jwtSecret "{{ jwtSecret | default( '', true ) }}"
 xredisClientEnv: &redisClientEnv
   REDIS_URL: "redis://redis-headless.{{ redis_namespace }}:6379"
 
+# Resource profiles for the third party charts, selected below by the `env` variable.
+# NOTE: group_vars files are parsed as plain YAML *before* any templating runs, so Jinja
+# block tags are not valid here - a conditional has to live inside a "{{ }}" value.
+xpostgresResourcesProd:
+  requests:
+    cpu: 250m
+    memory: 2Gi
+  limits:
+    cpu: 1
+    memory: 3Gi
+
+xpostgresResourcesDev:
+  requests:
+    cpu: 250m
+    memory: 250Mi
+  limits:
+    cpu: 1
+    memory: 2Gi
+
+xredisResourcesProd:
+  limits:
+    cpu: '1'
+    memory: 256Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+xredisResourcesDev:
+  limits:
+    cpu: '1'
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+xinfluxResourcesProd:
+  limits:
+    cpu: 1
+    memory: 2Gi
+  requests:
+    cpu: 10m
+    memory: 1Gi
+
+xinfluxResourcesDev:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 10m
+    memory: 512Mi
+
 xpostgresValues: &postgresValues
   postgresql:
     username: &pgUsername placeos
@@ -38,22 +89,7 @@ xpostgresValues: &postgresValues
     postgresPassword: *pgPostgresPassword
     maxConnections: 500
     replicaCount: 1
-    resources:
-{% if env|default('dev') == 'prod' %}
-      requests:
-        cpu: 250m
-        memory: 2Gi
-      limits:
-        cpu: 1
-        memory: 3Gi
-{% else %}
-      requests:
-        cpu: 250m
-        memory: 250Mi
-      limits:
-        cpu: 1
-        memory: 2Gi
-{% endif %}
+    resources: "{{ xpostgresResourcesProd if env | default('dev') == 'prod' else xpostgresResourcesDev }}"
     pdb:
       create: false
     image:
@@ -298,7 +334,7 @@ placeos_base:
       << : *postgresClientSecrets
       PLACE_SERVER_SECRET: *placeServerSecret
       INFLUX_API_KEY: *influxAdminToken
-    deployment:
+    deployment: {}
       # Uncomment to override default resources
       # resources:
       #   limits:
@@ -346,22 +382,7 @@ redis_base:
     persistence:
       enabled: true
       size: 100M
-    resources:
-{% if env|default('dev') == 'prod' %}
-      limits:
-        cpu: '1'
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 128Mi
-{% else %}
-      limits:
-        cpu: '1'
-        memory: 128Mi
-      requests:
-        cpu: 50m
-        memory: 64Mi
-{% endif %}
+    resources: "{{ xredisResourcesProd if env | default('dev') == 'prod' else xredisResourcesDev }}"
   image:
     registry: public.ecr.aws
     repository: bitnami/redis
@@ -378,22 +399,7 @@ influxdb_base:
   auth:
     admin:
       token: *influxAdminToken
-  resources:
-{% if env|default('dev') == 'prod' %}
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 10m
-      memory: 1Gi
-{% else %}
-    limits:
-      cpu: 1
-      memory: 1Gi
-    requests:
-      cpu: 10m
-      memory: 512Mi
-{% endif %}
+  resources: "{{ xinfluxResourcesProd if env | default('dev') == 'prod' else xinfluxResourcesDev }}"
   image:
     repository: bitnamilegacy/influxdb
   global:
