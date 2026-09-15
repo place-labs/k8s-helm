@@ -47,6 +47,12 @@ spec:
           - name: http
             containerPort: 3000
             protocol: TCP
+        startupProbe:
+          httpGet:
+            path: /api/frontend-loader/v1?startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /api/frontend-loader/v1?liveness
@@ -87,6 +93,20 @@ spec:
         ports:
         - containerPort: 8080
           name: http-nginx
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: http-nginx
+          failureThreshold: 30
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-nginx
+        readinessProbe:
+          httpGet:
+            path: /?readiness
+            port: http-nginx
         resources:
         {{- if .Values.httpDeployment.resources }}
           {{- toYaml .Values.httpDeployment.resources | nindent 12 }}

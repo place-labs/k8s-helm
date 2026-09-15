@@ -42,6 +42,12 @@ spec:
           - name: http
             containerPort: 8080
             protocol: TCP
+        startupProbe:
+          httpGet:
+            path: /auth/authority?health=true&startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /auth/authority?health=true&liveness

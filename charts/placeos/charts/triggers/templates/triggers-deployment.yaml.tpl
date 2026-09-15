@@ -48,13 +48,19 @@ spec:
         volumeMounts:
             - name: tmp
               mountPath: /repositories
+        startupProbe:
+          httpGet:
+            path: /api/triggers/v2?startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /api/triggers/v2
+            path: /api/triggers/v2?liveness
             port: http
         readinessProbe:
           httpGet:
-            path: /api/triggers/v2
+            path: /api/triggers/v2?readiness
             port: http
         resources:
         {{- if .Values.deployment.resources }}

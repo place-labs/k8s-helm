@@ -20,6 +20,12 @@ data:
         #charset koi8-r;
         access_log /dev/stdout;
 
+        location = /healthz {
+            access_log off;
+            add_header Content-Type text/plain;
+            return 200 "ok";
+        }
+
         location ~ /\. {
           deny all;
         }

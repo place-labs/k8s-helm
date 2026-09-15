@@ -55,6 +55,12 @@ spec:
         {{- end }}
         {{- end }}
         {{/*
+        startupProbe:
+          httpGet:
+            path: /?startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /?liveness

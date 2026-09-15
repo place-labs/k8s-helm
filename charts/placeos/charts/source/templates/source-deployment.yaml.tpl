@@ -42,6 +42,12 @@ spec:
           - name: http
             containerPort: 3000
             protocol: TCP
+        startupProbe:
+          httpGet:
+            path: /api/source/v1?startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /api/source/v1?liveness

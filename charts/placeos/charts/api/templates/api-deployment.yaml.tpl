@@ -45,6 +45,12 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp
+        startupProbe:
+          httpGet:
+            path: /api/engine/v2/?startup
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /api/engine/v2/?liveness

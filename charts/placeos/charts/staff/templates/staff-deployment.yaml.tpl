@@ -42,16 +42,22 @@ spec:
           - name: http
             containerPort: 8080
             protocol: TCP
+        startupProbe:
+          httpGet:
+            path: /api/staff/v1?startup
+            port: 8080
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /api/staff/v1
+            path: /api/staff/v1?liveness
             port: 8080
           timeoutSeconds: 10
           initialDelaySeconds: 10
           failureThreshold: 3
         readinessProbe:
           httpGet:
-            path: /api/staff/v1
+            path: /api/staff/v1?readiness
             port: 8080
         resources:
         {{- if .Values.deployment.resources }}
