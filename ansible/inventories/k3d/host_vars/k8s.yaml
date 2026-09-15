@@ -17,46 +17,46 @@ placeos_override:
   # api - No resource limits for local dev
   api:
     deployment:
-      resources: {}
+      resources: null
   
   # auth - No resource limits for local dev
   auth:
     deployment:
-      resources: {}
+      resources: null
   
   # core - No resource limits for local dev
   core:
     deployment:
-      resources: {}
+      resources: null
   
   # dispatch - No resource limits for local dev
   dispatch:
     deployment:
-      resources: {}
+      resources: null
   
   # frontendloader - No resource limits for local dev
   frontendloader:
     deployment:
-      resources: {}
+      resources: null
     httpDeployment:
-      resources: {}
+      resources: null
   
   # triggers - No resource limits for local dev
   triggers:
     deployment:
-      resources: {}
+      resources: null
   
   # staff - Ingress enabled for local access
   staff:
     ingress:
       enabled: true
     deployment:
-      resources: {}
+      resources: null
   
   # source - No resource limits for local dev
   source:
     deployment:
-      resources: {}
+      resources: null
 
 # Third-party service overrides for K3D (minimal local setup)
 ingress_nginx:
