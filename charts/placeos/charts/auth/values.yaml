@@ -10,7 +10,7 @@ deployment:
 
   image:
     registry: docker.io
-    repository: placeos/auth
+    repository: placeos/auth.cr
     pullPolicy: IfNotPresent
     # -- tag Overrides the image tag whose default is the chart appVersion.
     #tag: placeos-2.2609.2
