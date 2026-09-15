@@ -363,8 +363,9 @@ redis:
         ephemeral-storage: 50Mi
         memory: 128Mi
   image:
-    registry: public.ecr.aws
+    registry: docker.io
     repository: bitnami/redis
+    tag: latest
   global:
     security:
       allowInsecureImages: true
