@@ -64,7 +64,7 @@ spec:
           httpGet:
             path: /?startup
             port: http
-          failureThreshold: 30
+          failureThreshold: 60
           periodSeconds: 5
         livenessProbe:
           httpGet:
