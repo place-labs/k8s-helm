@@ -6,7 +6,7 @@ Contains 4 roles:
 
 - `placeos.helm`: deploy the core PlaceOS charts without thirdparty services
 - `placeos.helm.thirdparty`: deploy the thirdparty services
-- `placeos.helm.releasevars`: retreive existing chart release vars to prevent regenerating passwords for rethinkdb
+- `placeos.helm.releasevars`: retreive existing chart release vars to prevent regenerating secrets
 - `placeos.networkpolicies` : create k8s network polices for the deployed resources. Note: Does not work with k3d without modifying the default SDN.eg By switching to Calico SDN
 
 ## Prerequisites
@@ -78,7 +78,7 @@ Resource requests and limits follow the same pattern. When `env=prod`, productio
 
 **PlaceOS Services**: Resources are defined in Helm templates with dev defaults.
 
-**Third-Party Services**: Resources are conditionally set in `group_vars/all/k8s_base.yaml` using Jinja2 templates based on the `env` variable.
+**Third-Party Services**: Resources are conditionally set in `group_vars/all/k8s_base.yaml` based on the `env` variable.
 
 You can override individual service resources in the inventory `host_vars/k8s.yaml`:
 
@@ -128,7 +128,7 @@ ansible-playbook placeos-network-policies.yaml -e "gke=true"
 ansible-playbook placeos.yaml -i inventories/aks/  --check
 
 # Deploy with public IP
-ansible-playbook placeos.yaml -i inventories/aks/
+ansible-playbook placeos.yaml -i inventories/aks/ -e "placeDomain={domain/{external IP.sslip.io}}"
 # Deploy with internal IP
 ansible-playbook placeos.yaml -i inventories/aks/ -e "internalLB=true"
 
