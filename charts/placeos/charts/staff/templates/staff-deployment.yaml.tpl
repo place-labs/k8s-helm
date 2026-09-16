@@ -47,13 +47,12 @@ spec:
             path: /api/staff/v1?startup
             port: 8080
           failureThreshold: 30
-          periodSeconds: 10
+          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /api/staff/v1?liveness
             port: 8080
           timeoutSeconds: 10
-          initialDelaySeconds: 10
           failureThreshold: 3
         readinessProbe:
           httpGet:

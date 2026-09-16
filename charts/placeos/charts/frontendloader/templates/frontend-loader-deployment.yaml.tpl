@@ -52,7 +52,7 @@ spec:
             path: /api/frontend-loader/v1?startup
             port: http
           failureThreshold: 30
-          periodSeconds: 10
+          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /api/frontend-loader/v1?liveness
@@ -98,7 +98,7 @@ spec:
             path: /healthz
             port: http-nginx
           failureThreshold: 30
-          periodSeconds: 10
+          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /healthz

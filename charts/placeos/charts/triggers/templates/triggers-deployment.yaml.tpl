@@ -53,7 +53,7 @@ spec:
             path: /api/triggers/v2?startup
             port: http
           failureThreshold: 30
-          periodSeconds: 10
+          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /api/triggers/v2?liveness

@@ -47,7 +47,7 @@ spec:
             path: /auth/authority?health=true&startup
             port: http
           failureThreshold: 30
-          periodSeconds: 10
+          periodSeconds: 5
         livenessProbe:
           httpGet:
             path: /auth/authority?health=true&liveness
